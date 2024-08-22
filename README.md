@@ -1,9 +1,16 @@
 
 <div align='center'>
   
- # **Métodos Estadísticos - Ucentral** 
+ # **Métodos Estadísticos - Ucentral 2024-II** 
   Luis Andres Campos Maldonado, lcamposm@ucentral.edu.co
  </div>
+
+<div align='center'> 
+
+ ### Lenguaje base: `Python 3.10.12`
+  
+ </div>
+
 
 En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el paquete estadístico.
 
@@ -34,8 +41,3 @@ Las notas se distribuirán de la siguiente manera
 + Segundo avance. Marco teórico –previa metodología-
 + Metodología y primeros resultados.
 + Exposiciones y Entrega Final
-
-
-- <a href="https://docs.google.com/document/d/1LknmAN1d5trOVDNrnqS4oAObi_6Wd0xo/edit?usp=sharing&ouid=111401641962812428858&rtpof=true&sd=true"> PDA </a>
-
-- <a href="https://drive.google.com/drive/folders/1SIe_j4hw_fZjlNysLKyUEa5XkK5SIuwt?usp=sharing"> Grabaciones de las sesiones </a>
