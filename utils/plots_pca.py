@@ -27,7 +27,7 @@ def biplot(pca=None, dataframe=None, comp1: int = 1, comp2: int = 2):
     scaler, length = StandardScaler(), len(pca.explained_variance_)
     scaler.fit(dataframe)
     X_scaled = scaler.transform(dataframe)
-    if dataframe.index.name == None:  # En caso que el DataFrame no tenga nombre para el índice.
+    if dataframe.index.name is None:  # En caso que el DataFrame no tenga nombre para el índice.
         dataframe.index.name = "Indice"
     pca_trans = pd.DataFrame(pca.transform(X_scaled), index=dataframe.index,
                              columns=["PC" + str(comp) for comp in range(1, length + 1)])
@@ -174,7 +174,7 @@ def plot_loadings_bar(pca, df_pca: pd.DataFrame, n_compo: int = 2, rotation: int
     """
     components = pca.components_[:n_compo]
     loadings = pd.DataFrame(components, columns=df_pca.columns)
-    loadings.index = [f"PC{i+1}" for i in range(0, n_compo)]
+    loadings.index = [f"PC{i + 1}" for i in range(0, n_compo)]
     loadings = loadings.T
     max_eje_y = np.max(loadings.abs().max())
 
@@ -183,14 +183,14 @@ def plot_loadings_bar(pca, df_pca: pd.DataFrame, n_compo: int = 2, rotation: int
     else:
         rows = int(n_compo / 2) + 1
 
-    fig = make_subplots(rows=rows, cols=2, shared_yaxes=True, subplot_titles=[f"PC{i+1}" for i in range(n_compo)])
+    fig = make_subplots(rows=rows, cols=2, shared_yaxes=True, subplot_titles=[f"PC{i + 1}" for i in range(n_compo)])
 
     for i in range(n_compo):
         row = i // 2 + 1
         col = i % 2 + 1
-        temp = loadings[f"PC{i+1}"].to_frame()
-        temp["color"] = np.where(temp[f"PC{i+1}"] < 0, "red", "blue")
-        fig.add_trace(go.Bar(x=temp.index, y=temp[f"PC{i+1}"], marker_color=temp["color"]), row=row, col=col)
+        temp = loadings[f"PC{i + 1}"].to_frame()
+        temp["color"] = np.where(temp[f"PC{i + 1}"] < 0, "red", "blue")
+        fig.add_trace(go.Bar(x=temp.index, y=temp[f"PC{i + 1}"], marker_color=temp["color"]), row=row, col=col)
         fig.add_shape(type="line", x0=-0.5, x1=len(temp) - 0.5, y0=0, y1=0, line=dict(color="gray"), row=row, col=col)
         fig.update_xaxes(tickangle=rotation, row=row, col=col)
 
