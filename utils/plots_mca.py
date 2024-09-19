@@ -283,12 +283,6 @@ def mca_biplot(ca: prince.CA, df_ca: pd.DataFrame, dim1: int = 1, dim2: int = 2,
         hover_name=data_plot.index
     )
 
-    fig1 = px.scatter(
-        row, x=f"Dim{dim1}", y=f"Dim{dim2}", color="tmp", template="plotly_white",
-        hover_name=row.index, hover_data={"tmp": False}
-    )
-
-    fig.add_traces(list(fig1.select_traces()))
     fig.add_hline(y=0, line_width=0.5, line_dash="dash", line_color="black")
     fig.add_vline(x=0, line_width=0.5, line_dash="dash", line_color="black")
     fig.update_xaxes(range=[minx, maxx], title_text=f"Dim{dim1} ({var_exp[dim1 - 1]}%)")
@@ -414,7 +408,7 @@ def mca_screeplot(ca, figsize=(15, 6)):
     plt.show()
     
     
-def mca_triplot(mca: prince.CA, df_mca: pd.DataFrame, width: int = 1000, height: int = 800):
+def mca_triplot(mca: prince.CA, df_mca: pd.DataFrame, width: int = 1000, height: int = 800, delta: float = 0.5):
     """
     Genera un triplot 3D para visualizar la proyección de las variables en las primeras 3 dimensiones del análisis de correspondencias.
 
@@ -422,12 +416,17 @@ def mca_triplot(mca: prince.CA, df_mca: pd.DataFrame, width: int = 1000, height:
     :param df_mca: pd.DataFrame DataFrame utilizado para realizar el ajuste del objeto CA.
     :param width: int, opcional Ancho del gráfico (default: 1000).
     :param height: int, opcional Alto del gráfico (default: 800).
+    :param delta: float, opcional Delta para ajustar los límites de los ejes (default: 0.5).
     :return: None
     """
     df = mca.column_coordinates(df_mca)
     df.columns = [f"Dim{i+1}" for i in range(len(df.columns))]
     df["cos2"] = get_cos2(mca, df_mca, choice="columns")[["Dim1", "Dim2", "Dim3"]].sum(axis=1)
     df = df.round(4)
+
+    x_min, x_max = df["Dim1"].min() - delta, df["Dim1"].max() + delta
+    y_min, y_max = df["Dim2"].min() - delta, df["Dim2"].max() + delta
+    z_min, z_max = df["Dim3"].min() - delta, df["Dim3"].max() + delta
 
     go.Figure(data=[go.Scatter3d(
             x=df["Dim1"],
@@ -454,14 +453,16 @@ def mca_triplot(mca: prince.CA, df_mca: pd.DataFrame, width: int = 1000, height:
             "Dim 1: %{x}<br>" +
             "Dim 2: %{y}<br>" +
             "Dim 3: %{z}<br>" +
-            "<extra></extra>"
+            "cos²: %{customdata[0]:.4f}<br>" +
+            "<extra></extra>",
+            customdata=df[["cos2"]]
             )
         ]
         ).update_layout(
         scene=dict(
-            xaxis_title="Dim 1",
-            yaxis_title="Dim 2",
-            zaxis_title="Dim 3"
+            xaxis=dict(title="Dim 1", range=[x_min, x_max]),
+            yaxis=dict(title="Dim 2", range=[y_min, y_max]),
+            zaxis=dict(title="Dim 3", range=[z_min, z_max])
         ),
         title="Triplot: Proyección en las 3 primeras dimensiones",
         showlegend=False,

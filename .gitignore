@@ -168,3 +168,6 @@ cache/
 config/
 CUADERNOS/
 Books/
+
+# Notebooks Ignorados.
+exercises_clase.ipynb
