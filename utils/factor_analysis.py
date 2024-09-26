@@ -37,7 +37,7 @@ def get_communa_uniquess(fa: FactorAnalyzer, df_fa: pd.DataFrame) -> pd.DataFram
     temp1 = pd.DataFrame(communa, columns=["comunalidades"], index=index).T
     temp2 = pd.DataFrame(uniqueness, columns=["especificidad"], index=index).T
     
-    return pd.concat([temp1,temp2])
+    return pd.concat([temp1,temp2]).T.sort_values(by=["comunalidades"], ascending=False)
 
 
 def sedimentacion(fa):
