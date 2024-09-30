@@ -84,3 +84,42 @@ def cophenetic_coef(df, methods, metrics):
             except:
                 result.loc[metric, method] = -1
     return result
+
+
+def optimal_clusters_hierarchy(df, metrics, to_sklearn=False):
+    """
+    Función que determina el número óptimo de clusters, el mejor método de linkage y la mejor métrica
+    basándose en el coeficiente de correlación cofenética y el corte óptimo en el dendrograma.
+    
+    :param df: pd.DataFrame ya estandarizada y con solo variables cuantitativas.
+    :param metrics: list. Lista de métricas de distancia a comparar.
+    
+    :return: tuple con (n_clusters, mejor_métrica, mejor_linkage, umbral_optimo)
+    """
+    methods = ["ward", "complete", "average", "single"]
+      
+    result = cophenetic_coef(df, methods, metrics)
+    best_metric = result.max(axis=1).idxmax()
+    best_method = result.max().idxmax()
+        
+    best_linkage = sch.linkage(df, method=best_method, metric=best_metric)    
+    df_temp = pd.DataFrame(best_linkage[:, 2], columns=["heights"])
+    df_temp["diff"] = df_temp.diff(1)
+    df_temp = df_temp.sort_values(by="diff", ascending=False)
+    optimal_threshold = df_temp["heights"].head(2).mean()
+    clusters = sch.fcluster(best_linkage, t=optimal_threshold, criterion='distance')
+    if to_sklearn:
+        return {
+        "n_clusters": len(np.unique(clusters)),
+        "metric": best_metric,
+        "linkage": best_method,
+    }
+    
+    else:
+        {
+        "n_clusters": len(np.unique(clusters)),
+        "metric": best_metric,
+        "linkage": best_method,
+        "optimal_threshold": optimal_threshold,
+        "cophenetic": result.max().max()
+    }
