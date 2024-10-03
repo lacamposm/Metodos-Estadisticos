@@ -12,7 +12,7 @@
  </div>
 
 
-En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el paquete estadístico.
+En el curso se construyen los fundamentos teóricos de los principales métodos de la estadística exploratoria multidimensional y se trabajan sus aplicaciones, utilizando software especializado de uso libre y comercial. Las prácticas se orientan a la aplicación de los métodos a situaciones reales que requieren apropiación de los contextos específicos, a partir de la revisión de artículos, para realizar interpretaciones adecuadas de los datos y del fenómeno en general. Para el aprendizaje de la aplicación de los métodos, el estudiante deberá realizar talleres utilizando el Python lenguaje de programacion base.
 
 ## Textos de Referencia
 - Müller, A. C., & Guido, S. (2016). Introduction to machine learning with Python: a guide for data scientists. " O'Reilly Media, Inc.".
@@ -58,7 +58,9 @@ Las notas se distribuirán de la siguiente manera
 
 - _Lectura 7: Analisis Factorial_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_7_Factor_Analysis.ipynb)
 
-- _Lectura 8: Cluster Jerarquico con Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_8_Cluster_Jerarquico.ipynb)
+- _Lectura 8: Cluster Jerarquico_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_8_Cluster_Jerarquico.ipynb)
+
+- _Lectura 9: Algoritmo K-means_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_9_Kmeans.ipynb)
 
 ### Mini proyecto de ejemplo:
 
