@@ -23,34 +23,32 @@ def cluster_biplot(pca, dataframe, col_clusters, comp1=1, comp2=2, size_text=8):
     :param size_text: int, opcional. Tamaño del texto para evitar overlapping (default: 10).
     :return: None
     """
-    comp_1, comp_2 = str(comp1), str(comp2)  ## Strings de las compomentes a plotear.
-    scaler, length = StandardScaler(), len(pca.explained_variance_)
-    percent_var = pca.explained_variance_ratio_ * 100
-    scaler.fit(dataframe)
-    X_scaled = scaler.transform(dataframe)
-    ##
-    tmp = dataframe.copy()
-    if tmp.index.name == None:  ## En caso que el DataFrame no tenga nombre para el índice.
-        tmp.index.name = "Indice"
-    pca_trans = pd.DataFrame(pca.transform(X_scaled), index=tmp.index,
-                             columns=["PC" + str(comp) for comp in range(1, length + 1)])
-    text_list = [pca_trans.index.name + ": {}".format(pca_trans.index[i]) for i in range(0, len(tmp))]
-
-    features, tmp["cluster"] = tmp.columns, col_clusters
-    tmp["cluster"] = tmp["cluster"].astype("category")
+    percent_var, length = pca.explained_variance_ratio_ * 100, len(pca.explained_variance_)
+    X_scaled = StandardScaler().fit_transform(dataframe)
     
-    fig = px.scatter(tmp, x=pca_trans[f"PC{comp_1}"], y=pca_trans[f"PC{comp_2}"], color="cluster",
+    tmp = dataframe.copy()
+    if tmp.index.name == None:  # En caso que el DataFrame no tenga nombre para el índice.
+        tmp.index.name = "Indice"
+    pca_trans = pd.DataFrame(
+        pca.transform(X_scaled), index=tmp.index,
+        columns=[f"PC{str(comp)}" for comp in range(1, length + 1)]
+    )
+    
+    tmp["cluster"] = col_clusters
+    tmp["cluster"] = tmp["cluster"].astype("string")
+    
+    fig = px.scatter(tmp, x=pca_trans[f"PC{str(comp1)}"], y=pca_trans[f"PC{str(comp2)}"], color="cluster",
                      text=tmp.index, hover_name=tmp.index, template="plotly_white", symbol="cluster")
     
     fig.add_hline(y=0, line_width=0.5, line_dash="dash", line_color="black")
     fig.add_vline(x=0, line_width=0.5, line_dash="dash", line_color="black")
-    fig.update_traces(textposition=improve_text_position(pca_trans[f"PC{comp_1}"]),
+    fig.update_traces(textposition=improve_text_position(pca_trans[f"PC{str(comp1)}"]),
                       textfont_size=size_text, )
     fig.update_layout(title="PCA-CLUSTER Biplot.")
-    fig.update_xaxes(range=[min(pca_trans[f"PC{comp_1}"] - 0.35), max(pca_trans[f"PC{comp_1}"]) + 0.35],
-                     title_text="Dim " + comp_1 + " ({:.2f}%)".format(percent_var[comp1 - 1]))
-    fig.update_yaxes(range=[min(pca_trans[f"PC{comp_2}"] - 0.35), max(pca_trans[f"PC{comp_2}"]) + 0.35],
-                     title_text="Dim " + comp_2 + " ({:.2f}%)".format(percent_var[comp2 - 1]))
+    fig.update_xaxes(range=[min(pca_trans[f"PC{str(comp1)}"] - 0.35), max(pca_trans[f"PC{str(comp1)}"]) + 0.35],
+                     title_text="Dim " + str(comp1) + " ({:.2f}%)".format(percent_var[comp1 - 1]))
+    fig.update_yaxes(range=[min(pca_trans[f"PC{str(comp2)}"] - 0.35), max(pca_trans[f"PC{str(comp2)}"]) + 0.35],
+                     title_text="Dim " + str(comp2) + " ({:.2f}%)".format(percent_var[comp2 - 1]))
     fig.show()
 
     return None
@@ -112,19 +110,19 @@ def optimal_clusters_hierarchy(df, metrics, to_sklearn=False):
     clusters = sch.fcluster(best_linkage, t=optimal_threshold, criterion='distance')
     if to_sklearn:
         return {
-        "n_clusters": len(np.unique(clusters)),
-        "metric": best_metric,
-        "linkage": best_method,
-    }
+            "n_clusters": len(np.unique(clusters)),
+            "metric": best_metric,
+            "linkage": best_method,
+        }
     
     else:
-        {
-        "n_clusters": len(np.unique(clusters)),
-        "metric": best_metric,
-        "linkage": best_method,
-        "optimal_threshold": optimal_threshold,
-        "cophenetic": result.max().max()
-    }
+        return {                        
+            "n_clusters": len(np.unique(clusters)),
+            "metric": best_metric,
+            "linkage": best_method,
+            "optimal_threshold": optimal_threshold,
+            "cophenetic": result.max().max()
+        }
         
 
 def plot_silhouette(df: pd.DataFrame, n: int = 2, scaled_data: bool = True):
