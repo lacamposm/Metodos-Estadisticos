@@ -44,24 +44,26 @@ Las notas se distribuirán de la siguiente manera
 
 ### Revisa las lecturas en Colab.
 
-- _Lectura 1: Introduccion al curso_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_1_Intro.ipynb)
+- _Lectura 1: Introduccion al curso_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_1_Intro.ipynb)
 
-- _Lectura 2: EDA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_2_Analisis_Descriptivo_Multivariado.ipynb)
+- _Lectura 2: EDA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_2_Analisis_Descriptivo_Multivariado.ipynb)
 
-- _Lectura 3: PCA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_3_ACP.ipynb)
+- _Lectura 3: PCA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_3_ACP.ipynb)
 
-- _Lectura 4: Ejemplos PCA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_4_ACP_examples.ipynb)
+- _Lectura 4: Ejemplos PCA_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_4_ACP_examples.ipynb)
 
-- _Lectura 5: Analisis de correspondencias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_5_AC.ipynb)
+- _Lectura 5: Analisis de correspondencias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_5_AC.ipynb)
 
-- _Lectura 6: Analisis de correspondencias multiples_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_6_ACM.ipynb)
+- _Lectura 6: Analisis de correspondencias multiples_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_6_ACM.ipynb)
 
-- _Lectura 7: Analisis Factorial_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_7_Factor_Analysis.ipynb)
+- _Lectura 7: Analisis Factorial_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_7_Factor_Analysis.ipynb)
 
-- _Lectura 8: Cluster Jerarquico_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_8_Cluster_Jerarquico.ipynb)
+- _Lectura 8: Cluster Jerarquico_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_8_Cluster_Jerarquico.ipynb)
 
-- _Lectura 9: Algoritmo K-means_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/Lectura_9_Kmeans.ipynb)
+- _Lectura 9: Algoritmo K-means_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_9_Kmeans.ipynb)
+
+- _Lectura 10: DBSCAN_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_10_DBSCAN.ipynb)
 
 ### Mini proyecto de ejemplo:
 
-- _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/custom/metodos-estadisticos/news_clustering.ipynb)
+- _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)

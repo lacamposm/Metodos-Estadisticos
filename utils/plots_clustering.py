@@ -4,6 +4,7 @@ import plotly.express as px
 from scipy.cluster import hierarchy as sch
 from scipy.spatial.distance import pdist
 from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics import silhouette_samples, silhouette_score
 from sklearn.cluster import KMeans
 import warnings
@@ -209,13 +210,13 @@ def elbow_plot(df: pd.DataFrame, n: int = 2, scaled_data: bool = True):
     ).show()
     
     
-def gap_statistic(df: pd.DataFrame, nrefs=10, maxClusters=10, scaled_data: bool = True, random_state=42):
+def gap_statistic(df: pd.DataFrame, nrefs=10, max_clusters=10, scaled_data: bool = True, random_state=42):
     """
     Calcula el número óptimo de clusters (K) usando el método de la estadística Gap y muestra el gráfico.
 
     :param df: pd.DataFrame, los datos originales en formato DataFrame.
     :param nrefs: int, opcional. Número de conjuntos de referencia aleatorios que se crearán para la comparación. El valor por defecto es 3.
-    :param maxClusters: int, opcional. Número máximo de clusters a probar. El valor por defecto es 10.
+    :param max_clusters: int, opcional. Número máximo de clusters a probar. El valor por defecto es 10.
     :param scaled_data: bool, opcional. Si es True, se escalan los datos usando StandardScaler. Default es True.
     :param random_state: int, opcional. Semilla aleatoria para garantizar consistencia. Default es 42.
     :raises ValueError: Si el DataFrame contiene valores NaN o si ocurre un error con KMeans.
@@ -234,10 +235,10 @@ def gap_statistic(df: pd.DataFrame, nrefs=10, maxClusters=10, scaled_data: bool 
 
     np.random.seed(random_state)
 
-    gaps = np.zeros((len(range(1, maxClusters)),))
+    gaps = np.zeros((len(range(1, max_clusters)),))
     results = []
 
-    for gap_index, k in enumerate(range(1, maxClusters)):
+    for gap_index, k in enumerate(range(1, max_clusters)):
         
         refDisps = np.zeros(nrefs)
         for i in range(nrefs):
@@ -267,6 +268,36 @@ def gap_statistic(df: pd.DataFrame, nrefs=10, maxClusters=10, scaled_data: bool 
         template="plotly_white"
     )
 
-    fig.update_xaxes(title_text="Number of clusters $K$")
+    fig.update_xaxes(title_text="Number of clusters")
     fig.update_yaxes(title_text="Gap Statistic")    
     fig.show()
+
+
+def knn_plot_dbscan(df: pd.DataFrame, min_samples: int = 5, scaled_data: bool = True):
+    """
+    Función que genera el gráfico de las distancias al min_samples-ésimo vecino más cercano para
+    seleccionar el valor de eps en el algoritmo DBSCAN.
+    
+    :param df: pd.DataFrame con la data original.
+    :param min_samples: int, número de vecinos cercanos deseados para el análisis.
+                        Se sugiere usar el mismo valor que min_samples de DBSCAN.
+    :param scaled_data: bool, indica si los datos ya están escalados. Si es False, se escalarán automáticamente.
+    """
+    if not scaled_data:
+        scaler = StandardScaler()
+        df_scaled = scaler.fit_transform(df)
+    else:
+        df_scaled = df
+    
+    neigh = NearestNeighbors(n_neighbors=min_samples + 1)
+    nbrs = neigh.fit(df_scaled)
+    distances, _ = nbrs.kneighbors(df_scaled)
+    k_distances = distances[:, min_samples]
+    k_distances = np.sort(k_distances)
+
+    (
+        px.line(x=range(k_distances.shape[0]), y=k_distances, template="plotly_white")
+        .update_xaxes(title_text="Points (sample) sorted by distance")
+        .update_yaxes(title_text=f"{min_samples}-th nearest neighbor distance")
+        .show()
+    )
