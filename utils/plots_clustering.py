@@ -5,7 +5,7 @@ from scipy.cluster import hierarchy as sch
 from scipy.spatial.distance import pdist
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
-from sklearn.metrics import silhouette_samples, silhouette_score
+from sklearn.metrics import silhouette_score
 from sklearn.cluster import KMeans
 import warnings
 
