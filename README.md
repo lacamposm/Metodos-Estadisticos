@@ -69,3 +69,5 @@ Las notas se distribuirán de la siguiente manera
 ### Mini proyecto de ejemplo:
 
 - _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)
+
+- _Model Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/model_news_clustering.ipynb)
