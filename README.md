@@ -66,6 +66,8 @@ Las notas se distribuirán de la siguiente manera
 
 - _Lectura 11: Linear Regression_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_11_Linear_Regression.ipynb)
 
+- _Lectura 12: Logistic Regression_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_12_Logistic_Regression.ipynb)
+
 ### Mini proyecto de ejemplo:
 
 - _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)
