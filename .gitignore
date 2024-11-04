@@ -167,7 +167,8 @@ BASES/
 cache/
 config/
 CUADERNOS/
-Books/
+Books_Sta/
+data/
 
 # Notebooks Ignorados.
 exercises_clase.ipynb
