@@ -68,6 +68,8 @@ Las notas se distribuirán de la siguiente manera
 
 - _Lectura 12: Logistic Regression_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_12_Logistic_Regression.ipynb)
 
+- _Lectura 13: Decision Tree_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_13_Arboles_de_decision.ipynb)
+
 ### Mini proyecto de ejemplo:
 
 - _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)
