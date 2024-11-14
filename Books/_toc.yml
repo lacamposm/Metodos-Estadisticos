@@ -16,6 +16,9 @@ chapters:
   - file: content/Lectura_10_DBSCAN
   - file: content/Lectura_11_Linear_Regression
   - file: content/Lectura_12_Logistic_Regression
+  - file: content/Lectura_13_Arboles_de_decision.ipynb
+  - file: content/Lectura_14_Random_Forrest.ipynb
+  - file: content/Lectura_15_Cross_Validation.ipynb
   - file: content/news_clustering
   - file: content/model_news_clustering
   
