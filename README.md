@@ -70,6 +70,10 @@ Las notas se distribuirán de la siguiente manera
 
 - _Lectura 13: Decision Tree_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_13_Arboles_de_decision.ipynb)
 
+- _Lectura 14: Random Forrest_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_14_Random_Forrest.ipynb)
+
+- _Lectura 15: Cross Validation_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_15_Cross_Validation.ipynb)
+
 ### Mini proyecto de ejemplo:
 
 - _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)
