@@ -75,6 +75,11 @@ Las notas se distribuirán de la siguiente manera
 - _Lectura 15: Cross Validation_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_15_Cross_Validation.ipynb)
 
 - _Lectura 16: Introduccion Boosting_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_16_Intro_Metodos_de_Boosting.ipynb)
+
+- _Lectura 17: XgBoost, LigthGBM, Catboost_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_17_LigthGBM_XgBoost_CatBoost.ipynb)
+### Mini proyecto de ejemplo:
+
+- _Lectura 18: Intoduccion a SVM_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_18_Intro_to_SVM.ipynb)
 ### Mini proyecto de ejemplo:
 
 - _Clustering Noticias_ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/news_clustering.ipynb)
