@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -144,14 +144,8 @@
   
   
   
-    
-    
-      
-    
-    
-    <img src="../_static/logo2.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
-    <img src="../_static/logo2.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
   
+    <p class="title logo__title">Metodos Estadisticos</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -512,9 +506,6 @@ especialistas, ya sea para la implementación o para “vender” un proyecto de
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/ed44e5f8a9c96664a3a511819174a375413965211cd97ded89867a0158a4a94a.png" src="../_images/ed44e5f8a9c96664a3a511819174a375413965211cd97ded89867a0158a4a94a.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -528,13 +519,6 @@ especialistas, ya sea para la implementación o para “vender” un proyecto de
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 score in LR: 0.473364
-R2 score in tree model: 0.7781
-</pre></div>
-</div>
-<img alt="../_images/e19db43687f6e41ce61a9a7e1ebc57048864c978793ffbedb6847aa4c938f428.png" src="../_images/e19db43687f6e41ce61a9a7e1ebc57048864c978793ffbedb6847aa4c938f428.png" />
 </div>
 </div>
 <p>Este árbol se parece mucho al árbol de clasificación que ya conocemos. La principal diferencia es que en lugar de predecir una clase en cada nodo, predice un valor. Como ejemplo, supongamos que deseamos hacer una predicción para <span class="math notranslate nohighlight">\(x_0=2.15\)</span>, luego se debe atravezar el árbol comenzando en la raíz, y finalmente llegando al nodo hoja y el <code class="docutils literal notranslate"><span class="pre">value</span></code> que se predice es 5.671. Esta predicción es simplemente el valor objetivo promedio de la variable target en 24 registros del set de train que quedarón allí. Además esta predicción da como media del error (MSE) (<code class="docutils literal notranslate"><span class="pre">squared_error</span></code>) 1.16 sobre estos 24 registros.</p>
@@ -583,24 +567,6 @@ R2 score in tree model: 0.7781
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Para el nodo raiz:
-value = 3.169
-squared_error = 5.059
-Numero de muestras= 200
-
-Para el primer split:
-Instancias nodo izquiero = 160.000
-Instancias nodo derecho = 40.000
-Instancias nodo padre = 200.000
-
-MSE nodo izquierdo = 1.567
-MSE nodo derecho = 2.841
-
-MSE ponderado para los nodos izquierdo y derecho: 1.821
-</pre></div>
-</div>
-</div>
 </div>
 <p><em><strong>Nota.</strong></em></p>
 <p>Los árboles priorizan los límites de decisión ortogonales (todas las divisiones son perpendiculares a un eje), esto los hace sensibles a la rotación del set de train. Una forma de limitar problemas que cortes innecesarios (piense en rotar un región en 45 grados)
@@ -624,295 +590,6 @@ es usar PCA, que a menudo resulta en una mejor orientación en el set de train.<
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 21608 entries, 0 to 21612
-Data columns (total 17 columns):
- #   Column         Non-Null Count  Dtype  
----  ------         --------------  -----  
- 0   price          21608 non-null  float64
- 1   bedrooms       21608 non-null  int64  
- 2   bathrooms      21608 non-null  float64
- 3   sqft_living    21608 non-null  int64  
- 4   sqft_lot       21608 non-null  int64  
- 5   floors         21608 non-null  float64
- 6   waterfront     21608 non-null  int64  
- 7   view           21608 non-null  int64  
- 8   condition      21608 non-null  int64  
- 9   grade          21608 non-null  int64  
- 10  sqft_above     21608 non-null  int64  
- 11  sqft_basement  21608 non-null  int64  
- 12  yr_built       21608 non-null  int64  
- 13  zipcode        21608 non-null  int64  
- 14  lat            21608 non-null  float64
- 15  long           21608 non-null  float64
- 16  renovated      21608 non-null  bool   
-dtypes: bool(1), float64(5), int64(11)
-memory usage: 2.8 MB
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>price</th>
-      <th>bedrooms</th>
-      <th>bathrooms</th>
-      <th>sqft_living</th>
-      <th>sqft_lot</th>
-      <th>floors</th>
-      <th>waterfront</th>
-      <th>view</th>
-      <th>condition</th>
-      <th>grade</th>
-      <th>sqft_above</th>
-      <th>sqft_basement</th>
-      <th>yr_built</th>
-      <th>zipcode</th>
-      <th>lat</th>
-      <th>long</th>
-      <th>renovated</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>221900.0</td>
-      <td>3</td>
-      <td>1.00</td>
-      <td>1180</td>
-      <td>5650</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>7</td>
-      <td>1180</td>
-      <td>0</td>
-      <td>1955</td>
-      <td>98178</td>
-      <td>47.5112</td>
-      <td>-122.257</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>538000.0</td>
-      <td>3</td>
-      <td>2.25</td>
-      <td>2570</td>
-      <td>7242</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>7</td>
-      <td>2170</td>
-      <td>400</td>
-      <td>1951</td>
-      <td>98125</td>
-      <td>47.7210</td>
-      <td>-122.319</td>
-      <td>True</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>180000.0</td>
-      <td>2</td>
-      <td>1.00</td>
-      <td>770</td>
-      <td>10000</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>6</td>
-      <td>770</td>
-      <td>0</td>
-      <td>1933</td>
-      <td>98028</td>
-      <td>47.7379</td>
-      <td>-122.233</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>604000.0</td>
-      <td>4</td>
-      <td>3.00</td>
-      <td>1960</td>
-      <td>5000</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>7</td>
-      <td>1050</td>
-      <td>910</td>
-      <td>1965</td>
-      <td>98136</td>
-      <td>47.5208</td>
-      <td>-122.393</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>510000.0</td>
-      <td>3</td>
-      <td>2.00</td>
-      <td>1680</td>
-      <td>8080</td>
-      <td>1.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>8</td>
-      <td>1680</td>
-      <td>0</td>
-      <td>1987</td>
-      <td>98074</td>
-      <td>47.6168</td>
-      <td>-122.045</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>21608</th>
-      <td>360000.0</td>
-      <td>3</td>
-      <td>2.50</td>
-      <td>1530</td>
-      <td>1131</td>
-      <td>3.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>8</td>
-      <td>1530</td>
-      <td>0</td>
-      <td>2009</td>
-      <td>98103</td>
-      <td>47.6993</td>
-      <td>-122.346</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>21609</th>
-      <td>400000.0</td>
-      <td>4</td>
-      <td>2.50</td>
-      <td>2310</td>
-      <td>5813</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>8</td>
-      <td>2310</td>
-      <td>0</td>
-      <td>2014</td>
-      <td>98146</td>
-      <td>47.5107</td>
-      <td>-122.362</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>21610</th>
-      <td>402101.0</td>
-      <td>2</td>
-      <td>0.75</td>
-      <td>1020</td>
-      <td>1350</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>7</td>
-      <td>1020</td>
-      <td>0</td>
-      <td>2009</td>
-      <td>98144</td>
-      <td>47.5944</td>
-      <td>-122.299</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>21611</th>
-      <td>400000.0</td>
-      <td>3</td>
-      <td>2.50</td>
-      <td>1600</td>
-      <td>2388</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>8</td>
-      <td>1600</td>
-      <td>0</td>
-      <td>2004</td>
-      <td>98027</td>
-      <td>47.5345</td>
-      <td>-122.069</td>
-      <td>False</td>
-    </tr>
-    <tr>
-      <th>21612</th>
-      <td>325000.0</td>
-      <td>2</td>
-      <td>0.75</td>
-      <td>1020</td>
-      <td>1076</td>
-      <td>2.0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>7</td>
-      <td>1020</td>
-      <td>0</td>
-      <td>2008</td>
-      <td>98144</td>
-      <td>47.5941</td>
-      <td>-122.299</td>
-      <td>False</td>
-    </tr>
-  </tbody>
-</table>
-<p>21608 rows × 17 columns</p>
-</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -942,445 +619,6 @@ memory usage: 2.8 MB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-1 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 pre {
-  padding: 0;
-}
-
-#sk-container-id-1 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-1 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-1 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-1 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-1 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-1 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-1 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-1 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-1 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;cat&#x27;,
-                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                                  [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;,
-                                                   &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                                   &#x27;grade&#x27;]),
-                                                 (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                                  [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;,
-                                                   &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;,
-                                                   &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                                   &#x27;sqft_above&#x27;,
-                                                   &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                                   &#x27;lat&#x27;, &#x27;long&#x27;])])),
-                (&#x27;model&#x27;, DecisionTreeRegressor())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;cat&#x27;,
-                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                                  [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;,
-                                                   &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                                   &#x27;grade&#x27;]),
-                                                 (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                                  [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;,
-                                                   &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;,
-                                                   &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                                   &#x27;sqft_above&#x27;,
-                                                   &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                                   &#x27;lat&#x27;, &#x27;long&#x27;])])),
-                (&#x27;model&#x27;, DecisionTreeRegressor())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;preprocessor: ColumnTransformer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></label><div class="sk-toggleable__content fitted"><pre>ColumnTransformer(transformers=[(&#x27;cat&#x27;, OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                 [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;, &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                  &#x27;grade&#x27;]),
-                                (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                 [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;, &#x27;sqft_living&#x27;,
-                                  &#x27;sqft_lot&#x27;, &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                  &#x27;sqft_above&#x27;, &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                  &#x27;lat&#x27;, &#x27;long&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">cat</label><div class="sk-toggleable__content fitted"><pre>[&#x27;waterfront&#x27;, &#x27;zipcode&#x27;, &#x27;view&#x27;, &#x27;renovated&#x27;, &#x27;grade&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;OneHotEncoder<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></label><div class="sk-toggleable__content fitted"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">num</label><div class="sk-toggleable__content fitted"><pre>[&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;, &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;, &#x27;floors&#x27;, &#x27;condition&#x27;, &#x27;sqft_above&#x27;, &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;, &#x27;lat&#x27;, &#x27;long&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">passthrough</label><div class="sk-toggleable__content fitted"><pre>passthrough</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;DecisionTreeRegressor<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.tree.DecisionTreeRegressor.html">?<span>Documentation for DecisionTreeRegressor</span></a></label><div class="sk-toggleable__content fitted"><pre>DecisionTreeRegressor()</pre></div> </div></div></div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1400,22 +638,12 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/212e4544d644abe9722de389ddc90458313b6b4da67ff80b5ed8ed7a937fbb83.png" src="../_images/212e4544d644abe9722de389ddc90458313b6b4da67ff80b5ed8ed7a937fbb83.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Overfitting!!!&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 en Train: </span><span class="si">{</span><span class="n">pipeline_tree</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 en Test:  </span><span class="si">{</span><span class="n">pipeline_tree</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overfitting!!!
-R2 en Train: 0.9992
-R2 en Test:  0.6527
 </pre></div>
 </div>
 </div>
@@ -1446,17 +674,6 @@ R2 en Test:  0.6527
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Best&#39; params:
-{&#39;model__criterion&#39;: &#39;friedman_mse&#39;,
- &#39;model__max_depth&#39;: 9,
- &#39;model__min_samples_split&#39;: 60}
-
-R^2 en TRAIN: 0.8466
-R^2 en TEST:  0.7537
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="modelo-con-randomforestregressor">
@@ -1479,15 +696,6 @@ R^2 en TEST:  0.7537
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overfitting!!!
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 en Train: 0.9828
-R2 en Test:  0.8496
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1507,12 +715,6 @@ R2 en Test:  0.8496
 
 <span class="nb">print</span><span class="p">(</span><span class="n">pipeline_rf1</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pipeline_rf1</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8983077356735792
-0.8316341191697778
 </pre></div>
 </div>
 </div>
@@ -1555,23 +757,6 @@ R2 en Test:  0.8496
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 1 candidates, totalling 5 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Best&#39; params:
-{&#39;model__criterion&#39;: &#39;squared_error&#39;,
- &#39;model__max_depth&#39;: 10,
- &#39;model__max_features&#39;: &#39;sqrt&#39;,
- &#39;model__min_samples_split&#39;: 275,
- &#39;model__n_estimators&#39;: 450}
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 en Train: 0.7415
-R2 en Test:  0.7334
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1580,77 +765,6 @@ R2 en Test:  0.7334
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>mean_fit_time</th>
-      <th>std_fit_time</th>
-      <th>mean_score_time</th>
-      <th>std_score_time</th>
-      <th>param_model__n_estimators</th>
-      <th>param_model__min_samples_split</th>
-      <th>param_model__max_features</th>
-      <th>param_model__max_depth</th>
-      <th>param_model__criterion</th>
-      <th>params</th>
-      <th>...</th>
-      <th>mean_test_score</th>
-      <th>std_test_score</th>
-      <th>rank_test_score</th>
-      <th>split0_train_score</th>
-      <th>split1_train_score</th>
-      <th>split2_train_score</th>
-      <th>split3_train_score</th>
-      <th>split4_train_score</th>
-      <th>mean_train_score</th>
-      <th>std_train_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>10.072852</td>
-      <td>0.122756</td>
-      <td>0.167918</td>
-      <td>0.001057</td>
-      <td>450</td>
-      <td>275</td>
-      <td>sqrt</td>
-      <td>10</td>
-      <td>squared_error</td>
-      <td>{'model__n_estimators': 450, 'model__min_sampl...</td>
-      <td>...</td>
-      <td>0.709249</td>
-      <td>0.024515</td>
-      <td>1</td>
-      <td>0.727819</td>
-      <td>0.731267</td>
-      <td>0.730608</td>
-      <td>0.731713</td>
-      <td>0.728273</td>
-      <td>0.729936</td>
-      <td>0.001589</td>
-    </tr>
-  </tbody>
-</table>
-<p>1 rows × 25 columns</p>
-</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1670,12 +784,6 @@ R2 en Test:  0.7334
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 en Train: </span><span class="si">{</span><span class="n">rf_pipeline</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="w"> </span><span class="n">y_train</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R2 en Test:  </span><span class="si">{</span><span class="n">rf_pipeline</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_test</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R2 en Train: 0.8398
-R2 en Test:  0.7946
 </pre></div>
 </div>
 </div>
@@ -1842,456 +950,11 @@ $<span class="math notranslate nohighlight">\(\hat{F}(x) = \hat{F}_0(x) + \sum_{
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-2 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-2 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-2 pre {
-  padding: 0;
-}
-
-#sk-container-id-2 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-2 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-2 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-2 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-2 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-2 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-2 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-2 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-2 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-2 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-2 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-2 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-2 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-2 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-2 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-2 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-2 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-2 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-2 div.sk-label label.sk-toggleable__label,
-#sk-container-id-2 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-2 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-2 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-2 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-2 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-2 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-2 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-2 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-2 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-2 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-2 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;cat&#x27;,
-                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                                  [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;,
-                                                   &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                                   &#x27;grade&#x27;]),
-                                                 (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                                  [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;,
-                                                   &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;,
-                                                   &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                                   &#x27;sqft_above&#x27;,
-                                                   &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                                   &#x27;lat&#x27;, &#x27;long&#x27;])])),
-                (&#x27;model_gdb&#x27;, GradientBoostingRegressor())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;,
-                 ColumnTransformer(transformers=[(&#x27;cat&#x27;,
-                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                                  [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;,
-                                                   &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                                   &#x27;grade&#x27;]),
-                                                 (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                                  [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;,
-                                                   &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;,
-                                                   &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                                   &#x27;sqft_above&#x27;,
-                                                   &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                                   &#x27;lat&#x27;, &#x27;long&#x27;])])),
-                (&#x27;model_gdb&#x27;, GradientBoostingRegressor())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;preprocessor: ColumnTransformer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for preprocessor: ColumnTransformer</span></a></label><div class="sk-toggleable__content fitted"><pre>ColumnTransformer(transformers=[(&#x27;cat&#x27;, OneHotEncoder(handle_unknown=&#x27;ignore&#x27;),
-                                 [&#x27;waterfront&#x27;, &#x27;zipcode&#x27;, &#x27;view&#x27;, &#x27;renovated&#x27;,
-                                  &#x27;grade&#x27;]),
-                                (&#x27;num&#x27;, &#x27;passthrough&#x27;,
-                                 [&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;, &#x27;sqft_living&#x27;,
-                                  &#x27;sqft_lot&#x27;, &#x27;floors&#x27;, &#x27;condition&#x27;,
-                                  &#x27;sqft_above&#x27;, &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;,
-                                  &#x27;lat&#x27;, &#x27;long&#x27;])])</pre></div> </div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">cat</label><div class="sk-toggleable__content fitted"><pre>[&#x27;waterfront&#x27;, &#x27;zipcode&#x27;, &#x27;view&#x27;, &#x27;renovated&#x27;, &#x27;grade&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;OneHotEncoder<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></label><div class="sk-toggleable__content fitted"><pre>OneHotEncoder(handle_unknown=&#x27;ignore&#x27;)</pre></div> </div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">num</label><div class="sk-toggleable__content fitted"><pre>[&#x27;bedrooms&#x27;, &#x27;bathrooms&#x27;, &#x27;sqft_living&#x27;, &#x27;sqft_lot&#x27;, &#x27;floors&#x27;, &#x27;condition&#x27;, &#x27;sqft_above&#x27;, &#x27;sqft_basement&#x27;, &#x27;yr_built&#x27;, &#x27;lat&#x27;, &#x27;long&#x27;]</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">passthrough</label><div class="sk-toggleable__content fitted"><pre>passthrough</pre></div> </div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;GradientBoostingRegressor<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html">?<span>Documentation for GradientBoostingRegressor</span></a></label><div class="sk-toggleable__content fitted"><pre>GradientBoostingRegressor()</pre></div> </div></div></div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pipeline_gboost</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pipeline_gboost</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9002812020273169
-0.8295639432067976
 </pre></div>
 </div>
 </div>
@@ -2333,25 +996,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Residuos iniciales:
-4136     160946.563404
-3584    -209053.436596
-10888    -76553.436596
-5020     259696.563404
-17426    235946.563404
-             ...      
-15380   -164053.436596
-21607    -64053.436596
-17733    -41053.436596
-15728     55946.563404
-19969    310946.563404
-Name: price, Length: 17286, dtype: float64
-
-MSE inicial = 290,578,607,506.054
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="mejorardo-la-media-como-primer-estimador-con-un-arbol">
@@ -2364,20 +1008,11 @@ MSE inicial = 290,578,607,506.054
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/c9e129abd32743e0b37be1cfcf830ab2830fa7f625f9c758cfea22ccd0d04086.png" src="../_images/c9e129abd32743e0b37be1cfcf830ab2830fa7f625f9c758cfea22ccd0d04086.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Predicciones del primer arbol estimando los residuos.</span>
 <span class="n">first_tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">preprocessor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 478195.37952113, -128206.98599944,  -72689.26380263, ...,
-        -72689.26380263,  -72689.26380263,  -72689.26380263])
 </pre></div>
 </div>
 </div>
@@ -2393,16 +1028,6 @@ MSE inicial = 290,578,607,506.054
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([586872.9745482 , 526232.73799615, 531784.51021583, ...,
-       531784.51021583, 531784.51021583, 531784.51021583])
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE paso 1 = 120,691,452,215.075
-True
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="segundo-arbol">
@@ -2414,9 +1039,6 @@ True
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/8f3629df220a9b547a714008189e0405d2ce4f55e3bf56ca63a25f53e9c97ff8.png" src="../_images/8f3629df220a9b547a714008189e0405d2ce4f55e3bf56ca63a25f53e9c97ff8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2433,16 +1055,6 @@ True
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([608249.9441467 , 518074.58227838, 527211.95918512, ...,
-       527211.95918512, 527211.95918512, 527211.95918512])
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE paso 2 = 107,407,252,535.312
-True
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="tercer-arbol">
@@ -2454,9 +1066,6 @@ True
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/26927b7843192a28419dfea41f2254e3fb6dc3b1290f6f42d1395d1db0549999.png" src="../_images/26927b7843192a28419dfea41f2254e3fb6dc3b1290f6f42d1395d1db0549999.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2470,16 +1079,6 @@ True
 <span class="n">mse_paso_3</span> <span class="o">=</span>  <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">predictions_stage_3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">MSE paso 3 = </span><span class="si">{</span><span class="n">mse_paso_3</span><span class="si">:</span><span class="s2">,.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">mse_paso_2</span> <span class="o">&gt;</span> <span class="n">mse_paso_3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([642605.40833618, 504666.48822322, 519531.84800949, ...,
-       519531.84800949, 519531.84800949, 519531.84800949])
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE paso 3 = 96,458,798,631.760
-True
 </pre></div>
 </div>
 </div>
@@ -2502,9 +1101,6 @@ True
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/fc5ddbcfd650b5f3e8de0572fb0fd8b26478f8749e30941048bcf2ca0829314b.png" src="../_images/fc5ddbcfd650b5f3e8de0572fb0fd8b26478f8749e30941048bcf2ca0829314b.png" />
 </div>
 </div>
 </section>
@@ -2554,18 +1150,6 @@ True
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 10 candidates, totalling 50 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;model_gdb__n_estimators&#39;: 300, &#39;model_gdb__min_samples_split&#39;: 10, &#39;model_gdb__min_samples_leaf&#39;: 150, &#39;model_gdb__max_features&#39;: 15, &#39;model_gdb__max_depth&#39;: 6, &#39;model_gdb__learning_rate&#39;: 0.1}
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8824483207085242
-0.8459171102032405
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2574,293 +1158,6 @@ True
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>mean_fit_time</th>
-      <th>std_fit_time</th>
-      <th>mean_score_time</th>
-      <th>std_score_time</th>
-      <th>param_model_gdb__n_estimators</th>
-      <th>param_model_gdb__min_samples_split</th>
-      <th>param_model_gdb__min_samples_leaf</th>
-      <th>param_model_gdb__max_features</th>
-      <th>param_model_gdb__max_depth</th>
-      <th>param_model_gdb__learning_rate</th>
-      <th>...</th>
-      <th>mean_test_score</th>
-      <th>std_test_score</th>
-      <th>rank_test_score</th>
-      <th>split0_train_score</th>
-      <th>split1_train_score</th>
-      <th>split2_train_score</th>
-      <th>split3_train_score</th>
-      <th>split4_train_score</th>
-      <th>mean_train_score</th>
-      <th>std_train_score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>10.869767</td>
-      <td>0.249367</td>
-      <td>0.214011</td>
-      <td>0.014267</td>
-      <td>300</td>
-      <td>10</td>
-      <td>150</td>
-      <td>15</td>
-      <td>6</td>
-      <td>0.100</td>
-      <td>...</td>
-      <td>0.844537</td>
-      <td>0.015910</td>
-      <td>1</td>
-      <td>0.883986</td>
-      <td>0.880814</td>
-      <td>0.875576</td>
-      <td>0.872855</td>
-      <td>0.876157</td>
-      <td>0.877877</td>
-      <td>0.003986</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4.335061</td>
-      <td>0.128841</td>
-      <td>0.136629</td>
-      <td>0.007425</td>
-      <td>200</td>
-      <td>5</td>
-      <td>100</td>
-      <td>sqrt</td>
-      <td>5</td>
-      <td>0.010</td>
-      <td>...</td>
-      <td>0.656871</td>
-      <td>0.023568</td>
-      <td>9</td>
-      <td>0.674738</td>
-      <td>0.667741</td>
-      <td>0.665358</td>
-      <td>0.665773</td>
-      <td>0.664883</td>
-      <td>0.667699</td>
-      <td>0.003652</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4.228828</td>
-      <td>0.206974</td>
-      <td>0.167349</td>
-      <td>0.038354</td>
-      <td>350</td>
-      <td>2</td>
-      <td>100</td>
-      <td>log2</td>
-      <td>4</td>
-      <td>0.050</td>
-      <td>...</td>
-      <td>0.802422</td>
-      <td>0.024198</td>
-      <td>6</td>
-      <td>0.830547</td>
-      <td>0.821690</td>
-      <td>0.813767</td>
-      <td>0.815031</td>
-      <td>0.825061</td>
-      <td>0.821219</td>
-      <td>0.006258</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>9.851146</td>
-      <td>0.302519</td>
-      <td>0.416168</td>
-      <td>0.084687</td>
-      <td>400</td>
-      <td>10</td>
-      <td>100</td>
-      <td>log2</td>
-      <td>8</td>
-      <td>0.050</td>
-      <td>...</td>
-      <td>0.834211</td>
-      <td>0.022647</td>
-      <td>4</td>
-      <td>0.869694</td>
-      <td>0.859838</td>
-      <td>0.852368</td>
-      <td>0.860805</td>
-      <td>0.863552</td>
-      <td>0.861251</td>
-      <td>0.005616</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5.302224</td>
-      <td>0.236569</td>
-      <td>0.195824</td>
-      <td>0.024977</td>
-      <td>200</td>
-      <td>5</td>
-      <td>150</td>
-      <td>log2</td>
-      <td>10</td>
-      <td>0.050</td>
-      <td>...</td>
-      <td>0.795120</td>
-      <td>0.020426</td>
-      <td>7</td>
-      <td>0.818642</td>
-      <td>0.813166</td>
-      <td>0.811642</td>
-      <td>0.805665</td>
-      <td>0.805052</td>
-      <td>0.810833</td>
-      <td>0.005044</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>1.958225</td>
-      <td>0.098546</td>
-      <td>0.042073</td>
-      <td>0.001938</td>
-      <td>100</td>
-      <td>5</td>
-      <td>100</td>
-      <td>15</td>
-      <td>3</td>
-      <td>0.075</td>
-      <td>...</td>
-      <td>0.782772</td>
-      <td>0.025474</td>
-      <td>8</td>
-      <td>0.811829</td>
-      <td>0.794273</td>
-      <td>0.790564</td>
-      <td>0.795127</td>
-      <td>0.793477</td>
-      <td>0.797054</td>
-      <td>0.007545</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>3.178132</td>
-      <td>0.111445</td>
-      <td>0.109587</td>
-      <td>0.006329</td>
-      <td>200</td>
-      <td>10</td>
-      <td>50</td>
-      <td>log2</td>
-      <td>5</td>
-      <td>0.100</td>
-      <td>...</td>
-      <td>0.844287</td>
-      <td>0.017855</td>
-      <td>2</td>
-      <td>0.882164</td>
-      <td>0.872292</td>
-      <td>0.867235</td>
-      <td>0.865677</td>
-      <td>0.870595</td>
-      <td>0.871592</td>
-      <td>0.005783</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>10.968051</td>
-      <td>0.466411</td>
-      <td>0.241322</td>
-      <td>0.021487</td>
-      <td>350</td>
-      <td>10</td>
-      <td>100</td>
-      <td>sqrt</td>
-      <td>8</td>
-      <td>0.020</td>
-      <td>...</td>
-      <td>0.809606</td>
-      <td>0.024413</td>
-      <td>5</td>
-      <td>0.843196</td>
-      <td>0.831655</td>
-      <td>0.818595</td>
-      <td>0.827981</td>
-      <td>0.830507</td>
-      <td>0.830387</td>
-      <td>0.007881</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>11.402387</td>
-      <td>0.371135</td>
-      <td>0.121713</td>
-      <td>0.015403</td>
-      <td>200</td>
-      <td>10</td>
-      <td>50</td>
-      <td>15</td>
-      <td>10</td>
-      <td>0.020</td>
-      <td>...</td>
-      <td>0.835564</td>
-      <td>0.024635</td>
-      <td>3</td>
-      <td>0.873793</td>
-      <td>0.861289</td>
-      <td>0.858168</td>
-      <td>0.857429</td>
-      <td>0.863579</td>
-      <td>0.862852</td>
-      <td>0.005900</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2.045443</td>
-      <td>0.202478</td>
-      <td>0.049456</td>
-      <td>0.004184</td>
-      <td>100</td>
-      <td>2</td>
-      <td>150</td>
-      <td>sqrt</td>
-      <td>4</td>
-      <td>0.020</td>
-      <td>...</td>
-      <td>0.609198</td>
-      <td>0.018344</td>
-      <td>10</td>
-      <td>0.632046</td>
-      <td>0.621355</td>
-      <td>0.609324</td>
-      <td>0.612823</td>
-      <td>0.610908</td>
-      <td>0.617291</td>
-      <td>0.008467</td>
-    </tr>
-  </tbody>
-</table>
-<p>10 rows × 26 columns</p>
-</div></div></div>
 </div>
 </section>
 </section>
