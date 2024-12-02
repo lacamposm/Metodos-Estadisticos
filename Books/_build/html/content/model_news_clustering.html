@@ -1,0 +1,2477 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelado News-Clustering &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/model_news_clustering';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Clustering sobre Noticias de “El Tiempo” (Colombia)" href="news_clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/model_news_clustering.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/model_news_clustering.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelado News-Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracterizacion-de-los-clusters"><em><strong>Caracterizacion de los clusters</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="modelado-news-clustering">
+<h1><em><strong>Modelado News-Clustering</strong></em><a class="headerlink" href="#modelado-news-clustering" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!pip install umap-learn==0.5.6</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">umap</span> <span class="kn">import</span> <span class="n">UMAP</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">RobustScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">RandomizedSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span><span class="p">,</span> <span class="n">davies_bouldin_score</span>
+
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos-Estadisticos/main/data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">silhouette_scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el Silhouette Score utilizando la métrica de coseno para evaluar la calidad de los clústeres.</span>
+
+<span class="sd">    El Silhouette Score mide cómo de similar es un punto de datos a otros puntos de su mismo clúster en comparación</span>
+<span class="sd">    con los puntos de otros clústeres. El valor oscila entre -1 y 1, donde un valor más alto indica que los puntos</span>
+<span class="sd">    están mejor agrupados y más separados de otros clústeres.</span>
+
+<span class="sd">    :param estimator: Un modelo de clustering que debe tener un método `predict` para obtener las etiquetas de los</span>
+<span class="sd">    clústeres de las muestras de `X`.</span>
+<span class="sd">    :param X: Un array-like o matriz de datos (n_samples, n_features) sobre los cuales se calcularán los clústeres.</span>
+<span class="sd">    :return: El Silhouette Score para el conjunto de datos `X` y las etiquetas de los clústeres obtenidos del</span>
+<span class="sd">    `estimator`. Se utiliza la métrica de coseno para calcular las distancias.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El estimator: </span><span class="si">{</span><span class="n">estimator</span><span class="si">}</span><span class="s2"> no tiene metodo &#39;predict&#39;&quot;</span><span class="p">)</span>
+
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">davies_bouldin_scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calcula el índice de Davies-Bouldin para evaluar la calidad de los clústeres.</span>
+
+<span class="sd">    El índice de Davies-Bouldin mide la media del cociente entre las distancias intra-clúster e inter-clúster para cada</span>
+<span class="sd">    clúster. Un valor más bajo del índice indica una mejor formación de los clústeres, ya que minimiza la dispersión</span>
+<span class="sd">    dentro de los clústeres y maximiza la separación entre ellos.</span>
+
+<span class="sd">    :param estimator: Un modelo de clustering que debe tener un método `predict` para obtener las etiquetas de los</span>
+<span class="sd">    clústeres de las muestras de `X`.</span>
+<span class="sd">    :param X: Un array-like o matriz de datos (n_samples, n_features) sobre los cuales se calcularán los clústeres.</span>
+<span class="sd">    :return: El valor negativo del índice de Davies-Bouldin para el conjunto de datos `X` y las etiquetas de los</span>
+<span class="sd">    clústeres obtenidos del `estimator`. Esto invierte la métrica para que pueda maximizarse en las búsquedas</span>
+<span class="sd">    de hiperparámetros.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El estimator: </span><span class="si">{</span><span class="n">estimator</span><span class="si">}</span><span class="s2"> no tiene metodo &#39;predict&#39;&quot;</span><span class="p">)</span>
+
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="o">-</span><span class="n">davies_bouldin_score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">score</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_dict_best_model</span><span class="p">(</span><span class="n">input_dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transforma un diccionario de parámetros de un modelo en un nuevo formato más estructurado.</span>
+
+<span class="sd">    Esta función toma un diccionario que contiene información sobre un modelo, incluyendo un preprocesador, un método</span>
+<span class="sd">    de reducción de dimensiones y un agrupador (clusterer), junto con sus parámetros específicos. La función reorganiza</span>
+<span class="sd">    esta información en un formato más accesible y fácil de usar.</span>
+
+<span class="sd">    :param input_dict: Un diccionario que contiene los parámetros del modelo. Debe incluir las claves &quot;preprocessor&quot;,</span>
+<span class="sd">    &quot;dim_reduction&quot;, y &quot;clusterer&quot;, así como pares clave-valor para los parámetros del agrupador y la reducción de</span>
+<span class="sd">    dimensiones que siguen el formato &quot;clusterer__&lt;param_name&gt;&quot; y &quot;dim_reduction__&lt;param_name&gt;&quot;.</span>
+<span class="sd">    :return: Un nuevo diccionario estructurado que contiene el preprocesador, la reducción de dimensiones, el agrupador,</span>
+<span class="sd">    y los parámetros asociados a cada uno. La clave de los parámetros de agrupador y    de reducción de dimensiones</span>
+<span class="sd">    se simplifica eliminando el prefijo correspondiente.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;preprocessor&quot;</span><span class="p">:</span> <span class="n">input_dict</span><span class="p">[</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;dim_reduction&quot;</span><span class="p">:</span> <span class="n">input_dict</span><span class="p">[</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span> <span class="n">input_dict</span><span class="p">[</span><span class="s2">&quot;clusterer&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;clusterer_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">input_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;clusterer__&quot;</span><span class="p">)</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;dim_reduction_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">input_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;dim_reduction__&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+
+<span class="k">def</span> <span class="nf">tsne_plot_2d</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scorer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un gráfico 2D utilizando t-SNE para visualizar embeddings en un espacio reducido.</span>
+
+<span class="sd">    Esta función aplica un preprocesador a un DataFrame, seguido de una reducción de dimensionalidad mediante t-SNE.</span>
+<span class="sd">    Se pueden visualizar los embeddings resultantes en un gráfico, con la opción de agregar etiquetas de clúster para</span>
+<span class="sd">    distinguir diferentes grupos en los datos.</span>
+
+<span class="sd">    :param df: DataFrame que contiene los datos a visualizar. Cada fila representa una observación y cada columna</span>
+<span class="sd">    representa una característica o variable.</span>
+<span class="sd">    :param estimator:</span>
+<span class="sd">    :param scorer:</span>
+<span class="sd">    :param metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params_estimator</span> <span class="o">=</span> <span class="n">transform_dict_best_model</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
+        <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">)</span>
+        <span class="n">dim_reduction</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">)</span>
+        <span class="n">clusterer</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;clusterer&quot;</span><span class="p">)</span>
+        <span class="n">best_score</span> <span class="o">=</span> <span class="n">scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim_reduction</span><span class="p">,</span> <span class="n">PCA</span><span class="p">):</span>
+            <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+                <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">,</span> <span class="n">dim_reduction</span><span class="p">),</span>
+            <span class="p">])</span>
+
+            <span class="n">normalized_embeddings</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">normalized_embeddings</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">normalized_embeddings</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tSNE1&quot;</span><span class="p">,</span> <span class="s2">&quot;tSNE2&quot;</span><span class="p">])</span>
+        <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span>
+        <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;b&gt;Clustering: News-Summary-Embeddings in Low dimension with t-SNE&lt;/b&gt;&lt;br&gt;&quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;span style=&#39;font-size: 11px;&#39;&gt;Scaler: </span><span class="si">{</span><span class="n">preprocessor</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, &quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Dim-Reduction: </span><span class="si">{</span><span class="n">dim_reduction</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, Estimator: </span><span class="si">{</span><span class="n">clusterer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, Metric &quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Plot: </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">, Scorer Metric: </span><span class="si">{</span><span class="n">scorer</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&lt;/span&gt;&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_scaled</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tSNE1&quot;</span><span class="p">,</span> <span class="s2">&quot;tSNE2&quot;</span><span class="p">])</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;b&gt;News-Summary-Embeddings in Low dimension with t-SNE&lt;/b&gt;&lt;br&gt;&quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;span style=&#39;font-size: 10px;&#39;&gt;Scaler: </span><span class="si">{</span><span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="p">(</span>
+        <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+            <span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;tSNE1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;tSNE2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">opacity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Dark24</span><span class="p">,</span>
+            <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_white&quot;</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="p">)</span>
+    
+
+<span class="k">def</span> <span class="nf">umap_plot_2d</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scorer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que genera un gráfico en 2D utilizando UMAP y muestra los clústeres.</span>
+
+<span class="sd">    :param df: pd.DataFrame con los embeddings de los resumenes de las noticias).</span>
+<span class="sd">    :param estimator:</span>
+<span class="sd">    :param scorer:</span>
+<span class="sd">    :param metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">params_estimator</span> <span class="o">=</span> <span class="n">transform_dict_best_model</span><span class="p">(</span><span class="n">estimator</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
+        <span class="n">preprocessor</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">)</span>
+        <span class="n">dim_reduction</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">)</span>
+        <span class="n">clusterer</span> <span class="o">=</span> <span class="n">params_estimator</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;clusterer&quot;</span><span class="p">)</span>
+        <span class="n">best_score</span> <span class="o">=</span> <span class="n">scorer</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim_reduction</span><span class="p">,</span> <span class="n">UMAP</span><span class="p">):</span>
+            <span class="n">df_scaled</span> <span class="o">=</span> <span class="n">preprocessor</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">dim_reduction</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dim_reduction</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UMAP1&quot;</span><span class="p">,</span> <span class="s2">&quot;UMAP2&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+                <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="n">preprocessor</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">,</span> <span class="n">dim_reduction</span><span class="p">),</span>
+            <span class="p">])</span>
+            <span class="n">df_scaled</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="n">reducer</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+            <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UMAP1&quot;</span><span class="p">,</span> <span class="s2">&quot;UMAP2&quot;</span><span class="p">])</span>
+
+        <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">df_plot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span>
+        <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;b&gt;Clustering: News-Summary-Embeddings in Low dimension with UMAP&lt;/b&gt;&lt;br&gt;&quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;span style=&#39;font-size: 11px;&#39;&gt;Scaler: </span><span class="si">{</span><span class="n">preprocessor</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, &quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Dim-Reduction: </span><span class="si">{</span><span class="n">dim_reduction</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, Estimator: </span><span class="si">{</span><span class="n">clusterer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, Metric:&quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot; </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">, Scorer Metric: </span><span class="si">{</span><span class="n">scorer</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&lt;/span&gt;&quot;&quot;&quot;</span>
+
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df_scaled</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">reducer</span> <span class="o">=</span> <span class="n">UMAP</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_scaled</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;UMAP1&quot;</span><span class="p">,</span> <span class="s2">&quot;UMAP2&quot;</span><span class="p">])</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;b&gt;News-Summary-Embeddings in Low dimension with UMAP&lt;/b&gt;&lt;br&gt;&quot;&quot;&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;&lt;span style=&#39;font-size: 10px;&#39;&gt;Scaler: </span><span class="si">{</span><span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="p">)</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="p">(</span>
+        <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+            <span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;UMAP1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;UMAP2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">opacity</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Dark24</span><span class="p">,</span>
+            <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_white&quot;</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_iter</span> <span class="o">=</span> <span class="mi">10</span>                                     <span class="c1"># Número de ajustes en RandomizedSearchCV.</span>
+<span class="n">scorers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;silhouette&quot;</span><span class="p">,</span> <span class="s2">&quot;davies-bouldin&quot;</span><span class="p">]</span>      <span class="c1"># Puedes seleccionar diferentes metrica de adecuación de clusters</span>
+<span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span>                               <span class="c1"># Semilla aletoria de RandomizedSearchCV para replicar resultados.</span>
+
+
+<span class="n">scoring_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;silhouette&quot;</span><span class="p">:</span> <span class="n">silhouette_scorer</span><span class="p">,</span>
+    <span class="s2">&quot;davies-bouldin&quot;</span><span class="p">:</span> <span class="n">davies_bouldin_scorer</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">list_scalers</span> <span class="o">=</span> <span class="p">[</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">MinMaxScaler</span><span class="p">(),</span> <span class="n">RobustScaler</span><span class="p">()]</span>
+
+<span class="n">pca_n_components</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">80</span><span class="p">)]</span>
+<span class="n">umap_metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">]</span>
+<span class="n">umap_n_neighbors</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]</span>
+<span class="n">umap_min_dist</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">umap_n_components</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="n">gauss_mix_n_components</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">)]</span>
+<span class="n">gauss_mix_covariance_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="s2">&quot;diag&quot;</span><span class="p">]</span>
+<span class="n">kmeans_n_clusters</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">)]</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;preprocessor&quot;</span><span class="p">:</span> <span class="n">list_scalers</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">PCA</span><span class="p">()],</span>
+        <span class="s2">&quot;dim_reduction__n_components&quot;</span><span class="p">:</span> <span class="n">pca_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">KMeans</span><span class="p">()],</span>
+        <span class="s2">&quot;clusterer__n_clusters&quot;</span><span class="p">:</span> <span class="n">kmeans_n_clusters</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;preprocessor&quot;</span><span class="p">:</span> <span class="n">list_scalers</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">PCA</span><span class="p">()],</span>
+        <span class="s2">&quot;dim_reduction__n_components&quot;</span><span class="p">:</span> <span class="n">pca_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">GaussianMixture</span><span class="p">()],</span>
+        <span class="s2">&quot;clusterer__n_components&quot;</span><span class="p">:</span> <span class="n">gauss_mix_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer__covariance_type&quot;</span><span class="p">:</span> <span class="n">gauss_mix_covariance_type</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;preprocessor&quot;</span><span class="p">:</span> <span class="n">list_scalers</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">UMAP</span><span class="p">()],</span>
+        <span class="s2">&quot;dim_reduction__n_neighbors&quot;</span><span class="p">:</span> <span class="n">umap_n_neighbors</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__min_dist&quot;</span><span class="p">:</span> <span class="n">umap_min_dist</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__n_components&quot;</span><span class="p">:</span> <span class="n">umap_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__metric&quot;</span><span class="p">:</span> <span class="n">umap_metrics</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">KMeans</span><span class="p">()],</span>
+        <span class="s2">&quot;clusterer__n_clusters&quot;</span><span class="p">:</span> <span class="n">kmeans_n_clusters</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;preprocessor&quot;</span><span class="p">:</span> <span class="n">list_scalers</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">UMAP</span><span class="p">()],</span>
+        <span class="s2">&quot;dim_reduction__n_neighbors&quot;</span><span class="p">:</span> <span class="n">umap_n_neighbors</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__min_dist&quot;</span><span class="p">:</span> <span class="n">umap_min_dist</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__n_components&quot;</span><span class="p">:</span> <span class="n">umap_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;dim_reduction__metric&quot;</span><span class="p">:</span> <span class="n">umap_metrics</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">GaussianMixture</span><span class="p">()],</span>
+        <span class="s2">&quot;clusterer__n_components&quot;</span><span class="p">:</span> <span class="n">gauss_mix_n_components</span><span class="p">,</span>
+        <span class="s2">&quot;clusterer__covariance_type&quot;</span><span class="p">:</span> <span class="n">gauss_mix_covariance_type</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">,</span> <span class="s2">&quot;passthrough&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;dim_reduction&quot;</span><span class="p">,</span> <span class="s2">&quot;passthrough&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;clusterer&quot;</span><span class="p">,</span> <span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
+    <span class="p">])</span>
+
+<span class="n">random_search</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span>
+    <span class="n">param_distributions</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span>
+    <span class="n">scoring</span><span class="o">=</span><span class="n">scoring_dict</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+    <span class="n">refit</span><span class="o">=</span><span class="s2">&quot;silhouette&quot;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_embed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;mxbai-embed-large_summary_news_el_tiempo.parquet&quot;</span><span class="p">)</span>
+<span class="n">df_embed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>1014</th>
+      <th>1015</th>
+      <th>1016</th>
+      <th>1017</th>
+      <th>1018</th>
+      <th>1019</th>
+      <th>1020</th>
+      <th>1021</th>
+      <th>1022</th>
+      <th>1023</th>
+    </tr>
+    <tr>
+      <th>url_page</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/latinoamerica/evo-morales-amenaza-con-bloquear-bolivia-si-la-fiscalia-lo-captura-3389757</th>
+      <td>-0.020917</td>
+      <td>-0.006987</td>
+      <td>-0.026591</td>
+      <td>0.017555</td>
+      <td>0.032127</td>
+      <td>-0.046068</td>
+      <td>-0.048087</td>
+      <td>0.004656</td>
+      <td>0.005598</td>
+      <td>0.049441</td>
+      <td>...</td>
+      <td>0.028381</td>
+      <td>0.019583</td>
+      <td>0.007692</td>
+      <td>0.002656</td>
+      <td>0.050690</td>
+      <td>0.041930</td>
+      <td>0.001792</td>
+      <td>-0.013605</td>
+      <td>-0.002610</td>
+      <td>-0.016743</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/bogota/vehiculo-se-incendia-en-medio-de-la-carretera-en-fusagasuga-cundinamarca-bomberos-atienden-la-emergencia-3389756</th>
+      <td>-0.031880</td>
+      <td>0.027921</td>
+      <td>-0.016712</td>
+      <td>0.032918</td>
+      <td>0.024373</td>
+      <td>-0.010680</td>
+      <td>-0.058477</td>
+      <td>-0.027742</td>
+      <td>0.044773</td>
+      <td>0.041911</td>
+      <td>...</td>
+      <td>0.048250</td>
+      <td>0.040552</td>
+      <td>-0.037708</td>
+      <td>0.000493</td>
+      <td>0.010013</td>
+      <td>0.003768</td>
+      <td>0.026349</td>
+      <td>0.010262</td>
+      <td>-0.003502</td>
+      <td>0.014081</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/eeuu-y-canada/esta-es-la-edad-en-la-que-un-adulto-mayor-debe-dejar-de-conducir-harvard-3389502</th>
+      <td>-0.021267</td>
+      <td>0.007155</td>
+      <td>0.034475</td>
+      <td>0.030611</td>
+      <td>-0.008942</td>
+      <td>-0.016378</td>
+      <td>-0.011049</td>
+      <td>-0.016557</td>
+      <td>0.039848</td>
+      <td>0.030022</td>
+      <td>...</td>
+      <td>0.073989</td>
+      <td>0.016037</td>
+      <td>-0.018351</td>
+      <td>-0.029923</td>
+      <td>0.037829</td>
+      <td>-0.002450</td>
+      <td>-0.024424</td>
+      <td>0.009189</td>
+      <td>0.001148</td>
+      <td>-0.009378</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/europa/morire-en-prision-escribio-en-sus-memorias-el-opositor-ruso-alexei-navalni-3389755</th>
+      <td>-0.001724</td>
+      <td>-0.011231</td>
+      <td>0.006536</td>
+      <td>0.007330</td>
+      <td>0.013462</td>
+      <td>-0.022181</td>
+      <td>-0.013968</td>
+      <td>0.002475</td>
+      <td>0.010086</td>
+      <td>0.029852</td>
+      <td>...</td>
+      <td>0.043627</td>
+      <td>0.040211</td>
+      <td>-0.020006</td>
+      <td>0.009449</td>
+      <td>0.054445</td>
+      <td>0.034426</td>
+      <td>-0.022466</td>
+      <td>-0.010860</td>
+      <td>-0.025343</td>
+      <td>-0.013328</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/colombia/otras-ciudades/alcaldia-de-villa-de-leyva-en-boyaca-entrega-balance-tras-el-vendaval-de-ese-sabado-hay-12-personas-heridas-3389752</th>
+      <td>-0.015240</td>
+      <td>0.014905</td>
+      <td>0.014017</td>
+      <td>0.032451</td>
+      <td>0.006244</td>
+      <td>-0.013349</td>
+      <td>-0.052630</td>
+      <td>0.047903</td>
+      <td>0.035785</td>
+      <td>0.030179</td>
+      <td>...</td>
+      <td>-0.000029</td>
+      <td>0.047785</td>
+      <td>-0.012244</td>
+      <td>-0.007176</td>
+      <td>0.010913</td>
+      <td>0.012925</td>
+      <td>0.016821</td>
+      <td>0.001564</td>
+      <td>-0.004066</td>
+      <td>0.014183</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-llamado-desde-el-sur-del-meta-3385783</th>
+      <td>-0.015249</td>
+      <td>0.032793</td>
+      <td>-0.022702</td>
+      <td>0.048635</td>
+      <td>-0.002823</td>
+      <td>-0.039297</td>
+      <td>-0.053139</td>
+      <td>0.034664</td>
+      <td>0.032758</td>
+      <td>0.025721</td>
+      <td>...</td>
+      <td>0.027468</td>
+      <td>0.045833</td>
+      <td>-0.016872</td>
+      <td>-0.021523</td>
+      <td>0.025576</td>
+      <td>0.014999</td>
+      <td>-0.008812</td>
+      <td>-0.021739</td>
+      <td>-0.010349</td>
+      <td>0.009338</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/medio-oriente/asi-localizo-israel-al-lider-de-hezbola-los-detalles-del-operativo-de-inteligencia-para-efectuar-el-bombardeo-aereo-3385781</th>
+      <td>-0.013496</td>
+      <td>-0.014557</td>
+      <td>-0.018691</td>
+      <td>0.047176</td>
+      <td>0.018366</td>
+      <td>-0.011003</td>
+      <td>-0.093697</td>
+      <td>0.026669</td>
+      <td>-0.002839</td>
+      <td>-0.000249</td>
+      <td>...</td>
+      <td>0.032180</td>
+      <td>-0.000164</td>
+      <td>-0.033964</td>
+      <td>-0.035739</td>
+      <td>0.008483</td>
+      <td>0.055563</td>
+      <td>-0.048210</td>
+      <td>-0.003561</td>
+      <td>0.001201</td>
+      <td>-0.018963</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/del-crudo-al-turismo-3385901</th>
+      <td>-0.024780</td>
+      <td>0.041507</td>
+      <td>0.002410</td>
+      <td>0.001920</td>
+      <td>-0.007972</td>
+      <td>0.006983</td>
+      <td>-0.026574</td>
+      <td>0.025248</td>
+      <td>0.020038</td>
+      <td>0.037295</td>
+      <td>...</td>
+      <td>0.042184</td>
+      <td>0.043891</td>
+      <td>-0.024159</td>
+      <td>-0.011424</td>
+      <td>0.054588</td>
+      <td>-0.006380</td>
+      <td>0.002650</td>
+      <td>-0.021769</td>
+      <td>-0.050148</td>
+      <td>0.003720</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-imponente-tesoro-verde-3385938</th>
+      <td>-0.013511</td>
+      <td>0.009672</td>
+      <td>-0.010728</td>
+      <td>0.041266</td>
+      <td>0.003864</td>
+      <td>0.014097</td>
+      <td>-0.032700</td>
+      <td>0.034680</td>
+      <td>0.065962</td>
+      <td>0.033704</td>
+      <td>...</td>
+      <td>0.052577</td>
+      <td>0.008840</td>
+      <td>0.002960</td>
+      <td>0.019802</td>
+      <td>0.011811</td>
+      <td>0.018858</td>
+      <td>-0.007259</td>
+      <td>-0.019385</td>
+      <td>-0.031452</td>
+      <td>0.014297</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/los-trinos-que-mejor-silban-en-la-sabana-3385940</th>
+      <td>0.015330</td>
+      <td>0.010940</td>
+      <td>0.012188</td>
+      <td>-0.021195</td>
+      <td>0.031553</td>
+      <td>-0.026548</td>
+      <td>-0.064843</td>
+      <td>0.015146</td>
+      <td>0.036667</td>
+      <td>-0.002814</td>
+      <td>...</td>
+      <td>0.026943</td>
+      <td>0.041879</td>
+      <td>0.021138</td>
+      <td>-0.025357</td>
+      <td>0.017482</td>
+      <td>0.026049</td>
+      <td>-0.008655</td>
+      <td>-0.007465</td>
+      <td>-0.008995</td>
+      <td>0.012198</td>
+    </tr>
+  </tbody>
+</table>
+<p>3551 rows × 1024 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsne_plot_2d</span><span class="p">(</span><span class="n">df_embed</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+<span class="n">umap_plot_2d</span><span class="p">(</span><span class="n">df_embed</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model</span> <span class="o">=</span> <span class="n">random_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_embed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 2 folds for each of 10 candidates, totalling 20 fits
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=8, dim_reduction=PCA(), dim_reduction__n_components=68, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.141) silhouette: (test=-0.031) total time=   4.4s
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=12, dim_reduction=PCA(), dim_reduction__n_components=10, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.661) silhouette: (test=0.065) total time=   3.3s
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=8, dim_reduction=PCA(), dim_reduction__n_components=68, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.638) silhouette: (test=0.081) total time=   3.9s
+[CV 1/2] END clusterer=KMeans(), clusterer__n_clusters=8, dim_reduction=PCA(), dim_reduction__n_components=66, preprocessor=RobustScaler(); davies-bouldin: (test=-3.344) silhouette: (test=0.111) total time=   5.2s
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=6, dim_reduction=PCA(), dim_reduction__n_components=41, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.477) silhouette: (test=0.056) total time=   5.3s
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=12, dim_reduction=PCA(), dim_reduction__n_components=10, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.537) silhouette: (test=0.094) total time=   5.3s
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=6, dim_reduction=PCA(), dim_reduction__n_components=41, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.190) silhouette: (test=-0.069) total time=   4.8s
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=12, dim_reduction=PCA(), dim_reduction__n_components=76, preprocessor=RobustScaler(); davies-bouldin: (test=-3.453) silhouette: (test=0.058) total time=   7.5s
+[CV 1/2] END clusterer=KMeans(), clusterer__n_clusters=7, dim_reduction=PCA(), dim_reduction__n_components=10, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.796) silhouette: (test=0.093) total time=   3.0s
+[CV 2/2] END clusterer=KMeans(), clusterer__n_clusters=8, dim_reduction=PCA(), dim_reduction__n_components=66, preprocessor=RobustScaler(); davies-bouldin: (test=-3.260) silhouette: (test=0.101) total time=   5.9s
+[CV 2/2] END clusterer=KMeans(), clusterer__n_clusters=7, dim_reduction=PCA(), dim_reduction__n_components=10, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.490) silhouette: (test=0.088) total time=   3.6s
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=12, dim_reduction=PCA(), dim_reduction__n_components=76, preprocessor=RobustScaler(); davies-bouldin: (test=-3.542) silhouette: (test=0.076) total time=   7.6s
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=8, dim_reduction=PCA(), dim_reduction__n_components=55, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.394) silhouette: (test=0.065) total time=   4.2s
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=full, clusterer__n_components=8, dim_reduction=PCA(), dim_reduction__n_components=55, preprocessor=MinMaxScaler(); davies-bouldin: (test=-3.354) silhouette: (test=0.086) total time=   4.9s
+[CV 1/2] END clusterer=KMeans(), clusterer__n_clusters=5, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.5, dim_reduction__n_components=3, dim_reduction__n_neighbors=15, preprocessor=MinMaxScaler(); davies-bouldin: (test=-4.267) silhouette: (test=0.072) total time= 2.8min
+[CV 2/2] END clusterer=KMeans(), clusterer__n_clusters=5, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.5, dim_reduction__n_components=3, dim_reduction__n_neighbors=15, preprocessor=MinMaxScaler(); davies-bouldin: (test=-4.668) silhouette: (test=0.060) total time= 2.8min
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=10, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.5, dim_reduction__n_components=3, dim_reduction__n_neighbors=10, preprocessor=StandardScaler(); davies-bouldin: (test=-3.735) silhouette: (test=0.068) total time= 2.9min
+[CV 2/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=6, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.3, dim_reduction__n_components=2, dim_reduction__n_neighbors=15, preprocessor=MinMaxScaler(); davies-bouldin: (test=-4.152) silhouette: (test=0.070) total time= 2.9min
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=10, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.5, dim_reduction__n_components=3, dim_reduction__n_neighbors=10, preprocessor=StandardScaler(); davies-bouldin: (test=-3.982) silhouette: (test=0.099) total time= 2.9min
+[CV 1/2] END clusterer=GaussianMixture(), clusterer__covariance_type=diag, clusterer__n_components=6, dim_reduction=UMAP(), dim_reduction__metric=cosine, dim_reduction__min_dist=0.3, dim_reduction__n_components=2, dim_reduction__n_neighbors=15, preprocessor=MinMaxScaler(); davies-bouldin: (test=-4.227) silhouette: (test=0.080) total time= 2.9min
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model</span><span class="o">.</span><span class="n">best_estimator_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;, RobustScaler()),
+                (&#x27;dim_reduction&#x27;, PCA(n_components=66)),
+                (&#x27;clusterer&#x27;, KMeans())])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;Pipeline<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>Pipeline(steps=[(&#x27;preprocessor&#x27;, RobustScaler()),
+                (&#x27;dim_reduction&#x27;, PCA(n_components=66)),
+                (&#x27;clusterer&#x27;, KMeans())])</pre></div> </div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;RobustScaler<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.preprocessing.RobustScaler.html">?<span>Documentation for RobustScaler</span></a></label><div class="sk-toggleable__content fitted"><pre>RobustScaler()</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;PCA<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.decomposition.PCA.html">?<span>Documentation for PCA</span></a></label><div class="sk-toggleable__content fitted"><pre>PCA(n_components=66)</pre></div> </div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a></label><div class="sk-toggleable__content fitted"><pre>KMeans()</pre></div> </div></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean_fit_time</th>
+      <th>std_fit_time</th>
+      <th>mean_score_time</th>
+      <th>std_score_time</th>
+      <th>param_preprocessor</th>
+      <th>param_dim_reduction__n_neighbors</th>
+      <th>param_dim_reduction__n_components</th>
+      <th>param_dim_reduction__min_dist</th>
+      <th>param_dim_reduction__metric</th>
+      <th>param_dim_reduction</th>
+      <th>...</th>
+      <th>split0_test_silhouette</th>
+      <th>split1_test_silhouette</th>
+      <th>mean_test_silhouette</th>
+      <th>std_test_silhouette</th>
+      <th>rank_test_silhouette</th>
+      <th>split0_test_davies-bouldin</th>
+      <th>split1_test_davies-bouldin</th>
+      <th>mean_test_davies-bouldin</th>
+      <th>std_test_davies-bouldin</th>
+      <th>rank_test_davies-bouldin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>61.451363</td>
+      <td>0.641376</td>
+      <td>107.538870</td>
+      <td>0.217128</td>
+      <td>MinMaxScaler()</td>
+      <td>15.0</td>
+      <td>3</td>
+      <td>0.5</td>
+      <td>cosine</td>
+      <td>UMAP()</td>
+      <td>...</td>
+      <td>0.071795</td>
+      <td>0.060500</td>
+      <td>0.066147</td>
+      <td>0.005648</td>
+      <td>8</td>
+      <td>-4.267171</td>
+      <td>-4.668142</td>
+      <td>-4.467657</td>
+      <td>0.200486</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3.725260</td>
+      <td>0.844143</td>
+      <td>1.847641</td>
+      <td>0.498057</td>
+      <td>RobustScaler()</td>
+      <td>NaN</td>
+      <td>66</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.111457</td>
+      <td>0.100532</td>
+      <td>0.105995</td>
+      <td>0.005462</td>
+      <td>1</td>
+      <td>-3.343701</td>
+      <td>-3.259551</td>
+      <td>-3.301626</td>
+      <td>0.042075</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5.758554</td>
+      <td>0.342652</td>
+      <td>1.820870</td>
+      <td>0.283193</td>
+      <td>RobustScaler()</td>
+      <td>NaN</td>
+      <td>76</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.075848</td>
+      <td>0.057526</td>
+      <td>0.066687</td>
+      <td>0.009161</td>
+      <td>7</td>
+      <td>-3.541835</td>
+      <td>-3.453316</td>
+      <td>-3.497576</td>
+      <td>0.044260</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.628685</td>
+      <td>0.579398</td>
+      <td>1.688401</td>
+      <td>0.410230</td>
+      <td>MinMaxScaler()</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.093768</td>
+      <td>0.064748</td>
+      <td>0.079258</td>
+      <td>0.014510</td>
+      <td>4</td>
+      <td>-3.536984</td>
+      <td>-3.660859</td>
+      <td>-3.598921</td>
+      <td>0.061937</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>61.116615</td>
+      <td>0.601326</td>
+      <td>111.256128</td>
+      <td>0.370988</td>
+      <td>StandardScaler()</td>
+      <td>10.0</td>
+      <td>3</td>
+      <td>0.5</td>
+      <td>cosine</td>
+      <td>UMAP()</td>
+      <td>...</td>
+      <td>0.099070</td>
+      <td>0.068144</td>
+      <td>0.083607</td>
+      <td>0.015463</td>
+      <td>3</td>
+      <td>-3.981713</td>
+      <td>-3.735402</td>
+      <td>-3.858557</td>
+      <td>0.123156</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>62.002027</td>
+      <td>0.326131</td>
+      <td>111.037768</td>
+      <td>0.518493</td>
+      <td>MinMaxScaler()</td>
+      <td>15.0</td>
+      <td>2</td>
+      <td>0.3</td>
+      <td>cosine</td>
+      <td>UMAP()</td>
+      <td>...</td>
+      <td>0.080206</td>
+      <td>0.070261</td>
+      <td>0.075233</td>
+      <td>0.004973</td>
+      <td>6</td>
+      <td>-4.226512</td>
+      <td>-4.151934</td>
+      <td>-4.189223</td>
+      <td>0.037289</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3.070148</td>
+      <td>0.086945</td>
+      <td>1.979107</td>
+      <td>0.178444</td>
+      <td>MinMaxScaler()</td>
+      <td>NaN</td>
+      <td>41</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.056272</td>
+      <td>-0.069238</td>
+      <td>-0.006483</td>
+      <td>0.062755</td>
+      <td>10</td>
+      <td>-3.477332</td>
+      <td>-3.190424</td>
+      <td>-3.333878</td>
+      <td>0.143454</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2.286027</td>
+      <td>0.184273</td>
+      <td>1.842155</td>
+      <td>0.061444</td>
+      <td>MinMaxScaler()</td>
+      <td>NaN</td>
+      <td>68</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.081023</td>
+      <td>-0.031090</td>
+      <td>0.024966</td>
+      <td>0.056056</td>
+      <td>9</td>
+      <td>-3.637915</td>
+      <td>-3.141201</td>
+      <td>-3.389558</td>
+      <td>0.248357</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.472808</td>
+      <td>0.029106</td>
+      <td>1.822065</td>
+      <td>0.295383</td>
+      <td>MinMaxScaler()</td>
+      <td>NaN</td>
+      <td>10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.093114</td>
+      <td>0.087733</td>
+      <td>0.090423</td>
+      <td>0.002691</td>
+      <td>2</td>
+      <td>-3.795622</td>
+      <td>-3.490213</td>
+      <td>-3.642917</td>
+      <td>0.152704</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3.484603</td>
+      <td>0.191882</td>
+      <td>1.100228</td>
+      <td>0.169730</td>
+      <td>MinMaxScaler()</td>
+      <td>NaN</td>
+      <td>55</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>PCA()</td>
+      <td>...</td>
+      <td>0.086151</td>
+      <td>0.065150</td>
+      <td>0.075651</td>
+      <td>0.010500</td>
+      <td>5</td>
+      <td>-3.353578</td>
+      <td>-3.393720</td>
+      <td>-3.373649</td>
+      <td>0.020071</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 25 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df_embed</span><span class="p">)</span>
+<span class="n">labels</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3, 2, 1, ..., 5, 5, 4], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsne_plot_2d</span><span class="p">(</span><span class="n">df_embed</span><span class="p">,</span> <span class="n">best_model</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span> <span class="n">silhouette_scorer</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+<span class="n">umap_plot_2d</span><span class="p">(</span><span class="n">df_embed</span><span class="p">,</span> <span class="n">best_model</span><span class="o">.</span><span class="n">best_estimator_</span><span class="p">,</span> <span class="n">silhouette_scorer</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df_embed</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_embed</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cluster</th>
+    </tr>
+    <tr>
+      <th>url_page</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/latinoamerica/evo-morales-amenaza-con-bloquear-bolivia-si-la-fiscalia-lo-captura-3389757</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/bogota/vehiculo-se-incendia-en-medio-de-la-carretera-en-fusagasuga-cundinamarca-bomberos-atienden-la-emergencia-3389756</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/eeuu-y-canada/esta-es-la-edad-en-la-que-un-adulto-mayor-debe-dejar-de-conducir-harvard-3389502</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/europa/morire-en-prision-escribio-en-sus-memorias-el-opositor-ruso-alexei-navalni-3389755</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/colombia/otras-ciudades/alcaldia-de-villa-de-leyva-en-boyaca-entrega-balance-tras-el-vendaval-de-ese-sabado-hay-12-personas-heridas-3389752</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-llamado-desde-el-sur-del-meta-3385783</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/medio-oriente/asi-localizo-israel-al-lider-de-hezbola-los-detalles-del-operativo-de-inteligencia-para-efectuar-el-bombardeo-aereo-3385781</th>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/del-crudo-al-turismo-3385901</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-imponente-tesoro-verde-3385938</th>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/los-trinos-que-mejor-silban-en-la-sabana-3385940</th>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+<p>3551 rows × 1 columns</p>
+</div></div></div>
+</div>
+<section id="caracterizacion-de-los-clusters">
+<h2><em><strong>Caracterizacion de los clusters</strong></em><a class="headerlink" href="#caracterizacion-de-los-clusters" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;octubre_news_summary.json&quot;</span><span class="p">)</span>
+<span class="n">data_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="n">df_predict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df_embed</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_embed</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span>
+<span class="n">df_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_json</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">data_json</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">])</span>
+<span class="n">df_review</span> <span class="o">=</span> <span class="n">df_predict</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_summary</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_review</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cluster</th>
+      <th>summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/latinoamerica/evo-morales-amenaza-con-bloquear-bolivia-si-la-fiscalia-lo-captura-3389757</th>
+      <td>4</td>
+      <td>Evo Morales, expresidente de Bolivia, amenaza ...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/bogota/vehiculo-se-incendia-en-medio-de-la-carretera-en-fusagasuga-cundinamarca-bomberos-atienden-la-emergencia-3389756</th>
+      <td>3</td>
+      <td>El Cuerpo de Bomberos de Cundinamarca atendió ...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/eeuu-y-canada/esta-es-la-edad-en-la-que-un-adulto-mayor-debe-dejar-de-conducir-harvard-3389502</th>
+      <td>2</td>
+      <td>Los accidentes automovilísticos están en aumen...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/europa/morire-en-prision-escribio-en-sus-memorias-el-opositor-ruso-alexei-navalni-3389755</th>
+      <td>5</td>
+      <td>Alexei Navalni, opositor ruso al presidente Vl...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/colombia/otras-ciudades/alcaldia-de-villa-de-leyva-en-boyaca-entrega-balance-tras-el-vendaval-de-ese-sabado-hay-12-personas-heridas-3389752</th>
+      <td>3</td>
+      <td>Un fuerte vendaval sorprendió a los habitantes...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-llamado-desde-el-sur-del-meta-3385783</th>
+      <td>6</td>
+      <td>El acuerdo de paz con las Farc ha permitido la...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mundo/medio-oriente/asi-localizo-israel-al-lider-de-hezbola-los-detalles-del-operativo-de-inteligencia-para-efectuar-el-bombardeo-aereo-3385781</th>
+      <td>7</td>
+      <td>El viernes, un bombardeo aéreo israelí eliminó...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/del-crudo-al-turismo-3385901</th>
+      <td>6</td>
+      <td>El tema central es la transición energética en...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/el-imponente-tesoro-verde-3385938</th>
+      <td>6</td>
+      <td>El Meta enfrenta la amenaza de deforestación, ...</td>
+    </tr>
+    <tr>
+      <th>https://www.eltiempo.com/mas-contenido/los-trinos-que-mejor-silban-en-la-sabana-3385940</th>
+      <td>5</td>
+      <td>El Topo Solano y José David Oropeza son dos de...</td>
+    </tr>
+  </tbody>
+</table>
+<p>3551 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_text_sample_by_cluster</span><span class="p">(</span><span class="n">label_cluster</span><span class="p">,</span> <span class="n">size_sample</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_review</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;cluster == @label_cluster&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">size_sample</span><span class="p">)</span>
+    <span class="n">text_to_llm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">text_to_llm</span> <span class="o">=</span> <span class="n">text_to_llm</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;Noticia </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">news</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">news</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text_to_llm</span><span class="p">)])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">text_to_llm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text_to_llm</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">get_text_sample_by_cluster</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Noticia 1
+El informe de la Sociedad Española de Gastroenterología, Hepatología y Nutrición Pediátrica enfatiza la importancia de una alimentación balanceada para mantener el buen estado de salud. Se destaca la linaza como superalimento que contribuye a prevenir enfermedades autoinmunes, especialmente la artritis. Expertos recomiendan conocer el valor nutricional de los alimentos y evitar el sedentarismo y el estrés.
+
+Noticia 2
+El consumo del mango africano (Irvingia gabonensis) ha ganado atención por sus propiedades para reducir la grasa corporal y combatir la fatiga, según estudios. Las semillas, ricas en fibra soluble y antioxidantes, han sido objeto de investigación y se utilizan como suplemento natural. Expertos destacan su potencial para mejorar la salud general, aunque recomiendan consultar con profesionales de la salud antes del consumo.
+
+Noticia 3
+La Sociedad Colombiana de Cardiología y Cirugía Cardiovascular destaca los beneficios del ejercicio físico para las mujeres, incluyendo mejoras en condiciones como enfermedad cardiovascular y reducción de mortalidad prematura. Durante la menopausia, especialistas recomiendan actividades como el baile para mejorar la salud física y mental, según un estudio de la Universidad de Harvard. Este ejercicio beneficia la memoria, autoestima y controla colesterol y triglicéridos en sangre.
+
+Noticia 4
+El bilito, una fruta medicinal tropical, ha sido reconocida por sus múltiples propiedades beneficiosas para la salud, especialmente en el tratamiento de enfermedades respiratorias. Este árbol monoico nativo de América se utiliza tradicionalmente por diversas comunidades y ofrece diversos usos, desde aliviar síntomas de asma hasta combatir la osteoporosis. Expertos destacan sus propiedades antisépticas y cicatrizantes, así como su alto contenido en manitol que ayuda a reducir la hipertensión. Sin embargo, se recomienda incorporarlo con precaución en la dieta debido a sus efectos potenciales sobre el alzhéimer.
+
+Noticia 5
+El aumento del dolor de espalda en la población moderna, causado por el sedentarismo y el estrés, preocupa a expertos en salud. Santiago Kweitel, médico deportólogo, destaca que este problema es una de las razones más frecuentes de ausencia laboral. La dolencia afecta a ocho de cada diez personas y puede ser leve o punzante. Los factores de riesgo incluyen el estrés, el sedentarismo y la mala alimentación. Para prevenirlo, se recomiendan rutinas de estiramiento, pausas activas y ejercicios para fortalecer el core.
+
+Noticia 6
+El aumento global de casos de accidente cerebrovascular (ACV) es una preocupación reciente en salud pública. La Clínica Universidad de Navarra destaca los síntomas y causas subyacentes del ACV, mientras que el Instituto del Corazón de Texas resalta las consecuencias para los sobrevivientes. La fibrilación auricular, un ritmo cardíaco irregular, incrementa el riesgo de ACV según la Asociación Americana del Corazón. Expertos recomiendan monitorear la actividad cardíaca y adoptar estilos de vida saludables para prevenir estas afecciones.
+
+Noticia 7
+El Hospital Internacional de Colombia realizó una cirugía innovadora para una joven con cordoma, un raro tumor que afecta la columna vertebral y limita la movilidad. El neurocirujano Dr. Ludwing Badillo Ballesteros empleó odontectomía transoral, accediendo a través de la boca para remover el tumor sin dañar estructuras vitales. La paciente recuperó 95% de su movilidad y ya es independiente, aunque requiere controles constantes. Este procedimiento representa un avance significativo en el tratamiento de tumores similares.
+
+Noticia 8
+La salud capilar está estrechamente relacionada con los hábitos alimenticios y nutricionales. Según Harvard Health, factores como deficiencias de vitaminas y minerales, condiciones médicas y factores hormonales pueden desencadenar la caída del cabello o alopecia. Es crucial identificar y abordar cualquier deficiencia nutricional para prevenir y tratar esta condición. Vitamina D, hierro, biotina, vitamina C y zinc son esenciales para el crecimiento y fortaleza capilar. Un consumo excesivo de ciertos nutrientes puede ser perjudicial, por lo que se recomienda realizar análisis de sangre periódicamente.
+
+Noticia 9
+El síndrome de cabeza explosiva (EHS) es un fenómeno que se produce durante la transición entre la vigilia y el sueño, causando fuertes sonidos internos sin estímulos externos. Algunas personas experimentan alucinaciones visuales o sensaciones corporales. Dan Denis, psicólogo de la Universidad de York, sugiere que los insomnes o quienes se encuentran bajo presión son más susceptibles a este fenómeno. Aunque no existe un tratamiento, cambios en los hábitos de sueño pueden aliviar los síntomas.
+
+Noticia 10
+El consumo moderado de carne roja es recomendado por nutricionistas para una dieta equilibrada, aunque su exceso puede aumentar el colesterol y el riesgo cardiovascular. Según un estudio del departamento de Nutrición de la Universidad de Harvard, consumir más de 0,8 gramos de proteínas por kilogramo de peso corporal diariamente puede incrementar el riesgo de enfermedades cardiovasculares y cáncer. La directora del programa de artes culinarias de la Universidad de Drexel sugiere que las porciones adecuadas deben acompañarse con alimentos ricos en nutrientes para mantener una dieta sana.
+
+Noticia 11
+La jícama, un tubérculo rico en nutrientes, es versátil en su uso culinario y ofrece diversos beneficios para la salud, como mejorar la digestión, proteger el corazón y los huesos. Este alimento, originario de Mesoamérica, contiene inulina, fibra dietética y alta proporción de agua, lo que contribuye a la sensación de saciedad y hidratación del cuerpo. Además, es una excelente opción para personas con diabetes debido a su bajo contenido calórico y dulzor natural. Sin embargo, se recomienda consultar con un profesional de la salud antes de incorporarlo en la dieta, ya que cada persona tiene necesidades específicas.
+
+Noticia 12
+La menopausia puede causar sangrado de encías debido a cambios hormonales, lo que se relaciona con la gingivitis. Según la odontóloga Irene Esteve, este problema se combina con la xerostomía, o boca seca, que disminuye la producción de saliva y aumenta las infecciones bucales. Para mitigar estos síntomas, se recomienda usar humidificadores, respirar por la nariz y realizar revisiones dentales regulares. La menopausia también puede traer el &quot;síndrome de la boca ardiente&quot;, que causa molestias en áreas como la lengua y encías. Buscar atención odontológica es crucial para manejar estos problemas y mantener una buena salud bucal durante esta etapa.
+
+Noticia 13
+El tema central de la noticia son los cambios biológicos y psicológicos comunes a partir de los 60 años. El doctor José María Pallarés destaca que las principales causas de muerte en esta edad son patologías crónicas relacionadas con el corazón, pulmones, sistema endocrino y tumores. Se recomienda mantener una dieta mediterránea y hacer chequeos médicos regulares para mitigar estos efectos.
+
+Noticia 14
+El tema central de la noticia es que ciertos alimentos pueden adquirir un sabor a refrigerador debido a los gases utilizados en estos equipos. El &#39;tiktoker&#39; @Soycienciaycocina explicó que esto ocurre principalmente si los alimentos no están bien envueltos y el serpentín o bobina de enfriamiento está sucio, liberando componentes como hidrofluorocarbonos. Las consecuencias son que estos sabores desagradables pueden disuadir a las personas de consumir ciertos alimentos. El consejo es mantener la nevera limpia y guardar los alimentos herméticamente para prevenir este problema.
+
+Noticia 15
+El dermatólogo Dr. Daniel Asz Sigall desmiente el mito de que los shampoos causen caída del cabello. Según él, elegir el producto adecuado es crucial para cuidar el cuero cabelludo sin perjudicarlo. El especialista recomienda seleccionar shampoos específicos según el tipo de pelo y cuero cabelludo, y señala que la elección debe basarse en factores más allá del aroma o textura. Asimismo, destaca que cambios estacionales pueden influir en la caída del cabello, pero no es el shampoo quien causa problemas capilares significativos. La recomendación final es consultar a un dermatólogo ante cualquier preocupación sobre pérdida de cabello.
+
+Noticia 16
+La Oficina de Aduanas y Protección Fronteriza (CBP) advirtió sobre la prohibición de llevar huevos crudos y aves de corral desde México al entrar a Estados Unidos, en el marco del Día Internacional del Huevo. Las autoridades explicaron que esto se debe a riesgos de plagas y enfermedades. Aunque algunos productos con huevo envasados o cocinados pueden ingresar, los huevos crudos están estrictamente prohibidos. La CBP recordó la importancia de declarar todos los productos agrícolas al entrar al país para evitar sanciones.
+
+Noticia 17
+Una mujer en Florida afirmó que un batido de Chick-fil-A aceleró su trabajo de parto, volviéndose viral en TikTok. Anna Lundy aseguró que después de probar varios métodos naturales, bebió el batido y tuvo contracciones en menos de dos horas; su bebé nació al día siguiente. La Dra. Lauren F. Streicher desestimó la afirmación, explicando que muchos alimentos se han asociado erróneamente con la inducción del parto, y recomendó seguir las indicaciones médicas para una gestación segura.
+
+Noticia 18
+La Dra. Emma Qureshey, ginecóloga obstetra, ha advertido a través de TikTok sobre tres hábitos que podrían dañar la salud, especialmente el de orinar en la ducha. Asegura que esto puede debilitar el suelo pélvico y causar incontinencia. También recomienda evitar tratamientos caseros para infecciones vaginales, ya que pueden empeorar las condiciones. La doctora enfatiza la importancia de consultar a profesionales de la salud ante cualquier síntoma y ofrece recomendaciones básicas para prevenir infecciones urinarias.
+
+Noticia 19
+El aguacate, rico en ácido fólico y ácidos grasos omega-3, se ha destacado por sus beneficios para la salud mental según estudios del Departamento de Nutrición de la Universidad de Chile. Este alimento contribuye a la regulación del estado de ánimo y previene desequilibrios neuropsiquiátricos. Expertos recomiendan su inclusión en la dieta diaria, aunque subrayan la importancia de consultar con un profesional de la salud. Además de estos beneficios, el aguacate ofrece vitaminas y minerales que promueven la salud cardiovascular.
+
+Noticia 20
+Hipócrates recomendaba la miel como remedio natural para promover el bienestar y prolongar la vida. La Fundación Española de Nutrición destaca que contiene azúcares, aminoácidos, vitaminas, minerales y antioxidantes, con propiedades antiinflamatorias y antibacterianas. Investigaciones actuales confirman que reduce el colesterol LDL y previene enfermedades del corazón, mientras que estudios recientes muestran que ayuda a reducir la grasa en el hígado, protegiéndolo contra el estrés oxidativo.
+
+Noticia 21
+Dalton Cummins, quien sobrevivió al cáncer dos veces a los 24 años, ahora trabaja como enfermero en el Riley Hospital for Children donde fue paciente. Diagnósticado inicialmente con linfoma difuso de células B grandes y luego con linfoma de Hodgkin, Dalton superó intensivos tratamientos incluyendo quimioterapia y trasplante de células madre. Su experiencia personal lo motivó a trabajar en el mismo hospital que lo atendió, donde puede ayudar a otros pacientes oncológicos.
+
+Noticia 22
+El tema central de la noticia es un consejo dado por una dietista sobre hábitos a abandonar para lograr una pérdida de peso sostenible. Courtney Kassi, con 425.000 seguidores en TikTok, compartió cinco malos hábitos que deben ser eliminados, incluyendo evitar eventos sociales y adoptar una mentalidad negativa. Las implicaciones son importantes para quienes buscan cambiar su estilo de vida y pérdida de peso; sin un plan adecuado y la obsesión con la balanza diaria pueden llevar a resultados contraproducentes.
+
+Noticia 23
+El estudio de expertos de la Escuela de Medicina de Harvard identifica cinco formas de ejercicio para mantener una &quot;salud de oro&quot; a lo largo de la vida: natación, tai chi, entrenamiento de fuerza, caminatas y ejercicios de Kegel. La natación es recomendada para personas con artritis, mientras que el tai chi beneficia tanto al cuerpo como a la mente. El fortalecimiento muscular es crucial para prevenir caídas en personas mayores. Las caminatas son accesibles y ayudan a combatir enfermedades crónicas, y los ejercicios de Kegel mejoran la continencia urinaria y la salud sexual. Estas actividades promueven una mejor calidad de vida tanto física como mental.
+
+Noticia 24
+Siete Foods, una empresa fundada en 2014 por una familia mexicano-estadounidense, será adquirida por PepsiCo por US$1.200 millones para incorporar productos saludables inspirados en la cocina mexicana a su cartera. La transacción se espera cierre durante el primer semestre de 2025. Siete Foods ofrece tortillas, salsas y galletas hechas con ingredientes naturales y saludables, populares entre seguidores de dietas paleo o keto. PepsiCo destacó que los productos aportarán un aspecto nuevo a su cartera multicultural.
+
+Noticia 25
+Trabajadores portuarios en Estados Unidos iniciaron una huelga que podría afectar el comercio de alimentos y otros productos importados. Afectará principalmente plátanos, cerezas, mariscos y café, entre otros. La huelga, si persiste, podría generar escasez y subidas de precios para los consumidores en solo dos semanas. Expertos advierten que la situación podría alargarse hasta el próximo año si no se resuelve pronto, pero hay suministros de respaldo gracias a las lecciones aprendidas durante la pandemia.
+
+Noticia 26
+El artículo enfatiza la importancia de hábitos saludables para retrasar los signos del envejecimiento. Se recomiendan alimentos ricos en antioxidantes, como moras, uvas y arándanos, que protegen las células contra el estrés oxidativo. La Biblioteca Nacional de Medicina destaca estos compuestos naturales. Un licuado con estos ingredientes no solo es nutritivo, sino también refrescante, según propone el artículo, destacando sus beneficios para la salud cardiovascular y ósea, así como su efecto antiinflamatorio.
+
+Noticia 27
+Desde el inicio de 2024, las reclamaciones en servicios de salud han aumentado exponencialmente, especialmente en EPS intervenidas como Nueva EPS y Sanitas. La Supersalud reporta un incremento del 11,21% en quejas comparando agosto de este año con el mismo mes del año anterior. Las principales quejas se centran en el acceso a servicios y medicamentos, con un aumento del 49,7% en tutelas para procedimientos médicos y del 77,5% para suministro de medicamentos. El exministro Augusto Galán Sarmiento señala que la financiación estructural del sistema está deteriorada, mientras que Nueva EPS y Sanitas implementan estrategias para mejorar su red de servicios y entrega de medicamentos.
+
+Noticia 28
+El chontaduro, una fruta típica de Colombia, se destaca por sus propiedades nutricionales y beneficios para la salud. Este estudio realizado por la Universidad del Valle subraya su valor como fuente de proteínas, aceites, vitaminas liposolubles y minerales. Además, el chontaduro contiene vitamina A, C, antocianinas y betacarotenos, contribuyendo a mejorar problemas digestivos y disminuir inflamación. Sus beneficios incluyen cuidar la visión, combatir el estreñimiento, prevenir el envejecimiento prematuro y evitar la anemia.
+
+Noticia 29
+El &#39;youtuber&#39; Sven Vee completó un desafío de pedalear dos horas diarias durante 30 días, recorriendo más de 2.000 kilómetros y notando mejoras en su resistencia y bienestar mental. Este ejemplo demuestra que la bicicleta fija puede ser una actividad simple pero efectiva para mejorar la salud. Expertos recomiendan un equilibrio moderado en el ejercicio para evitar posibles daños, destacando la importancia de la disciplina y la regularidad.
+
+Noticia 30
+El cerebro, compuesto por más de mil millones de neuronas, requiere cuidados como una dieta equilibrada, ejercicio y descanso adecuado para mantener su salud. La albahaca, destacada por su contenido en antioxidantes y compuestos biológicamente activos, se ha asociado con beneficios cognitivos y digestivos. Expertos recomiendan incluirla en la dieta a través de infusiones, pero aconsejan consultar con un profesional para adaptarla a las necesidades individuales.
+
+Noticia 1
+El informe de la Sociedad Española de Gastroenterología, Hepatología y Nutrición Pediátrica enfatiza la importancia de una alimentación balanceada para mantener el buen estado de salud. Se destaca la linaza como superalimento que contribuye a prevenir enfermedades autoinmunes, especialmente la artritis. Expertos recomiendan conocer el valor nutricional de los alimentos y evitar el sedentarismo y el estrés.
+
+Noticia 2
+El consumo del mango africano (Irvingia gabonensis) ha ganado atención por sus propiedades para reducir la grasa corporal y combatir la fatiga, según estudios. Las semillas, ricas en fibra soluble y antioxidantes, han sido objeto de investigación y se utilizan como suplemento natural. Expertos destacan su potencial para mejorar la salud general, aunque recomiendan consultar con profesionales de la salud antes del consumo.
+
+Noticia 3
+La Sociedad Colombiana de Cardiología y Cirugía Cardiovascular destaca los beneficios del ejercicio físico para las mujeres, incluyendo mejoras en condiciones como enfermedad cardiovascular y reducción de mortalidad prematura. Durante la menopausia, especialistas recomiendan actividades como el baile para mejorar la salud física y mental, según un estudio de la Universidad de Harvard. Este ejercicio beneficia la memoria, autoestima y controla colesterol y triglicéridos en sangre.
+
+Noticia 4
+El bilito, una fruta medicinal tropical, ha sido reconocida por sus múltiples propiedades beneficiosas para la salud, especialmente en el tratamiento de enfermedades respiratorias. Este árbol monoico nativo de América se utiliza tradicionalmente por diversas comunidades y ofrece diversos usos, desde aliviar síntomas de asma hasta combatir la osteoporosis. Expertos destacan sus propiedades antisépticas y cicatrizantes, así como su alto contenido en manitol que ayuda a reducir la hipertensión. Sin embargo, se recomienda incorporarlo con precaución en la dieta debido a sus efectos potenciales sobre el alzhéimer.
+
+Noticia 5
+El aumento del dolor de espalda en la población moderna, causado por el sedentarismo y el estrés, preocupa a expertos en salud. Santiago Kweitel, médico deportólogo, destaca que este problema es una de las razones más frecuentes de ausencia laboral. La dolencia afecta a ocho de cada diez personas y puede ser leve o punzante. Los factores de riesgo incluyen el estrés, el sedentarismo y la mala alimentación. Para prevenirlo, se recomiendan rutinas de estiramiento, pausas activas y ejercicios para fortalecer el core.
+
+Noticia 6
+El aumento global de casos de accidente cerebrovascular (ACV) es una preocupación reciente en salud pública. La Clínica Universidad de Navarra destaca los síntomas y causas subyacentes del ACV, mientras que el Instituto del Corazón de Texas resalta las consecuencias para los sobrevivientes. La fibrilación auricular, un ritmo cardíaco irregular, incrementa el riesgo de ACV según la Asociación Americana del Corazón. Expertos recomiendan monitorear la actividad cardíaca y adoptar estilos de vida saludables para prevenir estas afecciones.
+
+Noticia 7
+El Hospital Internacional de Colombia realizó una cirugía innovadora para una joven con cordoma, un raro tumor que afecta la columna vertebral y limita la movilidad. El neurocirujano Dr. Ludwing Badillo Ballesteros empleó odontectomía transoral, accediendo a través de la boca para remover el tumor sin dañar estructuras vitales. La paciente recuperó 95% de su movilidad y ya es independiente, aunque requiere controles constantes. Este procedimiento representa un avance significativo en el tratamiento de tumores similares.
+
+Noticia 8
+La salud capilar está estrechamente relacionada con los hábitos alimenticios y nutricionales. Según Harvard Health, factores como deficiencias de vitaminas y minerales, condiciones médicas y factores hormonales pueden desencadenar la caída del cabello o alopecia. Es crucial identificar y abordar cualquier deficiencia nutricional para prevenir y tratar esta condición. Vitamina D, hierro, biotina, vitamina C y zinc son esenciales para el crecimiento y fortaleza capilar. Un consumo excesivo de ciertos nutrientes puede ser perjudicial, por lo que se recomienda realizar análisis de sangre periódicamente.
+
+Noticia 9
+El síndrome de cabeza explosiva (EHS) es un fenómeno que se produce durante la transición entre la vigilia y el sueño, causando fuertes sonidos internos sin estímulos externos. Algunas personas experimentan alucinaciones visuales o sensaciones corporales. Dan Denis, psicólogo de la Universidad de York, sugiere que los insomnes o quienes se encuentran bajo presión son más susceptibles a este fenómeno. Aunque no existe un tratamiento, cambios en los hábitos de sueño pueden aliviar los síntomas.
+
+Noticia 10
+El consumo moderado de carne roja es recomendado por nutricionistas para una dieta equilibrada, aunque su exceso puede aumentar el colesterol y el riesgo cardiovascular. Según un estudio del departamento de Nutrición de la Universidad de Harvard, consumir más de 0,8 gramos de proteínas por kilogramo de peso corporal diariamente puede incrementar el riesgo de enfermedades cardiovasculares y cáncer. La directora del programa de artes culinarias de la Universidad de Drexel sugiere que las porciones adecuadas deben acompañarse con alimentos ricos en nutrientes para mantener una dieta sana.
+
+Noticia 11
+La jícama, un tubérculo rico en nutrientes, es versátil en su uso culinario y ofrece diversos beneficios para la salud, como mejorar la digestión, proteger el corazón y los huesos. Este alimento, originario de Mesoamérica, contiene inulina, fibra dietética y alta proporción de agua, lo que contribuye a la sensación de saciedad y hidratación del cuerpo. Además, es una excelente opción para personas con diabetes debido a su bajo contenido calórico y dulzor natural. Sin embargo, se recomienda consultar con un profesional de la salud antes de incorporarlo en la dieta, ya que cada persona tiene necesidades específicas.
+
+Noticia 12
+La menopausia puede causar sangrado de encías debido a cambios hormonales, lo que se relaciona con la gingivitis. Según la odontóloga Irene Esteve, este problema se combina con la xerostomía, o boca seca, que disminuye la producción de saliva y aumenta las infecciones bucales. Para mitigar estos síntomas, se recomienda usar humidificadores, respirar por la nariz y realizar revisiones dentales regulares. La menopausia también puede traer el &quot;síndrome de la boca ardiente&quot;, que causa molestias en áreas como la lengua y encías. Buscar atención odontológica es crucial para manejar estos problemas y mantener una buena salud bucal durante esta etapa.
+
+Noticia 13
+El tema central de la noticia son los cambios biológicos y psicológicos comunes a partir de los 60 años. El doctor José María Pallarés destaca que las principales causas de muerte en esta edad son patologías crónicas relacionadas con el corazón, pulmones, sistema endocrino y tumores. Se recomienda mantener una dieta mediterránea y hacer chequeos médicos regulares para mitigar estos efectos.
+
+Noticia 14
+El tema central de la noticia es que ciertos alimentos pueden adquirir un sabor a refrigerador debido a los gases utilizados en estos equipos. El &#39;tiktoker&#39; @Soycienciaycocina explicó que esto ocurre principalmente si los alimentos no están bien envueltos y el serpentín o bobina de enfriamiento está sucio, liberando componentes como hidrofluorocarbonos. Las consecuencias son que estos sabores desagradables pueden disuadir a las personas de consumir ciertos alimentos. El consejo es mantener la nevera limpia y guardar los alimentos herméticamente para prevenir este problema.
+
+Noticia 15
+El dermatólogo Dr. Daniel Asz Sigall desmiente el mito de que los shampoos causen caída del cabello. Según él, elegir el producto adecuado es crucial para cuidar el cuero cabelludo sin perjudicarlo. El especialista recomienda seleccionar shampoos específicos según el tipo de pelo y cuero cabelludo, y señala que la elección debe basarse en factores más allá del aroma o textura. Asimismo, destaca que cambios estacionales pueden influir en la caída del cabello, pero no es el shampoo quien causa problemas capilares significativos. La recomendación final es consultar a un dermatólogo ante cualquier preocupación sobre pérdida de cabello.
+
+Noticia 16
+La Oficina de Aduanas y Protección Fronteriza (CBP) advirtió sobre la prohibición de llevar huevos crudos y aves de corral desde México al entrar a Estados Unidos, en el marco del Día Internacional del Huevo. Las autoridades explicaron que esto se debe a riesgos de plagas y enfermedades. Aunque algunos productos con huevo envasados o cocinados pueden ingresar, los huevos crudos están estrictamente prohibidos. La CBP recordó la importancia de declarar todos los productos agrícolas al entrar al país para evitar sanciones.
+
+Noticia 17
+Una mujer en Florida afirmó que un batido de Chick-fil-A aceleró su trabajo de parto, volviéndose viral en TikTok. Anna Lundy aseguró que después de probar varios métodos naturales, bebió el batido y tuvo contracciones en menos de dos horas; su bebé nació al día siguiente. La Dra. Lauren F. Streicher desestimó la afirmación, explicando que muchos alimentos se han asociado erróneamente con la inducción del parto, y recomendó seguir las indicaciones médicas para una gestación segura.
+
+Noticia 18
+La Dra. Emma Qureshey, ginecóloga obstetra, ha advertido a través de TikTok sobre tres hábitos que podrían dañar la salud, especialmente el de orinar en la ducha. Asegura que esto puede debilitar el suelo pélvico y causar incontinencia. También recomienda evitar tratamientos caseros para infecciones vaginales, ya que pueden empeorar las condiciones. La doctora enfatiza la importancia de consultar a profesionales de la salud ante cualquier síntoma y ofrece recomendaciones básicas para prevenir infecciones urinarias.
+
+Noticia 19
+El aguacate, rico en ácido fólico y ácidos grasos omega-3, se ha destacado por sus beneficios para la salud mental según estudios del Departamento de Nutrición de la Universidad de Chile. Este alimento contribuye a la regulación del estado de ánimo y previene desequilibrios neuropsiquiátricos. Expertos recomiendan su inclusión en la dieta diaria, aunque subrayan la importancia de consultar con un profesional de la salud. Además de estos beneficios, el aguacate ofrece vitaminas y minerales que promueven la salud cardiovascular.
+
+Noticia 20
+Hipócrates recomendaba la miel como remedio natural para promover el bienestar y prolongar la vida. La Fundación Española de Nutrición destaca que contiene azúcares, aminoácidos, vitaminas, minerales y antioxidantes, con propiedades antiinflamatorias y antibacterianas. Investigaciones actuales confirman que reduce el colesterol LDL y previene enfermedades del corazón, mientras que estudios recientes muestran que ayuda a reducir la grasa en el hígado, protegiéndolo contra el estrés oxidativo.
+
+Noticia 21
+Dalton Cummins, quien sobrevivió al cáncer dos veces a los 24 años, ahora trabaja como enfermero en el Riley Hospital for Children donde fue paciente. Diagnósticado inicialmente con linfoma difuso de células B grandes y luego con linfoma de Hodgkin, Dalton superó intensivos tratamientos incluyendo quimioterapia y trasplante de células madre. Su experiencia personal lo motivó a trabajar en el mismo hospital que lo atendió, donde puede ayudar a otros pacientes oncológicos.
+
+Noticia 22
+El tema central de la noticia es un consejo dado por una dietista sobre hábitos a abandonar para lograr una pérdida de peso sostenible. Courtney Kassi, con 425.000 seguidores en TikTok, compartió cinco malos hábitos que deben ser eliminados, incluyendo evitar eventos sociales y adoptar una mentalidad negativa. Las implicaciones son importantes para quienes buscan cambiar su estilo de vida y pérdida de peso; sin un plan adecuado y la obsesión con la balanza diaria pueden llevar a resultados contraproducentes.
+
+Noticia 23
+El estudio de expertos de la Escuela de Medicina de Harvard identifica cinco formas de ejercicio para mantener una &quot;salud de oro&quot; a lo largo de la vida: natación, tai chi, entrenamiento de fuerza, caminatas y ejercicios de Kegel. La natación es recomendada para personas con artritis, mientras que el tai chi beneficia tanto al cuerpo como a la mente. El fortalecimiento muscular es crucial para prevenir caídas en personas mayores. Las caminatas son accesibles y ayudan a combatir enfermedades crónicas, y los ejercicios de Kegel mejoran la continencia urinaria y la salud sexual. Estas actividades promueven una mejor calidad de vida tanto física como mental.
+
+Noticia 24
+Siete Foods, una empresa fundada en 2014 por una familia mexicano-estadounidense, será adquirida por PepsiCo por US$1.200 millones para incorporar productos saludables inspirados en la cocina mexicana a su cartera. La transacción se espera cierre durante el primer semestre de 2025. Siete Foods ofrece tortillas, salsas y galletas hechas con ingredientes naturales y saludables, populares entre seguidores de dietas paleo o keto. PepsiCo destacó que los productos aportarán un aspecto nuevo a su cartera multicultural.
+
+Noticia 25
+Trabajadores portuarios en Estados Unidos iniciaron una huelga que podría afectar el comercio de alimentos y otros productos importados. Afectará principalmente plátanos, cerezas, mariscos y café, entre otros. La huelga, si persiste, podría generar escasez y subidas de precios para los consumidores en solo dos semanas. Expertos advierten que la situación podría alargarse hasta el próximo año si no se resuelve pronto, pero hay suministros de respaldo gracias a las lecciones aprendidas durante la pandemia.
+
+Noticia 26
+El artículo enfatiza la importancia de hábitos saludables para retrasar los signos del envejecimiento. Se recomiendan alimentos ricos en antioxidantes, como moras, uvas y arándanos, que protegen las células contra el estrés oxidativo. La Biblioteca Nacional de Medicina destaca estos compuestos naturales. Un licuado con estos ingredientes no solo es nutritivo, sino también refrescante, según propone el artículo, destacando sus beneficios para la salud cardiovascular y ósea, así como su efecto antiinflamatorio.
+
+Noticia 27
+Desde el inicio de 2024, las reclamaciones en servicios de salud han aumentado exponencialmente, especialmente en EPS intervenidas como Nueva EPS y Sanitas. La Supersalud reporta un incremento del 11,21% en quejas comparando agosto de este año con el mismo mes del año anterior. Las principales quejas se centran en el acceso a servicios y medicamentos, con un aumento del 49,7% en tutelas para procedimientos médicos y del 77,5% para suministro de medicamentos. El exministro Augusto Galán Sarmiento señala que la financiación estructural del sistema está deteriorada, mientras que Nueva EPS y Sanitas implementan estrategias para mejorar su red de servicios y entrega de medicamentos.
+
+Noticia 28
+El chontaduro, una fruta típica de Colombia, se destaca por sus propiedades nutricionales y beneficios para la salud. Este estudio realizado por la Universidad del Valle subraya su valor como fuente de proteínas, aceites, vitaminas liposolubles y minerales. Además, el chontaduro contiene vitamina A, C, antocianinas y betacarotenos, contribuyendo a mejorar problemas digestivos y disminuir inflamación. Sus beneficios incluyen cuidar la visión, combatir el estreñimiento, prevenir el envejecimiento prematuro y evitar la anemia.
+
+Noticia 29
+El &#39;youtuber&#39; Sven Vee completó un desafío de pedalear dos horas diarias durante 30 días, recorriendo más de 2.000 kilómetros y notando mejoras en su resistencia y bienestar mental. Este ejemplo demuestra que la bicicleta fija puede ser una actividad simple pero efectiva para mejorar la salud. Expertos recomiendan un equilibrio moderado en el ejercicio para evitar posibles daños, destacando la importancia de la disciplina y la regularidad.
+
+Noticia 30
+El cerebro, compuesto por más de mil millones de neuronas, requiere cuidados como una dieta equilibrada, ejercicio y descanso adecuado para mantener su salud. La albahaca, destacada por su contenido en antioxidantes y compuestos biológicamente activos, se ha asociado con beneficios cognitivos y digestivos. Expertos recomiendan incluirla en la dieta a través de infusiones, pero aconsejan consultar con un profesional para adaptarla a las necesidades individuales.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Activar Ollama con el modelo qwen2.5:7b o con el que sea de su eleccion</span>
+<span class="c1"># en este caso es recomendado uno mucho mas &quot;capaz&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">langchain_ollama</span> <span class="kn">import</span> <span class="n">ChatOllama</span>
+<span class="kn">from</span> <span class="nn">langchain_core.output_parsers</span> <span class="kn">import</span> <span class="n">StrOutputParser</span>
+<span class="kn">from</span> <span class="nn">langchain_core.prompts</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ChatPromptTemplate</span><span class="p">,</span>
+    <span class="n">SystemMessagePromptTemplate</span><span class="p">,</span>
+    <span class="n">HumanMessagePromptTemplate</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_topic_in_cluster</span><span class="p">(</span><span class="n">news</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;qwen2.5:7b&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+    <span class="n">llm_ollama</span> <span class="o">=</span> <span class="n">ChatOllama</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">num_predict</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+        <span class="n">num_ctx</span><span class="o">=</span><span class="mi">16000</span><span class="p">,</span>
+        <span class="n">keep_alive</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+
+    <span class="n">prompt_characterics</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">SystemMessagePromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Eres un asistente especializado en análisis de noticias y clustering semántico. Tu tarea es ayudar a identificar temas, &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;palabras clave y subtemas dentro de grupos de resúmenes de noticias. Analizas los patrones comunes en los eventos, &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;lugares, personas y palabras clave para proporcionar una descripción clara y precisa del tema principal de cada grupo &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;de noticias. Además, eres capaz de detectar subtemas o enfoques recurrentes que puedan enriquecer el análisis.&quot;&quot;&quot;</span>
+            <span class="p">),</span>
+            <span class="n">HumanMessagePromptTemplate</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Los siguientes son resúmenes de noticias que han sido agrupados en un clúster debido a su similitud semántica. &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Tu tarea es analizar estos resúmenes y proporcionar una caracterización general del tema principal del clúster. &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Identifica patrones comunes en los eventos, lugares, personas y palabras clave mencionadas, y determina un título o &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;categoría representativa que capture la esencia del clúster.&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Además, destaca si hay algún subtema relevante o recurrente que ayude a entender mejor el enfoque de las noticias en &quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;este grupo. Asegúrate de que la descripción sea clara y precisa para que refleje el contenido general de las noticias.&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Resúmenes de noticias en el clúster: {news}&quot;&quot;&quot;</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;Salida esperada:</span>
+<span class="sd">                    Tema principal: Una breve descripción del tema general del clúster.</span>
+<span class="sd">                    Palabras clave: Lista de palabras clave relevantes.</span>
+<span class="sd">                    Subtemas (si los hay): Cualquier subtema adicional que aparezca en varios resúmenes.</span>
+<span class="sd">                    Título sugerido: Un título breve que represente el clúster.&quot;&quot;&quot;</span>
+                <span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">llm_chain</span> <span class="o">=</span> <span class="n">prompt_characterics</span> <span class="o">|</span> <span class="n">llm_ollama</span> <span class="o">|</span> <span class="n">StrOutputParser</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">llm_chain</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&quot;news&quot;</span><span class="p">:</span> <span class="n">news</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_cluster</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cluster con label: </span><span class="si">{</span><span class="n">label_cluster</span><span class="si">}</span><span class="se">\n</span><span class="s2">Noticias de la muestra:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">news_summary</span> <span class="o">=</span> <span class="n">get_text_sample_by_cluster</span><span class="p">(</span><span class="n">label_cluster</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Respuesta LLM:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_topic_in_cluster</span><span class="p">(</span><span class="n">news_summary</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster con label: 1
+Noticias de la muestra:
+
+Noticia 1
+David Alonso, piloto colombiano de Moto3, ganó su décimo triunfo en Japón, asegurando matemáticamente el título mundial. Su victoria emocionante incluyó celebraciones con banderas y la moto que usaba al comenzar. Alonso expresó emoción y gratitud por su equipo y familia. Este triunfo marca el primer campeonato mundial para Colombia en Moto3, con importantes implicaciones para el país y el deportista.
+
+Noticia 2
+El partido entre Bolivia y Colombia por la eliminatoria al Mundial del 2026 contará con el arbitraje central de Wilton Sampaio, un árbitro brasileño con experiencia en torneos internacionales. La designación fue realizada por la Conmebol para el encuentro en El Alto a 4.150 metros de altura. Sampaio ha dirigido partidos entre ambos países anteriormente y será apoyado por jueces brasileños, lo que podría influir en el resultado del juego.
+
+Noticia 3
+El Camp Nou, estadio del FC Barcelona, está sufriendo remodelaciones a gran velocidad para cumplir con los plazos. Un enfrentamiento entre obreros subcontratados originarios de Albania y Rumania generó una pelea multitudinaria que dejó seis heridos y retrasó momentáneamente las obras. Las autoridades despidieron a 20 trabajadores involucrados y arrestaron a varios. A pesar del incidente, la remodelación avanza con el objetivo de entregar el estadio antes de lo previsto para celebrar los 125 años del club en noviembre de 2024, aunque podría estar listo hasta enero del próximo año.
+
+Noticia 4
+Manuela Vanegas comienza la temporada con Real Sociedad destacándose en marca y goleo. La colombiana de 23 años marcó su segundo gol en cinco partidos, incluyendo un tiro libre directo crucial contra el Granada. Con 13 goles totales en Europa, Vanegas es una pieza clave para la Real Sociedad y la Selección Colombia.
+
+Noticia 5
+Deportivo Pasto enfrentará a Atlético Nacional en la fecha 13 de la Liga BetPlay 2024-2. Ambos equipos luchan por los cuadrangulares semifinales, con Nacional sexto y Pasto octavo. El líder es América de Cali, que suma 26 puntos tras vencer a Boyacá Chicó.
+
+Noticia 6
+Jürgen Klopp, exentrenador del Liverpool, fue nombrado nuevo &quot;jefe global de fútbol&quot; de Red Bull a partir de enero de 2025 con un contrato de cinco años. Su rol incluirá la dirección estratégica de equipos como el Leipzig y el Salzburgo. Klopp destacó su intención de desarrollar el talento futbolístico de los clubes bajo la tutela de Red Bull. El nombramiento se produce tras meses de negociaciones entre Red Bull y Klopp, lideradas por Oliver Mintzlaff, director general de proyectos deportivos de la compañía.
+
+Noticia 7
+Liverpool ha tenido una temporada sólida en las principales competiciones, con cinco victorias en seis partidos de la Premier League y una victoria en la Champions League contra el Milan. Luis Díaz, un colombiano clave bajo el mando del DT Arne Slot, se ha convertido en el máximo goleador del equipo. Alexis Mac Allister felicitó a Díaz por sus números pero también lo animó a mantener la consistencia durante todo el año. En su próximo partido, Liverpool recibirá al Bolonia en Anfield Road.
+
+Noticia 8
+Colombia jugará su partido crucial en las eliminatorias contra Bolivia en el estadio más alto del mundo, donde el ambiente es tenso y Boliva viene de ganar por primera vez como visitante desde 1993. Néstor Lorenzo, entrenador colombiano, denuncia intentos de complicar la logística y espionaje a sus entrenamientos. A pesar de las dificultades, Colombia busca mantener su invicto y asegurar matemáticamente su clasificación lo antes posible.
+
+Noticia 9
+James Rodríguez volvió a ser titular en Rayo Vallecano y mostró destellos de su habilidad en la victoria por 1-1 contra Leganés, calmando las críticas sobre su rendimiento. El entrenador Íñigo Pérez mantiene que el jugador necesita ganar ritmo tras su parón. James demostró calidad y humanidad al firmar autógrafos y hacer felices a los hinchas en el centro deportivo del club, incluyendo una familia con un recién nacido.
+
+Noticia 10
+Millonarios empató 0-0 con Bucaramanga en El Campín, arrancando mal la Copa Colombia. El partido fue plano y sin emociones, con Millonarios mostrando un juego errático. Para el segundo tiempo se hizo el cambio de Delvin Alfonzo, pero no mejoró significativamente. Ahora Millonarios debe ganar en el juego de vuelta para avanzar en el torneo.
+
+Noticia 11
+Se filtró una nueva camiseta de la Selección Colombia para conmemorar el centenario de la Federación Colombiana de Fútbol, generando controversia entre los aficionados. El diseño es similar al usado en 1945 y no ha sido lanzado oficialmente. La camiseta, que incluye el escudo y el logo antiguo de Adidas, ya se vende en 100 euros en portales internacionales. Muchos fans expresan su opinión, algunos la consideran hermosa mientras otros la critican por su precio y diseño.
+
+Noticia 12
+Se filtró una nueva camiseta de la Selección Colombia que rendirá homenaje a los 100 años de la Federación Colombiana de Fútbol. La prenda, diseñada por Adidas, es blanca con el tricolor en franjas horizontales y lleva el escudo del equipo y el logo antiguo bordados. Se espera que forme parte de una colección que incluye también una sudadera azul. El precio oficial aún no se ha anunciado, pero ya se vende por 100 euros (aproximadamente 464 mil pesos).
+
+Noticia 13
+La Selección Colombia prepara su partido contra Bolivia a 4.150 metros de altura, mientras el técnico Néstor Lorenzo enfrenta críticas por la elección del lugar para la concentración. Oscar Villegas, DT boliviano, cuestionó la estrategia colombiana y acusó a los medios locales de favorecer a Colombia. Por su parte, Luis Haquín, capitán de Bolivia, aseguró que su equipo buscará romper el invicto de Colombia en casa.
+
+Noticia 14
+Bolivia derrotó a Colombia en un partido donde el equipo altiplanino sorprendió con una jugada individual que llevó al empate tras la expulsión de un jugador colombiano. La selección dirigida por Néstor Lorenzo, jugando con un hombre menos, intentó controlar el juego pero no logró marcar. En el segundo tiempo, Bolivia anotó gracias a un zurdazo imposible de Miguel Terceros que desequilibró el partido.
+
+Noticia 15
+James Rodríguez es la gran figura del Rayo Vallecano, aunque no es titular regular. El equipo espera que su experiencia de la Copa América ayude en las demostraciones futuras. Los dirigentes están contentos con él y buscan mantener la normalidad para subir en la tabla. Algunos sectores critican al jugador, pero los dirigentes ven con optimismo su futuro en el club.
+
+
+Respuesta LLM:
+
+**Tema principal:** El fútbol colombiano y sus implicaciones, con énfasis en competiciones internacionales, campeonatos nacionales y la preparación para partidos cruciales.
+
+**Palabras clave:** Colombia, fútbol, Copa América, Liga BetPlay 2024-25, eliminatorias al Mundial 2026, Millonarios, Real Sociedad, James Rodríguez, David Alonso, competencias internacionales, entrenadores, camisetas conmemorativas.
+
+**Subtemas:**
+1. **Campeonatos y Títulos:** Menciona el logro de David Alonso como primer campeón mundial para Colombia en Moto3.
+2. **Eliminatorias al Mundial 2026:** Discute los partidos entre Bolivia y Colombia, la designación del árbitro Wilton Sampaio, y las tensiones generadas por el ambiente en El Alto.
+3. **Incidentes y Conflictos:** Aborda peleas entre obreros en el Camp Nou y críticas a la elección de local para los partidos de eliminatorias.
+4. **Camisetas conmemorativas:** Menciona la polémica generada por las nuevas camisetas de la Selección Colombia.
+
+**Título sugerido:** &quot;Fútbol Colombiano: Campeonatos, Eliminatorias y Controversias&quot;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="news_clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracterizacion-de-los-clusters"><em><strong>Caracterizacion de los clusters</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
