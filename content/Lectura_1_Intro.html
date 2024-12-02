@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Introducción al machine learning &#8212; My sample book</title>
+    <title>Introducción al machine learning &#8212; Metodos Estadisticos</title>
   
   
   
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -149,8 +149,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
   
   
 </a></div>
@@ -174,7 +174,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Introducción al machine learning</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de componente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
@@ -190,6 +190,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
 </ul>
@@ -540,7 +544,7 @@ License: BSD 3-Clause License
         OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Location: /home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages
 Requires: numpy, python-dateutil, pytz, tzdata
-Required-by: category-encoders, factor_analyzer, mglearn, pandas-flavor, pingouin, prince, seaborn, statsmodels, sweetviz, xarray
+Required-by: catboost, category-encoders, factor_analyzer, mglearn, pandas-flavor, pingouin, prince, seaborn, statsmodels, sweetviz, xarray
 </pre></div>
 </div>
 </div>
@@ -1532,7 +1536,7 @@ License: Copyright (c) 2005-2023, NumPy Developers.
             https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 Location: /home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages
 Requires: 
-Required-by: category-encoders, contourpy, factor_analyzer, folium, hdbscan, imageio, imbalanced-learn, langchain, langchain-community, lightgbm, matplotlib, mglearn, numba, pandas, patsy, pingouin, pyarrow, scikit-learn, scipy, seaborn, statsmodels, sweetviz, umap-learn, xarray
+Required-by: catboost, category-encoders, contourpy, factor_analyzer, folium, hdbscan, imageio, imbalanced-learn, langchain, langchain-community, lightgbm, matplotlib, mglearn, numba, pandas, patsy, pingouin, pyarrow, scikit-learn, scikit-optimize, scipy, seaborn, statsmodels, sweetviz, umap-learn, xarray, xgboost
 </pre></div>
 </div>
 </div>
@@ -1551,7 +1555,9 @@ Summary: Fundamental algorithms for scientific computing in Python
 Home-page: https://scipy.org/
 Author: 
 Author-email: 
-License: Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>License: Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers.
         All rights reserved.
         
         Redistribution and use in source and binary forms, with or without
@@ -2486,7 +2492,7 @@ License: Copyright (c) 2001-2002 Enthought, Inc. 2003-2024, SciPy Developers.
             https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 Location: /home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages
 Requires: numpy
-Required-by: category-encoders, factor_analyzer, hdbscan, imbalanced-learn, lightgbm, pingouin, pynndescent, scikit-learn, statsmodels, sweetviz, umap-learn
+Required-by: catboost, category-encoders, factor_analyzer, hdbscan, imbalanced-learn, lightgbm, pingouin, pynndescent, scikit-learn, scikit-optimize, statsmodels, sweetviz, umap-learn, xgboost
 </pre></div>
 </div>
 </div>
@@ -2508,7 +2514,7 @@ Author-email:
 License: new BSD
 Location: /home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages
 Requires: joblib, numpy, scipy, threadpoolctl
-Required-by: category-encoders, factor_analyzer, hdbscan, imbalanced-learn, mglearn, pingouin, prince, pynndescent, umap-learn
+Required-by: category-encoders, factor_analyzer, hdbscan, imbalanced-learn, mglearn, pingouin, prince, pynndescent, scikit-optimize, umap-learn
 </pre></div>
 </div>
 </div>
@@ -2750,7 +2756,7 @@ Required-by: category-encoders, factor_analyzer, hdbscan, imbalanced-learn, mgle
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.10.12 (main, Sep 11 2024, 15:47:36) [GCC 11.4.0]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.10.12 (main, Nov  6 2024, 20:22:13) [GCC 11.4.0]
 pandas version: 2.2.2
 matplotlib version: 3.9.2
 NumPy version: 1.26.4

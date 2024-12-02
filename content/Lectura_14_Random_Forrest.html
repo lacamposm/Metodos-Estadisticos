@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Random Forrest &#8212; My sample book</title>
+    <title>Random Forrest &#8212; Metodos Estadisticos</title>
   
   
   
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -149,8 +149,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
   
   
 </a></div>
@@ -174,7 +174,7 @@
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de componente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
@@ -190,6 +190,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Random Forrest</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
 </ul>
@@ -389,7 +393,6 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notas-adicionales"><em><strong>Notas Adicionales:</strong></em></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-evaluation"><em><strong>Out-of-Bag Evaluation</strong></em></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Random Forrest.</strong></em></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-random-forrest"><em><strong>Algoritmo Random Forrest.</strong></em></a></li>
 </ul>
@@ -400,19 +403,25 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-con-todas-las-covariables"><em><strong>Modelo con todas las covariables</strong></em></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-en-random-forest"><em><strong>Feature Importance en Random Forest</strong></em></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impacto-de-las-variables-categoricas"><strong>Impacto de las Variables Categóricas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion"><strong>Interpretación</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-limitaciones"><strong>Ventajas y Limitaciones</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impacto-de-las-variables-categoricas"><em><strong>Impacto de las Variables Categóricas</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion"><em><strong>Interpretación</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-limitaciones"><em><strong>Ventajas y Limitaciones</strong></em></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-oob-en-random-forest"><em><strong>Out-of-Bag (OOB) en Random Forest</strong></em></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-funciona-el-oob"><em><strong>¿Cómo Funciona el OOB?</strong></em></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-el-oob-score-puede-ser-mas-bajo"><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notas"><em><strong>Notas:</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-evaluation"><em><strong>Out-of-Bag Evaluation</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#como-funciona-el-oob"><em><strong>¿Cómo Funciona el OOB?</strong></em></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-el-oob-score-puede-ser-mas-bajo"><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notas"><em><strong>Notas:</strong></em></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-elegir-un-modelo-de-clasificacion"><em><strong>¿Cómo Elegir un Modelo de Clasificación?</strong></em></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><em><strong>Conclusiones</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><em><strong>Conclusiones</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hiperparametros-de-random-forest-en-scikit-learn-recomendaciones-y-explicaciones"><em><strong>Hiperparámetros de Random Forest en Scikit-learn: Recomendaciones y Explicaciones</strong></em></a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -530,18 +539,12 @@
 <li><p><strong>Tamaño de la Submuestra</strong>: En el paso 2, se menciona que se toma una remuestra de <span class="math notranslate nohighlight">\(n\)</span> registros. Esto es típico en el bagging, donde el tamaño de la submuestra es igual al tamaño del conjunto de datos original. Sin embargo, en algunas variantes, el tamaño de la submuestra puede ser menor que <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
 <li><p><strong>Modelos Base</strong>: Los modelos base utilizados en el bagging pueden ser de cualquier tipo, pero los árboles de decisión son comúnmente utilizados debido a su alta varianza y baja capacidad de generalización individual, lo que se compensa al combinarlos en un ensemble.</p></li>
 </ul>
-</section>
-</section>
-<section id="out-of-bag-evaluation">
-<h3><em><strong>Out-of-Bag Evaluation</strong></em><a class="headerlink" href="#out-of-bag-evaluation" title="Link to this heading">#</a></h3>
-<p>Con <em>bagging</em>, algunas instancias se pueden muestrear varias veces para cualquier predictor dado, mientras que otros pueden no ser muestreados en absoluto. Por defecto, un <em>BaggingClassifier</em> toma <span class="math notranslate nohighlight">\(m\)</span> registros del set de train con reemplazo (<code class="docutils literal notranslate"><span class="pre">bootstrap=True</span></code>), donde <span class="math notranslate nohighlight">\(m\)</span> es el tamaño del conjunto de entrenamiento. Esto significa que solo alrededor del <span class="math notranslate nohighlight">\(63\%\)</span> de los registros del set de entrenamiento se muestrean en promedio para cada predictor. El <span class="math notranslate nohighlight">\(37\%\)</span> restante de los registros  que no son muestreados se denominan registros (instancias) <em><strong>out-of-bag (oob)</strong></em>.</p>
-<p>Dado que un predictor nunca ve los registros <em>oob</em> durante el entrenamiento, se puede evaluar en
-estos registros, sin la necesidad de un set de validación por separado. Es posible evaluar el <em>ensamble</em> promediando las evaluaciones <em>oob</em> de cada predictor.</p>
 <p><em><strong>NOTA:</strong></em></p>
 <ol class="arabic simple">
 <li><p>En Scikit-Learn, puede establecer <code class="docutils literal notranslate"><span class="pre">oob_score=True</span></code> al crear un <em>BaggingClassifier</em> para solicitar una evaluación <em>oob</em> automática después del entrenamiento.</p></li>
 <li><p>La función de decisión <em>oob</em> para cada registro del set de train también está disponible a través del atributo <code class="docutils literal notranslate"><span class="pre">oob_decision_function_</span></code>. En este caso que el estimador base tenga un método como <code class="docutils literal notranslate"><span class="pre">predict_proba()</span></code>, la función de decisión devuelve las probabilidades de clase para cada registro del set de train.</p></li>
 </ol>
+</section>
 </section>
 <section id="id1">
 <h3><em><strong>Random Forrest.</strong></em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
@@ -2036,9 +2039,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="feature-importance-en-random-forest">
 <h2><em><strong>Feature Importance en Random Forest</strong></em><a class="headerlink" href="#feature-importance-en-random-forest" title="Link to this heading">#</a></h2>
-<p>La <strong>feature importance</strong> mide la relevancia de cada característica para las predicciones del modelo. En <strong>Random Forest</strong>, se calcula mediante:</p>
+<p>La <em><strong>feature importance</strong></em> mide la relevancia de cada característica para las predicciones del modelo. En <strong>Random Forest</strong>, se calcula mediante:</p>
 <ul class="simple">
-<li><p><strong>Reducción Promedio de la Impureza (MDI):</strong></p>
+<li><p><em><strong>Reducción Promedio de la Impureza (MDI):</strong></em></p>
 <ul>
 <li><p>Calcula cuánto reduce la impureza (Gini o entropía) al usar una característica para dividir un nodo.</p></li>
 <li><p>Predeterminado en scikit-learn.</p></li>
@@ -2046,7 +2049,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </li>
 </ul>
 <section id="impacto-de-las-variables-categoricas">
-<h3><strong>Impacto de las Variables Categóricas</strong><a class="headerlink" href="#impacto-de-las-variables-categoricas" title="Link to this heading">#</a></h3>
+<h3><em><strong>Impacto de las Variables Categóricas</strong></em><a class="headerlink" href="#impacto-de-las-variables-categoricas" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Las variables categóricas con muchas categorías o pocas observaciones en ciertas categorías pueden sesgar la importancia.</p></li>
 <li><p><strong>Categorías poco representadas:</strong></p>
@@ -2058,14 +2061,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </ul>
 </section>
 <section id="interpretacion">
-<h3><strong>Interpretación</strong><a class="headerlink" href="#interpretacion" title="Link to this heading">#</a></h3>
+<h3><em><strong>Interpretación</strong></em><a class="headerlink" href="#interpretacion" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Valores más altos indican mayor relevancia de una característica.</p></li>
 <li><p>Ayuda a identificar las variables clave y eliminar las irrelevantes.</p></li>
 </ul>
 </section>
 <section id="ventajas-y-limitaciones">
-<h3><strong>Ventajas y Limitaciones</strong><a class="headerlink" href="#ventajas-y-limitaciones" title="Link to this heading">#</a></h3>
+<h3><em><strong>Ventajas y Limitaciones</strong></em><a class="headerlink" href="#ventajas-y-limitaciones" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Ventajas:</strong> Intuitivo, útil para simplificar modelos.</p></li>
 <li><p><strong>Limitaciones:</strong></p>
@@ -2073,7 +2076,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <li><p>Sesgo hacia variables categóricas con muchas categorías.</p></li>
 <li><p>Poca utilidad de categorías infrecuentes.</p></li>
 <li><p>Dificultad para capturar interacciones.</p></li>
-<li><p>Dependencia del método (MDI puede sobrestimar; MDA es más preciso).</p></li>
+<li><p>Dependencia del método (MDI puede sobrestimar).</p></li>
 </ol>
 </li>
 </ul>
@@ -2342,9 +2345,12 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="out-of-bag-oob-en-random-forest">
 <h2><em><strong>Out-of-Bag (OOB) en Random Forest</strong></em><a class="headerlink" href="#out-of-bag-oob-en-random-forest" title="Link to this heading">#</a></h2>
+<section id="out-of-bag-evaluation">
+<h3><em><strong>Out-of-Bag Evaluation</strong></em><a class="headerlink" href="#out-of-bag-evaluation" title="Link to this heading">#</a></h3>
+<p>Con <em>bagging</em>, algunas instancias se pueden muestrear varias veces para cualquier predictor dado, mientras que otros pueden no ser muestreados en absoluto. Por defecto, un <em>BaggingClassifier</em> toma <span class="math notranslate nohighlight">\(m\)</span> registros del set de train con reemplazo (<code class="docutils literal notranslate"><span class="pre">bootstrap=True</span></code>), donde <span class="math notranslate nohighlight">\(m\)</span> es el tamaño del conjunto de entrenamiento. Esto significa que solo alrededor del <span class="math notranslate nohighlight">\(63\%\)</span> de los registros del set de entrenamiento se muestrean en promedio para cada predictor. El <span class="math notranslate nohighlight">\(37\%\)</span> restante de los registros que no son muestreados se denominan registros (instancias) <em><strong>out-of-bag (oob)</strong></em>.</p>
 <p>El <em><strong>Out-of-Bag (OOB)</strong></em> es una técnica útil para evaluar el rendimiento de un modelo de <em><strong>Random Forest</strong></em> durante el entrenamiento, sin necesidad de un conjunto de validación separado.</p>
 <section id="como-funciona-el-oob">
-<h3><em><strong>¿Cómo Funciona el OOB?</strong></em><a class="headerlink" href="#como-funciona-el-oob" title="Link to this heading">#</a></h3>
+<h4><em><strong>¿Cómo Funciona el OOB?</strong></em><a class="headerlink" href="#como-funciona-el-oob" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p><em><strong>Selección de Datos por Bootstrap:</strong></em></p>
 <ul class="simple">
@@ -2367,7 +2373,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </ol>
 </section>
 <section id="por-que-el-oob-score-puede-ser-mas-bajo">
-<h3><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em><a class="headerlink" href="#por-que-el-oob-score-puede-ser-mas-bajo" title="Link to this heading">#</a></h3>
+<h4><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em><a class="headerlink" href="#por-que-el-oob-score-puede-ser-mas-bajo" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p><em><strong>Menos Árboles Contribuyen:</strong></em></p>
 <ul class="simple">
@@ -2387,7 +2393,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </ol>
 </section>
 <section id="notas">
-<h3><em><strong>Notas:</strong></em><a class="headerlink" href="#notas" title="Link to this heading">#</a></h3>
+<h4><em><strong>Notas:</strong></em><a class="headerlink" href="#notas" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><em><strong>Evaluación Comparable:</strong></em> Aunque es más conservador, el OOB Score puede reflejar mejor cómo el modelo generalizará en datos no vistos.</p></li>
 <li><p><em><strong>Sesgo en Datos Desbalanceados:</strong></em> En conjuntos con clases altamente desbalanceadas, el OOB Score puede subestimar el rendimiento real debido al sesgo hacia la clase mayoritaria.</p></li>
@@ -2597,6 +2603,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 </section>
+</section>
 <section id="como-elegir-un-modelo-de-clasificacion">
 <h3><em><strong>¿Cómo Elegir un Modelo de Clasificación?</strong></em><a class="headerlink" href="#como-elegir-un-modelo-de-clasificacion" title="Link to this heading">#</a></h3>
 <p>La elección del modelo de clasificación depende de múltiples factores, siendo el rendimiento predictivo, como el AUC (Área bajo la curva), uno de los más importantes. Sin embargo, cuando el rendimiento de los modelos es similar, como en este caso, donde todos los modelos tienen resultados comparables, la decisión puede basarse en otros criterios como la varianza, la eficiencia computacional y el propósito del análisis.</p>
@@ -2669,6 +2676,87 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </ul>
 </li>
 </ol>
+<section id="hiperparametros-de-random-forest-en-scikit-learn-recomendaciones-y-explicaciones">
+<h3><em><strong>Hiperparámetros de Random Forest en Scikit-learn: Recomendaciones y Explicaciones</strong></em><a class="headerlink" href="#hiperparametros-de-random-forest-en-scikit-learn-recomendaciones-y-explicaciones" title="Link to this heading">#</a></h3>
+<p>Un <strong>Random Forest</strong> es un modelo basado en árboles de decisión que utiliza el principio de ensembles para mejorar la precisión y reducir el sobreajuste. A continuación, se describen los hiperparámetros principales, incluidas las recomendaciones para optimizarlos:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_estimators</span></code></p></li>
+<li><p><strong>Descripción</strong>: Número de árboles en el bosque.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Comienza con <strong>100</strong> y aumenta hasta que el rendimiento se estabilice (e.g., 200-500).</p></li>
+<li><p>Más árboles ofrecen más estabilidad, pero aumentan el tiempo de cómputo.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">criterion</span></code></p></li>
+<li><p><strong>Descripción</strong>: Función para medir la calidad de una división.</p></li>
+<li><p><strong>Opciones</strong>:</p>
+<ul>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">gini</span></code></strong>: Índice de Gini (predeterminado). Mide la impureza de las particiones.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">entropy</span></code></strong>: Ganancia de información. Basado en la reducción de entropía.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">log_loss</span></code></strong>: Pérdida logarítmica (desde Scikit-learn 1.1). Permite obtener probabilidades calibradas.</p></li>
+</ul>
+</li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Usa <strong><code class="docutils literal notranslate"><span class="pre">gini</span></code></strong> como punto de partida para la mayoría de los problemas.</p></li>
+<li><p>Experimenta con <strong><code class="docutils literal notranslate"><span class="pre">entropy</span></code></strong> si prefieres divisiones basadas en entropía.</p></li>
+<li><p>Usa <strong><code class="docutils literal notranslate"><span class="pre">log_loss</span></code></strong> si necesitas probabilidades calibradas o si el modelo debe ser compatible con métricas de puntuación probabilística (e.g., log-loss o Brier score).</p></li>
+</ul>
+</li>
+<li><p><strong>Nota</strong>: <code class="docutils literal notranslate"><span class="pre">log_loss</span></code> es útil para clasificación multiclase y puede ser más robusto cuando las clases están desbalanceadas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_depth</span></code></p></li>
+<li><p><strong>Descripción</strong>: Profundidad máxima de cada árbol.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Usa valores entre <strong>5 y 20</strong> para evitar el sobreajuste.</p></li>
+<li><p>Si no se especifica, los árboles crecen hasta que las hojas sean puras.</p></li>
+<li><p>Limitar la profundidad es útil para datos ruidosos.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code></p></li>
+<li><p><strong>Descripción</strong>: Número mínimo de muestras para dividir un nodo.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Valor predeterminado: <strong>2</strong>.</p></li>
+<li><p>Para evitar divisiones con pocas observaciones, utiliza valores más altos, como <strong>0.01</strong> del total de datos.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code></p></li>
+<li><p><strong>Descripción</strong>: Mínimo de muestras en una hoja.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Valores pequeños (<strong>1-5</strong>) para datos grandes.</p></li>
+<li><p>Valores más altos (<strong>10-50</strong>) en datos ruidosos para árboles más simples.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_features</span></code></p></li>
+<li><p><strong>Descripción</strong>: Número máximo de características consideradas en cada división.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Clasificación: Usa <code class="docutils literal notranslate"><span class="pre">&quot;sqrt&quot;</span></code> (raíz cuadrada del total de variables).</p></li>
+<li><p>Para alta dimensionalidad: Usa <code class="docutils literal notranslate"><span class="pre">&quot;log2&quot;</span></code> o valores pequeños.</p></li>
+<li><p>Predeterminado (<code class="docutils literal notranslate"><span class="pre">auto</span></code>) funciona bien para la mayoría de los casos.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bootstrap</span></code></p></li>
+<li><p><strong>Descripción</strong>: Si usar muestreo con reemplazo.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Usa <code class="docutils literal notranslate"><span class="pre">True</span></code> (predeterminado) para conjuntos grandes.</p></li>
+<li><p>Cambia a <code class="docutils literal notranslate"><span class="pre">False</span></code> para conjuntos de datos pequeños.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">class_weight</span></code></p></li>
+<li><p><strong>Descripción</strong>: Pesos de las clases en problemas de clasificación.</p></li>
+<li><p><strong>Recomendación</strong>:</p>
+<ul>
+<li><p>Usa <code class="docutils literal notranslate"><span class="pre">&quot;balanced&quot;</span></code> si hay desbalance entre las clases.</p></li>
+<li><p>Asigna pesos personalizados si tienes conocimiento previo sobre su importancia.</p></li>
+</ul>
+</li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -2747,7 +2835,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notas-adicionales"><em><strong>Notas Adicionales:</strong></em></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-evaluation"><em><strong>Out-of-Bag Evaluation</strong></em></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Random Forrest.</strong></em></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-random-forrest"><em><strong>Algoritmo Random Forrest.</strong></em></a></li>
 </ul>
@@ -2758,19 +2845,25 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-con-todas-las-covariables"><em><strong>Modelo con todas las covariables</strong></em></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-en-random-forest"><em><strong>Feature Importance en Random Forest</strong></em></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impacto-de-las-variables-categoricas"><strong>Impacto de las Variables Categóricas</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion"><strong>Interpretación</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-limitaciones"><strong>Ventajas y Limitaciones</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#impacto-de-las-variables-categoricas"><em><strong>Impacto de las Variables Categóricas</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion"><em><strong>Interpretación</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-limitaciones"><em><strong>Ventajas y Limitaciones</strong></em></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-oob-en-random-forest"><em><strong>Out-of-Bag (OOB) en Random Forest</strong></em></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-funciona-el-oob"><em><strong>¿Cómo Funciona el OOB?</strong></em></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-el-oob-score-puede-ser-mas-bajo"><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notas"><em><strong>Notas:</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#out-of-bag-evaluation"><em><strong>Out-of-Bag Evaluation</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#como-funciona-el-oob"><em><strong>¿Cómo Funciona el OOB?</strong></em></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#por-que-el-oob-score-puede-ser-mas-bajo"><em><strong>¿Por qué el OOB Score puede ser más bajo?</strong></em></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notas"><em><strong>Notas:</strong></em></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-elegir-un-modelo-de-clasificacion"><em><strong>¿Cómo Elegir un Modelo de Clasificación?</strong></em></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><em><strong>Conclusiones</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones"><em><strong>Conclusiones</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hiperparametros-de-random-forest-en-scikit-learn-recomendaciones-y-explicaciones"><em><strong>Hiperparámetros de Random Forest en Scikit-learn: Recomendaciones y Explicaciones</strong></em></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

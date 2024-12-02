@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Métodos Estadísticos - Ucentral 2024-II &#8212; My sample book</title>
+    <title>Métodos Estadísticos - Ucentral 2024-II &#8212; Metodos Estadisticos</title>
   
   
   
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -150,8 +150,8 @@
       
     
     
-    <img src="../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo2.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
   
   
 </a></div>
@@ -175,7 +175,7 @@
         <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
-<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de componente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
@@ -191,6 +191,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
 <li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
 </ul>
@@ -400,7 +404,7 @@
   <div align='center'>
 <section class="tex2jax_ignore mathjax_ignore" id="metodos-estadisticos-ucentral-2024-ii">
 <h1><strong>Métodos Estadísticos - Ucentral 2024-II</strong><a class="headerlink" href="#metodos-estadisticos-ucentral-2024-ii" title="Link to this heading">#</a></h1>
-<p>Luis Andres Campos Maldonado, <a class="reference external" href="mailto:lcamposm&#37;&#52;&#48;ucentral&#46;edu&#46;co">lcamposm<span>&#64;</span>ucentral<span>&#46;</span>edu<span>&#46;</span>co</a></p>
+<p><a class="reference external" href="https://www.linkedin.com/in/lacamposm/">Luis Andres Campos Maldonado</a>, <a class="reference external" href="mailto:lcamposm&#37;&#52;&#48;ucentral&#46;edu&#46;co">lcamposm<span>&#64;</span>ucentral<span>&#46;</span>edu<span>&#46;</span>co</a></p>
  </div>
 <div align='center'> 
 <section id="lenguaje-base-python-3-10-12">
@@ -461,6 +465,12 @@
 <li><p><em>Lectura 10: DBSCAN</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_10_DBSCAN.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
 <li><p><em>Lectura 11: Linear Regression</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_11_Linear_Regression.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
 <li><p><em>Lectura 12: Logistic Regression</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_12_Logistic_Regression.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 13: Decision Tree</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_13_Arboles_de_decision.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 14: Random Forrest</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_14_Random_Forrest.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 15: Cross Validation</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_15_Cross_Validation.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 16: Introduccion Boosting</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_16_Intro_Metodos_de_Boosting.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 17: XgBoost, LigthGBM, Catboost</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_17_LigthGBM_XgBoost_CatBoost.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
+<li><p><em>Lectura 18: Intoduccion a SVM</em> <a class="reference external" href="https://colab.research.google.com/github/lacamposm/Metodos-Estadisticos/blob/main/Lectura_18_Intro_to_SVM.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p></li>
 </ul>
 </section>
 <section id="mini-proyecto-de-ejemplo">
