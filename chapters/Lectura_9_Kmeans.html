@@ -1,0 +1,4974 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>K-means clustering &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_9_Kmeans';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DBSCAN clustering" href="Lectura_10_DBSCAN.html" />
+    <link rel="prev" title="Clusters jerárquicos." href="Lectura_8_Cluster_Jerarquico.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_9_Kmeans.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_9_Kmeans.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>K-means clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong><span class="math notranslate nohighlight">\(k\)</span>-means clustering</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-de-k-means"><em><strong>Algoritmo de <span class="math notranslate nohighlight">\(k\)</span>-means.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-k-means"><em><strong>Método <span class="math notranslate nohighlight">\(k\)</span>-means</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cuantos-cluster-debemos-seleccionar"><em><strong>¿Cuántos cluster debemos seleccionar?</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-del-codo"><em><strong>Método del codo.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-silhouette"><em><strong>Coeficiente de silhouette</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gap-statistic"><em><strong>GAP Statistic</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-los-cluster"><em><strong>Visualización de los cluster.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="k-means-clustering">
+<h1><em><strong>K-means clustering</strong></em><a class="headerlink" href="#k-means-clustering" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">utils.plots_clustering</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">cluster_biplot</span><span class="p">,</span>
+    <span class="n">elbow_plot</span><span class="p">,</span>
+    <span class="n">plot_silhouette</span><span class="p">,</span>
+    <span class="n">gap_statistic</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos-Estadisticos/main/data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h2><em><strong><span class="math notranslate nohighlight">\(k\)</span>-means clustering</strong></em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>El k-means clustering es uno de los algoritmos de agrupamiento más simples y más utilizados. Es de los métodos no supervisado para dividir un conjunto de individuos (registros del Dataset) en un conjunto de <span class="math notranslate nohighlight">\(k\)</span> grupos (es decir, <em><strong><span class="math notranslate nohighlight">\(k\)</span> clusters</strong></em>), donde <span class="math notranslate nohighlight">\(k\)</span> representa el número de grupos preestablecidos. Este algoritmo busca que los objetos <em><strong>dentro del mismo cluster</strong></em> sean lo más similares posibles (es decir, alta similitud intraclase), mientras que <em><strong>distintos clusters</strong></em> sean lo más diferente posible (es decir, baja similitud entre clases).</p>
+<p>En el <span class="math notranslate nohighlight">\(k\)</span>-means clustering, cada grupo está representado por su centro (es decir, <em><strong>centroide</strong></em>) que corresponde a la media de puntos asignados al <em><strong>cluster</strong></em>.</p>
+<section id="algoritmo-de-k-means">
+<h3><em><strong>Algoritmo de <span class="math notranslate nohighlight">\(k\)</span>-means.</strong></em><a class="headerlink" href="#algoritmo-de-k-means" title="Link to this heading">#</a></h3>
+<p>El primer paso cuando se usa el algoritmo es indicar el número <span class="math notranslate nohighlight">\(k\)</span> de clusters que se desean obtener. El algoritmo comienza seleccionando aleatoriamente <span class="math notranslate nohighlight">\(k\)</span> objetos del conjunto de datos para que sirvan como centroides iniciales de los cluster. Seguido, cada uno de los registros restantes se asigna a su centroide más cercano (<em>asignación de cluster</em>), donde más cercano se asigna por la distacia euclideana. Después del paso de asignación, el algoritmo calcula el nuevo centroide de cada cluster (<em>actualización del centroide</em>). Ahora que los centroides se han vuelto a calcular, para cada observación se verifican las distancias para determinar si podría estar más cerca a un clúster diferente. Todos los objetos se reasignan nuevamente utilizando el  centroide  actualizado del clúster. Los pasos de asignación de cluster y actualización del centroide se repiten iterativamente hasta que las asignaciones de clústeres dejan de cambiar (se logra la convergencia), es decir, los clusters formados en la iteración actual son los mismos que los obtenidos en la iteración anterior.</p>
+<p><em><strong>El algoritmo <span class="math notranslate nohighlight">\(k\)</span>-means se puede resumir de la siguiente manera:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Especifique el número de cluster (<span class="math notranslate nohighlight">\(k\)</span>) que se crearán.</p></li>
+<li><p>Seleccione aleatoriamente <span class="math notranslate nohighlight">\(k\)</span> registros del conjunto de datos como centroides de los clusters iniciales.</p></li>
+<li><p>Asigna cada registro a su <em><strong>centroide</strong></em> más cercano, basado en alguna distancia.</p></li>
+<li><p>Para cada uno de los <span class="math notranslate nohighlight">\(k\)</span> clusters, se actualiza el <em><strong>centroide del cluster</strong></em>.</p></li>
+<li><p>Iterar los pasos 3 y 4 hasta que las asignaciones de los <em><strong>clusters</strong></em> dejen de cambiar o el número máximo de
+iteraciones se alcanza.</p></li>
+</ol>
+<p><em><strong>Se asume que entre los individuos se puede establecer una distancia euclidiana.</strong></em></p>
+<p>La idea básica detrás de <span class="math notranslate nohighlight">\(k\)</span>-means clustering consiste en definir grupos de modo que el total de la variación <em><strong>intra-cluster</strong></em> se minimize (conocida como <em><strong>inertia, within-cluster sum-of-squares criterion, o within-cluster variation</strong></em>).</p>
+<p>El algoritmo estándar define la variación <em><strong>intra-cluster</strong></em> como la suma de las distancias al cuadrado (euclidiana) al centroide y los elementos del cluster:</p>
+<div class="math notranslate nohighlight">
+\[W(C_k) = \sum_{x_i \in C_{k}}||x_i -\mu_k||^2\]</div>
+<p>• <span class="math notranslate nohighlight">\(x_i\)</span> es un registro que pertence al cluster <span class="math notranslate nohighlight">\(C_k\)</span>.</p>
+<p>• <span class="math notranslate nohighlight">\(\mu_k\)</span> es el valor promedio de los registros asignados al cluster <span class="math notranslate nohighlight">\(C_k\)</span></p>
+<p>Cada registro (<span class="math notranslate nohighlight">\(x_i\)</span>) se asigna a un cluster de tal forma que la suma de los cuadrados de la distancia de la observación a sus <em><strong>centroides</strong></em> <span class="math notranslate nohighlight">\(\mu_k\)</span> sea mínimo.</p>
+<p>Definimos la <em><strong>inercia</strong></em> o <em><strong>within-cluster sum-of-squares</strong></em> como sigue:</p>
+<div class="math notranslate nohighlight">
+\[WCSS =\sum_{n=1}^{k} W(C_n)= \sum_{n=1}^{k} \sum_{x_i \in C_{n}}||x_i -\mu_n||^2\]</div>
+<p>El algoritmo <span class="math notranslate nohighlight">\(k\)</span>-means tiene como objetivo elegir <em><strong>centroides</strong></em> que minimicen la <em><strong>inercia</strong></em>. Esto mide la compacidad (es decir <em>goodness</em>) del agrupamiento, se desea que sea lo mas baja posible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_kmeans_algorithm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a37a09ae4af1069de8e21df09b5a64e8d0e94962c34e50292e0646365f226740.png" src="../_images/a37a09ae4af1069de8e21df09b5a64e8d0e94962c34e50292e0646365f226740.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="metodo-k-means">
+<h2><em><strong>Método <span class="math notranslate nohighlight">\(k\)</span>-means</strong></em><a class="headerlink" href="#metodo-k-means" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html"><code class="docutils literal notranslate"><span class="pre">sklearn.cluster.KMeans</span></code></a> para realizar el <span class="math notranslate nohighlight">\(k\)</span>-means clustering.</p>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_usarrests</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;USArrests.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_usarrests</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Escalamos la información.</span>
+<span class="n">scaled_data</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>1.255179</td>
+      <td>0.790787</td>
+      <td>-0.526195</td>
+      <td>-0.003451</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0.513019</td>
+      <td>1.118060</td>
+      <td>-1.224067</td>
+      <td>2.509424</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0.072361</td>
+      <td>1.493817</td>
+      <td>1.009122</td>
+      <td>1.053466</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0.234708</td>
+      <td>0.233212</td>
+      <td>-1.084492</td>
+      <td>-0.186794</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0.281093</td>
+      <td>1.275635</td>
+      <td>1.776781</td>
+      <td>2.088814</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>0.025976</td>
+      <td>0.402909</td>
+      <td>0.869548</td>
+      <td>1.883901</td>
+    </tr>
+    <tr>
+      <th>Connecticut</th>
+      <td>-1.040880</td>
+      <td>-0.736484</td>
+      <td>0.799761</td>
+      <td>-1.092723</td>
+    </tr>
+    <tr>
+      <th>Delaware</th>
+      <td>-0.437875</td>
+      <td>0.815030</td>
+      <td>0.450825</td>
+      <td>-0.585834</td>
+    </tr>
+    <tr>
+      <th>Florida</th>
+      <td>1.765415</td>
+      <td>1.990786</td>
+      <td>1.009122</td>
+      <td>1.150530</td>
+    </tr>
+    <tr>
+      <th>Georgia</th>
+      <td>2.229265</td>
+      <td>0.487757</td>
+      <td>-0.386621</td>
+      <td>0.492653</td>
+    </tr>
+    <tr>
+      <th>Hawaii</th>
+      <td>-0.577030</td>
+      <td>-1.512241</td>
+      <td>1.218484</td>
+      <td>-0.111300</td>
+    </tr>
+    <tr>
+      <th>Idaho</th>
+      <td>-1.203228</td>
+      <td>-0.615272</td>
+      <td>-0.805344</td>
+      <td>-0.758392</td>
+    </tr>
+    <tr>
+      <th>Illinois</th>
+      <td>0.605789</td>
+      <td>0.948363</td>
+      <td>1.218484</td>
+      <td>0.298525</td>
+    </tr>
+    <tr>
+      <th>Indiana</th>
+      <td>-0.136372</td>
+      <td>-0.700121</td>
+      <td>-0.037685</td>
+      <td>-0.025021</td>
+    </tr>
+    <tr>
+      <th>Iowa</th>
+      <td>-1.295998</td>
+      <td>-1.391029</td>
+      <td>-0.595982</td>
+      <td>-1.071153</td>
+    </tr>
+    <tr>
+      <th>Kansas</th>
+      <td>-0.414682</td>
+      <td>-0.675878</td>
+      <td>0.032102</td>
+      <td>-0.348567</td>
+    </tr>
+    <tr>
+      <th>Kentucky</th>
+      <td>0.443441</td>
+      <td>-0.748605</td>
+      <td>-0.944918</td>
+      <td>-0.531910</td>
+    </tr>
+    <tr>
+      <th>Louisiana</th>
+      <td>1.765415</td>
+      <td>0.948363</td>
+      <td>0.032102</td>
+      <td>0.104398</td>
+    </tr>
+    <tr>
+      <th>Maine</th>
+      <td>-1.319191</td>
+      <td>-1.063757</td>
+      <td>-1.014705</td>
+      <td>-1.448624</td>
+    </tr>
+    <tr>
+      <th>Maryland</th>
+      <td>0.814521</td>
+      <td>1.566544</td>
+      <td>0.101889</td>
+      <td>0.708350</td>
+    </tr>
+    <tr>
+      <th>Massachusetts</th>
+      <td>-0.785763</td>
+      <td>-0.263757</td>
+      <td>1.358058</td>
+      <td>-0.531910</td>
+    </tr>
+    <tr>
+      <th>Michigan</th>
+      <td>1.000062</td>
+      <td>1.021090</td>
+      <td>0.590399</td>
+      <td>1.495646</td>
+    </tr>
+    <tr>
+      <th>Minnesota</th>
+      <td>-1.180036</td>
+      <td>-1.197090</td>
+      <td>0.032102</td>
+      <td>-0.682898</td>
+    </tr>
+    <tr>
+      <th>Mississippi</th>
+      <td>1.927762</td>
+      <td>1.069575</td>
+      <td>-1.503215</td>
+      <td>-0.445631</td>
+    </tr>
+    <tr>
+      <th>Missouri</th>
+      <td>0.281093</td>
+      <td>0.087757</td>
+      <td>0.311251</td>
+      <td>0.751490</td>
+    </tr>
+    <tr>
+      <th>Montana</th>
+      <td>-0.414682</td>
+      <td>-0.748605</td>
+      <td>-0.875131</td>
+      <td>-0.521125</td>
+    </tr>
+    <tr>
+      <th>Nebraska</th>
+      <td>-0.808955</td>
+      <td>-0.833454</td>
+      <td>-0.247047</td>
+      <td>-0.510340</td>
+    </tr>
+    <tr>
+      <th>Nevada</th>
+      <td>1.023254</td>
+      <td>0.984726</td>
+      <td>1.078909</td>
+      <td>2.671197</td>
+    </tr>
+    <tr>
+      <th>New Hampshire</th>
+      <td>-1.319191</td>
+      <td>-1.378908</td>
+      <td>-0.665769</td>
+      <td>-1.265281</td>
+    </tr>
+    <tr>
+      <th>New Jersey</th>
+      <td>-0.089987</td>
+      <td>-0.142545</td>
+      <td>1.637207</td>
+      <td>-0.262288</td>
+    </tr>
+    <tr>
+      <th>New Mexico</th>
+      <td>0.837714</td>
+      <td>1.384726</td>
+      <td>0.311251</td>
+      <td>1.172100</td>
+    </tr>
+    <tr>
+      <th>New York</th>
+      <td>0.768136</td>
+      <td>1.008969</td>
+      <td>1.427845</td>
+      <td>0.525008</td>
+    </tr>
+    <tr>
+      <th>North Carolina</th>
+      <td>1.208794</td>
+      <td>2.015028</td>
+      <td>-1.433428</td>
+      <td>-0.553480</td>
+    </tr>
+    <tr>
+      <th>North Dakota</th>
+      <td>-1.620693</td>
+      <td>-1.524362</td>
+      <td>-1.503215</td>
+      <td>-1.502548</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>-0.113180</td>
+      <td>-0.615272</td>
+      <td>0.660186</td>
+      <td>0.018119</td>
+    </tr>
+    <tr>
+      <th>Oklahoma</th>
+      <td>-0.275527</td>
+      <td>-0.239515</td>
+      <td>0.171676</td>
+      <td>-0.132870</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>-0.669800</td>
+      <td>-0.142545</td>
+      <td>0.101889</td>
+      <td>0.870123</td>
+    </tr>
+    <tr>
+      <th>Pennsylvania</th>
+      <td>-0.345105</td>
+      <td>-0.784969</td>
+      <td>0.450825</td>
+      <td>-0.682898</td>
+    </tr>
+    <tr>
+      <th>Rhode Island</th>
+      <td>-1.017688</td>
+      <td>0.039273</td>
+      <td>1.497632</td>
+      <td>-1.394700</td>
+    </tr>
+    <tr>
+      <th>South Carolina</th>
+      <td>1.533490</td>
+      <td>1.311999</td>
+      <td>-1.224067</td>
+      <td>0.136752</td>
+    </tr>
+    <tr>
+      <th>South Dakota</th>
+      <td>-0.924918</td>
+      <td>-1.027393</td>
+      <td>-1.433428</td>
+      <td>-0.909380</td>
+    </tr>
+    <tr>
+      <th>Tennessee</th>
+      <td>1.255179</td>
+      <td>0.208970</td>
+      <td>-0.456408</td>
+      <td>0.611287</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>1.139217</td>
+      <td>0.366545</td>
+      <td>1.009122</td>
+      <td>0.460298</td>
+    </tr>
+    <tr>
+      <th>Utah</th>
+      <td>-1.064073</td>
+      <td>-0.615272</td>
+      <td>1.009122</td>
+      <td>0.179892</td>
+    </tr>
+    <tr>
+      <th>Vermont</th>
+      <td>-1.295998</td>
+      <td>-1.487999</td>
+      <td>-2.340661</td>
+      <td>-1.081938</td>
+    </tr>
+    <tr>
+      <th>Virginia</th>
+      <td>0.165131</td>
+      <td>-0.178909</td>
+      <td>-0.177259</td>
+      <td>-0.057376</td>
+    </tr>
+    <tr>
+      <th>Washington</th>
+      <td>-0.878533</td>
+      <td>-0.312242</td>
+      <td>0.520612</td>
+      <td>0.535792</td>
+    </tr>
+    <tr>
+      <th>West Virginia</th>
+      <td>-0.484260</td>
+      <td>-1.087999</td>
+      <td>-1.852151</td>
+      <td>-1.286851</td>
+    </tr>
+    <tr>
+      <th>Wisconsin</th>
+      <td>-1.203228</td>
+      <td>-1.427393</td>
+      <td>0.032102</td>
+      <td>-1.125078</td>
+    </tr>
+    <tr>
+      <th>Wyoming</th>
+      <td>-0.229142</td>
+      <td>-0.118303</td>
+      <td>-0.386621</td>
+      <td>-0.607404</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>       <span class="c1"># Número de clusters</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>      <span class="c1"># Semilla aleatoria.</span>
+<span class="p">)</span>                                  
+
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span> <span class="c1"># Ajustamos el modelo.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=2, random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=2, random_state=0)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Atributos.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>104.96163315756873
+[[ 1.01513667  1.02412028  0.19959126  0.85556386]
+ [-0.67675778 -0.68274685 -0.13306084 -0.57037591]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">centroides</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;centroide_cluster_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+<span class="n">centroides</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>centroide_cluster_0</th>
+      <td>1.015137</td>
+      <td>1.024120</td>
+      <td>0.199591</td>
+      <td>0.855564</td>
+    </tr>
+    <tr>
+      <th>centroide_cluster_1</th>
+      <td>-0.676758</td>
+      <td>-0.682747</td>
+      <td>-0.133061</td>
+      <td>-0.570376</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot centroides.</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">centroides</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">temp</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;cluster0&quot;</span><span class="p">,</span><span class="s2">&quot;cluster1&quot;</span><span class="p">]</span>
+<span class="n">X_axis</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">columns</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="c1">##</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">X_axis</span><span class="p">,</span><span class="n">temp</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Features&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plot centroides&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0255654d627ec6ba043c120464c1d06dde21a0065b5ab8e8baa34eb87764a521.png" src="../_images/0255654d627ec6ba043c120464c1d06dde21a0065b5ab8e8baa34eb87764a521.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cluster de cada instancia</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 0 0 1 0 0 1 1 0 0 1 1 0 1 1 1 1 0 1 0 1 0 1 0 0 1 1 0 1 1 0 0 0 1 1 1 1
+ 1 1 0 1 0 0 1 1 1 1 1 1 1]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cluster</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_cluster</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_cluster</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>7.9</td>
+      <td>204</td>
+      <td>78</td>
+      <td>38.7</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Connecticut</th>
+      <td>3.3</td>
+      <td>110</td>
+      <td>77</td>
+      <td>11.1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Delaware</th>
+      <td>5.9</td>
+      <td>238</td>
+      <td>72</td>
+      <td>15.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Florida</th>
+      <td>15.4</td>
+      <td>335</td>
+      <td>80</td>
+      <td>31.9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Georgia</th>
+      <td>17.4</td>
+      <td>211</td>
+      <td>60</td>
+      <td>25.8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Hawaii</th>
+      <td>5.3</td>
+      <td>46</td>
+      <td>83</td>
+      <td>20.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Idaho</th>
+      <td>2.6</td>
+      <td>120</td>
+      <td>54</td>
+      <td>14.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Illinois</th>
+      <td>10.4</td>
+      <td>249</td>
+      <td>83</td>
+      <td>24.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Indiana</th>
+      <td>7.2</td>
+      <td>113</td>
+      <td>65</td>
+      <td>21.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Iowa</th>
+      <td>2.2</td>
+      <td>56</td>
+      <td>57</td>
+      <td>11.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Kansas</th>
+      <td>6.0</td>
+      <td>115</td>
+      <td>66</td>
+      <td>18.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Kentucky</th>
+      <td>9.7</td>
+      <td>109</td>
+      <td>52</td>
+      <td>16.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Louisiana</th>
+      <td>15.4</td>
+      <td>249</td>
+      <td>66</td>
+      <td>22.2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Maine</th>
+      <td>2.1</td>
+      <td>83</td>
+      <td>51</td>
+      <td>7.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Maryland</th>
+      <td>11.3</td>
+      <td>300</td>
+      <td>67</td>
+      <td>27.8</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Massachusetts</th>
+      <td>4.4</td>
+      <td>149</td>
+      <td>85</td>
+      <td>16.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Michigan</th>
+      <td>12.1</td>
+      <td>255</td>
+      <td>74</td>
+      <td>35.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Minnesota</th>
+      <td>2.7</td>
+      <td>72</td>
+      <td>66</td>
+      <td>14.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Mississippi</th>
+      <td>16.1</td>
+      <td>259</td>
+      <td>44</td>
+      <td>17.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Missouri</th>
+      <td>9.0</td>
+      <td>178</td>
+      <td>70</td>
+      <td>28.2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Montana</th>
+      <td>6.0</td>
+      <td>109</td>
+      <td>53</td>
+      <td>16.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Nebraska</th>
+      <td>4.3</td>
+      <td>102</td>
+      <td>62</td>
+      <td>16.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Nevada</th>
+      <td>12.2</td>
+      <td>252</td>
+      <td>81</td>
+      <td>46.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New Hampshire</th>
+      <td>2.1</td>
+      <td>57</td>
+      <td>56</td>
+      <td>9.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New Jersey</th>
+      <td>7.4</td>
+      <td>159</td>
+      <td>89</td>
+      <td>18.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New Mexico</th>
+      <td>11.4</td>
+      <td>285</td>
+      <td>70</td>
+      <td>32.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New York</th>
+      <td>11.1</td>
+      <td>254</td>
+      <td>86</td>
+      <td>26.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>North Carolina</th>
+      <td>13.0</td>
+      <td>337</td>
+      <td>45</td>
+      <td>16.1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>North Dakota</th>
+      <td>0.8</td>
+      <td>45</td>
+      <td>44</td>
+      <td>7.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>7.3</td>
+      <td>120</td>
+      <td>75</td>
+      <td>21.4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Oklahoma</th>
+      <td>6.6</td>
+      <td>151</td>
+      <td>68</td>
+      <td>20.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>4.9</td>
+      <td>159</td>
+      <td>67</td>
+      <td>29.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Pennsylvania</th>
+      <td>6.3</td>
+      <td>106</td>
+      <td>72</td>
+      <td>14.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Rhode Island</th>
+      <td>3.4</td>
+      <td>174</td>
+      <td>87</td>
+      <td>8.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>South Carolina</th>
+      <td>14.4</td>
+      <td>279</td>
+      <td>48</td>
+      <td>22.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>South Dakota</th>
+      <td>3.8</td>
+      <td>86</td>
+      <td>45</td>
+      <td>12.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Tennessee</th>
+      <td>13.2</td>
+      <td>188</td>
+      <td>59</td>
+      <td>26.9</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>12.7</td>
+      <td>201</td>
+      <td>80</td>
+      <td>25.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Utah</th>
+      <td>3.2</td>
+      <td>120</td>
+      <td>80</td>
+      <td>22.9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Vermont</th>
+      <td>2.2</td>
+      <td>48</td>
+      <td>32</td>
+      <td>11.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Virginia</th>
+      <td>8.5</td>
+      <td>156</td>
+      <td>63</td>
+      <td>20.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Washington</th>
+      <td>4.0</td>
+      <td>145</td>
+      <td>73</td>
+      <td>26.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>West Virginia</th>
+      <td>5.7</td>
+      <td>81</td>
+      <td>39</td>
+      <td>9.3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Wisconsin</th>
+      <td>2.6</td>
+      <td>53</td>
+      <td>66</td>
+      <td>10.8</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Wyoming</th>
+      <td>6.8</td>
+      <td>161</td>
+      <td>60</td>
+      <td>15.6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cluster</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+    <tr>
+      <th>cluster</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12.165</td>
+      <td>255.250000</td>
+      <td>68.400000</td>
+      <td>29.165000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.870</td>
+      <td>114.433333</td>
+      <td>63.633333</td>
+      <td>15.943333</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Con 4 clusters</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">kmeans1</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="n">kmeans1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=4, random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=4, random_state=0)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">kmeans1</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kmeans1</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>58.241584331343226
+[[ 0.75759426  1.13128272  0.94567938  1.22798509]
+ [-0.44878894 -0.35858791  0.56576856 -0.20455729]
+ [-0.97130281 -1.11783581 -0.93954982 -0.97657842]
+ [ 1.32475684  0.90930557 -0.86737678  0.29612861]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Metodo predict en K-means</span>
+<span class="n">df_to_predict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;new_instance_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">))])</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">df_to_predict</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>new_instance_35</th>
+      <td>-0.113180</td>
+      <td>-0.615272</td>
+      <td>0.660186</td>
+      <td>0.018119</td>
+    </tr>
+    <tr>
+      <th>new_instance_22</th>
+      <td>1.000062</td>
+      <td>1.021090</td>
+      <td>0.590399</td>
+      <td>1.495646</td>
+    </tr>
+    <tr>
+      <th>new_instance_3</th>
+      <td>0.072361</td>
+      <td>1.493817</td>
+      <td>1.009122</td>
+      <td>1.053466</td>
+    </tr>
+    <tr>
+      <th>new_instance_24</th>
+      <td>1.927762</td>
+      <td>1.069575</td>
+      <td>-1.503215</td>
+      <td>-0.445631</td>
+    </tr>
+    <tr>
+      <th>new_instance_13</th>
+      <td>0.605789</td>
+      <td>0.948363</td>
+      <td>1.218484</td>
+      <td>0.298525</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 0, 0, 0, 0], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distancia de las instancia al centroide de cada cluster.</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;distance_cluster_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)],</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span>
+<span class="n">temp</span><span class="p">[</span><span class="s2">&quot;assign_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span>
+<span class="n">temp</span><span class="p">[</span><span class="s2">&quot;assign_cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;assign_cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+<span class="n">temp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>distance_cluster_0</th>
+      <th>distance_cluster_1</th>
+      <th>assign_cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>1.173345</td>
+      <td>2.525795</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>2.241206</td>
+      <td>3.915857</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>1.343111</td>
+      <td>3.039746</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>1.992482</td>
+      <td>1.649881</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>2.147210</td>
+      <td>3.933386</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>1.694303</td>
+      <td>2.949777</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Connecticut</th>
+      <td>3.388652</td>
+      <td>1.130697</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Delaware</th>
+      <td>2.072609</td>
+      <td>1.625288</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Florida</th>
+      <td>1.496565</td>
+      <td>4.168703</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Georgia</th>
+      <td>1.495708</td>
+      <td>3.318037</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Hawaii</th>
+      <td>3.307732</td>
+      <td>1.653913</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Idaho</th>
+      <td>3.350149</td>
+      <td>0.876948</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Illinois</th>
+      <td>1.233588</td>
+      <td>2.624330</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Indiana</th>
+      <td>2.265107</td>
+      <td>0.773839</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Iowa</th>
+      <td>3.939475</td>
+      <td>1.161980</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Kansas</th>
+      <td>2.532264</td>
+      <td>0.381063</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Kentucky</th>
+      <td>2.589281</td>
+      <td>1.385559</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Louisiana</th>
+      <td>1.077478</td>
+      <td>3.017834</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Maine</th>
+      <td>4.073342</td>
+      <td>1.451380</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Maryland</th>
+      <td>0.604721</td>
+      <td>2.995591</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Massachusetts</th>
+      <td>2.858145</td>
+      <td>1.553174</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Michigan</th>
+      <td>0.750115</td>
+      <td>3.241392</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Minnesota</th>
+      <td>3.485322</td>
+      <td>0.746845</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Mississippi</th>
+      <td>2.329723</td>
+      <td>3.427396</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Missouri</th>
+      <td>1.199539</td>
+      <td>1.859004</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Montana</th>
+      <td>2.870059</td>
+      <td>0.791274</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Nebraska</th>
+      <td>2.973730</td>
+      <td>0.238298</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Nevada</th>
+      <td>2.017757</td>
+      <td>4.200854</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New Hampshire</th>
+      <td>4.058382</td>
+      <td>1.289974</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New Jersey</th>
+      <td>2.428732</td>
+      <td>1.965930</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New Mexico</th>
+      <td>0.523620</td>
+      <td>3.130767</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New York</th>
+      <td>1.295806</td>
+      <td>2.930173</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>North Carolina</th>
+      <td>2.381503</td>
+      <td>3.539002</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>North Dakota</th>
+      <td>4.680022</td>
+      <td>2.084610</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>2.207752</td>
+      <td>1.139184</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Oklahoma</th>
+      <td>2.059215</td>
+      <td>0.801072</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>2.051799</td>
+      <td>1.556312</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Pennsylvania</th>
+      <td>2.748280</td>
+      <td>0.688496</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Rhode Island</th>
+      <td>3.442513</td>
+      <td>1.994045</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>South Carolina</th>
+      <td>1.701486</td>
+      <td>3.248773</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>South Dakota</th>
+      <td>3.708679</td>
+      <td>1.409342</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Tennessee</th>
+      <td>1.100953</td>
+      <td>2.455284</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>1.122219</td>
+      <td>2.601086</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Utah</th>
+      <td>2.850016</td>
+      <td>1.421988</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Vermont</th>
+      <td>4.675348</td>
+      <td>2.483361</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Virginia</th>
+      <td>1.773489</td>
+      <td>1.108040</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Washington</th>
+      <td>2.361600</td>
+      <td>1.352362</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>West Virginia</th>
+      <td>3.938125</td>
+      <td>1.915696</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Wisconsin</th>
+      <td>3.857726</td>
+      <td>1.080112</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Wyoming</th>
+      <td>2.310255</td>
+      <td>0.764605</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="cuantos-cluster-debemos-seleccionar">
+<h2><em><strong>¿Cuántos cluster debemos seleccionar?</strong></em><a class="headerlink" href="#cuantos-cluster-debemos-seleccionar" title="Link to this heading">#</a></h2>
+<p>Determinar el número óptimo de clusters en un Dataset es un problema fundamental en el agrupamiento. En <span class="math notranslate nohighlight">\(k\)</span>-means se requiere especificar de antemano el número de clústeres <span class="math notranslate nohighlight">\(k\)</span> que se generarán.</p>
+<p>Desafortunadamente no hay una respuesta definitiva a esta pregunta. El número óptimo de clusters es algo subjetivo y depende del método utilizado para medir
+similitudes y los parámetros utilizados para la partición.</p>
+<p>Una solución simple y popular consiste en inspeccionar el dendrograma producido por el agrupamiento jerárquico para ver si sugiere un número particular de grupos, de igual forma este enfoque también es subjetivo.</p>
+<p>Vamos a describir diferentes métodos para determinar el número óptimo de clusters para <span class="math notranslate nohighlight">\(k\)</span>-means. Estos métodos incluyen métodos directos y métodos de prueba estadísticos:</p>
+<ol class="arabic simple">
+<li><p>Métodos directos: consiste en optimizar un criterio, como el <em><strong>WCSS</strong></em> o la silueta media. Los métodos se denominan <em><strong>elbow method</strong></em> y <em><strong>silhouette</strong></em>, respectivamente.</p></li>
+<li><p>Métodos estadísticos de contraste: consiste en comparar la evidencia contra la hipótesis nula. Un ejemplo es la estadística de <a class="reference internal" href="#"><span class="xref myst"><em><strong>GAP</strong></em></span></a>.</p></li>
+</ol>
+<section id="metodo-del-codo">
+<h3><em><strong>Método del codo.</strong></em><a class="headerlink" href="#metodo-del-codo" title="Link to this heading">#</a></h3>
+<p>La idea básica detrás de los método <span class="math notranslate nohighlight">\(k\)</span>-means, es definir clusters tales que <em><strong>WCSS</strong></em> se minimiza. Recordemos que <em><strong>WCSS</strong></em> mide la compacidad del agrupamiento y queremos que sea lo más pequeño posible.</p>
+<p>El método codo analiza el <em><strong>WCSS</strong></em> como una función del número de clusters. Se debe elegir una cantidad de clusers de tal forma que agregar otro cluster no mejore mucho el valor <em><strong>WCSS</strong></em>.</p>
+<p>El número óptimo de clústeres se puede definir de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>Calcule el algoritmo de clustering <span class="math notranslate nohighlight">\(k\)</span>-means para diferentes valores de <span class="math notranslate nohighlight">\(k\)</span>. Puede variar <span class="math notranslate nohighlight">\(k\)</span> de 1 a 10 grupos.</p></li>
+<li><p>Para cada <span class="math notranslate nohighlight">\(k\)</span>, calcule <em><strong>WCSS</strong></em>.</p></li>
+<li><p>Trazar la curva de <em><strong>WCSS</strong></em> según el número de clusters <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>La ubicación de una curva (codo) en el plot generalmente se considera como un indicador del número adecuado de clusters.</p></li>
+</ol>
+<p>Tenga en cuenta que el método del codo a veces es ambiguo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elbow_plot</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scaled_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>Según lo observado, ¿cuántos cluster usted considera que se deben formar?</strong></em></p>
+</section>
+<section id="coeficiente-de-silhouette">
+<h3><em><strong>Coeficiente de silhouette</strong></em><a class="headerlink" href="#coeficiente-de-silhouette" title="Link to this heading">#</a></h3>
+<p>El coeficiente de silueta mide qué tan bien se agrupa una observación y estima la <em><strong>distancia promedio entre clusters</strong></em>. El plot de silueta muestra una medida de qué tan cerca está cada punto en un cluster de los puntos en los clusters vecinos.</p>
+<p>Para cada observación <span class="math notranslate nohighlight">\(i\)</span>, el ancho de la silueta <span class="math notranslate nohighlight">\(s_i\)</span> se calcula de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>Para cada observación <span class="math notranslate nohighlight">\(i\)</span>, calculamos la disimilitud (distancia) promedio <span class="math notranslate nohighlight">\(a_i\)</span> entre <span class="math notranslate nohighlight">\(i\)</span> y todos los otros puntos del clúster al que pertenezca <span class="math notranslate nohighlight">\(i\)</span>.</p></li>
+<li><p>Para todos los demás clusters <span class="math notranslate nohighlight">\(C\)</span>, a los que no pertenezca <span class="math notranslate nohighlight">\(i\)</span>, calcule el promedio de disimilitud <span class="math notranslate nohighlight">\(d(i,C)\)</span> de <span class="math notranslate nohighlight">\(i\)</span> con todos los puntos de <span class="math notranslate nohighlight">\(C\)</span>. La menor de estas <span class="math notranslate nohighlight">\(d(i,C)\)</span> se define como <span class="math notranslate nohighlight">\(b_i = min_C\  d(i,C)\)</span>. El valor de <span class="math notranslate nohighlight">\(b_i\)</span> puede verse como la disimilitud promedio entre <span class="math notranslate nohighlight">\(i\)</span> y su cluster “vecino”, es decir, el más cercano al que <em><strong>no</strong></em> pertenece.</p></li>
+<li><p>Finalmente, el ancho de la silueta de la observación <span class="math notranslate nohighlight">\(i\)</span> se define mediante la fórmula:
+$<span class="math notranslate nohighlight">\(S_i = \frac{(b_i - a_i)}{max(a_i, b_i)}\)</span>$</p></li>
+</ol>
+<p>El ancho de la silueta se puede interpretar de la siguiente manera:</p>
+<ul class="simple">
+<li><p>Las observaciones con un <span class="math notranslate nohighlight">\(S_i\)</span> grande (casi 1) están muy bien agrupadas.</p></li>
+<li><p>Un <span class="math notranslate nohighlight">\(S_i\)</span> pequeño (alrededor de 0) significa que la observación se encuentra entre dos grupos.</p></li>
+<li><p>Las observaciones con un <span class="math notranslate nohighlight">\(S_i\)</span> negativo probablemente estén ubicadas en el cluster incorrecto.</p></li>
+</ul>
+<p>El algoritmo es similar al método del codo y se puede calcular de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>Calcule el algoritmo <span class="math notranslate nohighlight">\(k\)</span>-means  para diferentes valores de <span class="math notranslate nohighlight">\(k\)</span>. Por ejemplo, variando <span class="math notranslate nohighlight">\(k\)</span> de 1 a 10 grupos.</p></li>
+<li><p>Para cada <span class="math notranslate nohighlight">\(k\)</span>, calcule la silueta promedio de las observaciones.</p></li>
+<li><p>Trazar el plot según el número de clusters y la silueta promedio.</p></li>
+<li><p>La ubicación del máximo se considera como el número apropiado de clusters.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_silhouette</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scaled_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>El criterio estricto, nos diría que la mejor elección son 2 clusters.</strong></em></p>
+</section>
+<section id="gap-statistic">
+<h3><em><strong>GAP Statistic</strong></em><a class="headerlink" href="#gap-statistic" title="Link to this heading">#</a></h3>
+<p>Este estadístico compara, para diferentes valores de <span class="math notranslate nohighlight">\(k\)</span>, el <em><strong>WCSS</strong></em> observado frente al valor esperado acorde a una distribución uniforme de referencia. La estimación del número óptimo de clusters es el valor <span class="math notranslate nohighlight">\(k\)</span> con el que se consigue maximizar el estadístico <em><strong>GAP</strong></em>, es decir, encuentra el valor de <span class="math notranslate nohighlight">\(k\)</span> con el que se consigue una estructura de clusters lo más alejada posible de una distribución uniforme aleatoria. Este método puede aplicarse a cualquier tipo de clustering.</p>
+<p>El algoritmo del gap statistic method es el siguiente:</p>
+<ol class="arabic simple">
+<li><p>Hacer clustering de los datos para un rango de valores de <span class="math notranslate nohighlight">\(k\)</span> y calcular para cada uno el valor de <em><strong>WCSS</strong></em>.</p></li>
+<li><p>Simular <span class="math notranslate nohighlight">\(B\)</span> sets de datos de referencia, todos ellos con una distribución aleatoria uniforme. Aplicar clustering a cada uno de los sets con el mismo rango de valores <span class="math notranslate nohighlight">\(k\)</span> empleado en los datos originales, calculando en cada caso <span class="math notranslate nohighlight">\(W_{kb}\)</span>. Se recomienda emplear valores de <span class="math notranslate nohighlight">\(B=500\)</span>.</p></li>
+<li><p>Calcular el estadístico <em><strong>GAP</strong></em> para cada valor de <span class="math notranslate nohighlight">\(k\)</span> como la desviación de la varianza observada <em><strong>WCSS</strong></em> respecto del valor esperado acorde a la distribución de referencia <span class="math notranslate nohighlight">\(W_{kb}\)</span>.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[GAP(k)=\frac{1}{B}\sum_{b=1}^{B}log(W_{kb})−log(WCSS)\]</div>
+<p>La estimación de los clústeres óptimos será el valor que maximice la estadística de <em><strong>GAP</strong></em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gap_statistic</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">,</span> <span class="n">nrefs</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">max_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">scaled_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>En este caso el caso el número de clusters a selecionar debe ser de <em><strong>4 clusters.</strong></em></p>
+</section>
+</section>
+<section id="visualizacion-de-los-cluster">
+<h2><em><strong>Visualización de los cluster.</strong></em><a class="headerlink" href="#visualizacion-de-los-cluster" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de <code class="docutils literal notranslate"><span class="pre">PCA</span></code> para lograr visualizar los cluster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)</span>
+<span class="n">pca_transform</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">scaled_data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reduccion a&quot;</span><span class="p">,</span> <span class="n">pca</span><span class="o">.</span><span class="n">n_components_</span><span class="p">,</span> <span class="s2">&quot;dimensiones&quot;</span><span class="p">)</span>
+
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_transform</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reduccion a 3 dimensiones
+</pre></div>
+</div>
+<div class="output text_html"><style>#sk-container-id-3 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-3 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-3 pre {
+  padding: 0;
+}
+
+#sk-container-id-3 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-3 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-3 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-3 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-3 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-3 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-3 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-3 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-3 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-3 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-3 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-3 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-3 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-3 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-3 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-3 div.sk-label label.sk-toggleable__label,
+#sk-container-id-3 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-3 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-3 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-3 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-3 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-3 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-3 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-3 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-3 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-3 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=2, random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" checked><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=2, random_state=42)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_with_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca_transform</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">n_components_</span><span class="p">)])</span>
+<span class="n">df_with_pca</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_with_pca</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+      <th>PC3</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0.985566</td>
+      <td>-1.133392</td>
+      <td>-0.444269</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>1.950138</td>
+      <td>-1.073213</td>
+      <td>2.040003</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>1.763164</td>
+      <td>0.745957</td>
+      <td>0.054781</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>-0.141420</td>
+      <td>-1.119797</td>
+      <td>0.114574</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>2.523980</td>
+      <td>1.542934</td>
+      <td>0.598557</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>1.514563</td>
+      <td>0.987555</td>
+      <td>1.095007</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Connecticut</th>
+      <td>-1.358647</td>
+      <td>1.088928</td>
+      <td>-0.643258</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Delaware</th>
+      <td>0.047709</td>
+      <td>0.325359</td>
+      <td>-0.718633</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Florida</th>
+      <td>3.013042</td>
+      <td>-0.039229</td>
+      <td>-0.576829</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Georgia</th>
+      <td>1.639283</td>
+      <td>-1.278942</td>
+      <td>-0.342460</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Hawaii</th>
+      <td>-0.912657</td>
+      <td>1.570460</td>
+      <td>0.050782</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Idaho</th>
+      <td>-1.639800</td>
+      <td>-0.210973</td>
+      <td>0.259801</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Illinois</th>
+      <td>1.378911</td>
+      <td>0.681841</td>
+      <td>-0.677496</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Indiana</th>
+      <td>-0.505461</td>
+      <td>0.151563</td>
+      <td>0.228055</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Iowa</th>
+      <td>-2.253646</td>
+      <td>0.104054</td>
+      <td>0.164564</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Kansas</th>
+      <td>-0.796881</td>
+      <td>0.270165</td>
+      <td>0.025553</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Kentucky</th>
+      <td>-0.750859</td>
+      <td>-0.958440</td>
+      <td>-0.028369</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Louisiana</th>
+      <td>1.564818</td>
+      <td>-0.871055</td>
+      <td>-0.783480</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Maine</th>
+      <td>-2.396829</td>
+      <td>-0.376392</td>
+      <td>-0.065682</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Maryland</th>
+      <td>1.763369</td>
+      <td>-0.427655</td>
+      <td>-0.157250</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Massachusetts</th>
+      <td>-0.486166</td>
+      <td>1.474496</td>
+      <td>-0.609497</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Michigan</th>
+      <td>2.108441</td>
+      <td>0.155397</td>
+      <td>0.384869</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Minnesota</th>
+      <td>-1.692682</td>
+      <td>0.632261</td>
+      <td>0.153070</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Mississippi</th>
+      <td>0.996494</td>
+      <td>-2.393796</td>
+      <td>-0.740808</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Missouri</th>
+      <td>0.696787</td>
+      <td>0.263355</td>
+      <td>0.377444</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Montana</th>
+      <td>-1.185452</td>
+      <td>-0.536874</td>
+      <td>0.246889</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Nebraska</th>
+      <td>-1.265637</td>
+      <td>0.193954</td>
+      <td>0.175574</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Nevada</th>
+      <td>2.874395</td>
+      <td>0.775600</td>
+      <td>1.163380</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New Hampshire</th>
+      <td>-2.383915</td>
+      <td>0.018082</td>
+      <td>0.036855</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New Jersey</th>
+      <td>0.181566</td>
+      <td>1.449506</td>
+      <td>-0.764454</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>New Mexico</th>
+      <td>1.980024</td>
+      <td>-0.142849</td>
+      <td>0.183692</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>New York</th>
+      <td>1.682577</td>
+      <td>0.823184</td>
+      <td>-0.643075</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>North Carolina</th>
+      <td>1.123379</td>
+      <td>-2.228003</td>
+      <td>-0.863572</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>North Dakota</th>
+      <td>-2.992226</td>
+      <td>-0.599119</td>
+      <td>0.301277</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>-0.225965</td>
+      <td>0.742238</td>
+      <td>-0.031139</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Oklahoma</th>
+      <td>-0.311783</td>
+      <td>0.287854</td>
+      <td>-0.015310</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>0.059122</td>
+      <td>0.541411</td>
+      <td>0.939833</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Pennsylvania</th>
+      <td>-0.888416</td>
+      <td>0.571100</td>
+      <td>-0.400629</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Rhode Island</th>
+      <td>-0.863772</td>
+      <td>1.491978</td>
+      <td>-1.369946</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>South Carolina</th>
+      <td>1.320724</td>
+      <td>-1.933405</td>
+      <td>-0.300538</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>South Dakota</th>
+      <td>-1.987775</td>
+      <td>-0.823343</td>
+      <td>0.389293</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Tennessee</th>
+      <td>0.999742</td>
+      <td>-0.860251</td>
+      <td>0.188083</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>1.355138</td>
+      <td>0.412481</td>
+      <td>-0.492069</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Utah</th>
+      <td>-0.550565</td>
+      <td>1.471505</td>
+      <td>0.293728</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Vermont</th>
+      <td>-2.801412</td>
+      <td>-1.402288</td>
+      <td>0.841263</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Virginia</th>
+      <td>-0.096335</td>
+      <td>-0.199735</td>
+      <td>0.011713</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Washington</th>
+      <td>-0.216903</td>
+      <td>0.970124</td>
+      <td>0.624871</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>West Virginia</th>
+      <td>-2.108585</td>
+      <td>-1.424847</td>
+      <td>0.104775</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Wisconsin</th>
+      <td>-2.079714</td>
+      <td>0.611269</td>
+      <td>-0.138865</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Wyoming</th>
+      <td>-0.629427</td>
+      <td>-0.321013</td>
+      <td>-0.240659</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot con 2 clusters.</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">df_usarrests</span><span class="p">,</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consideremos 4 clusters.</span>
+<span class="n">kmeans1</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_transform</span><span class="p">);</span> <span class="n">kmeans1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-4 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-4 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-4 pre {
+  padding: 0;
+}
+
+#sk-container-id-4 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-4 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-4 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-4 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-4 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-4 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-4 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-4 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-4 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-4 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-4 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-4 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-4 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-4 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-4 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-4 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-4 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-4 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-4 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-4 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-4 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-4 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-4 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-4 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-4 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-4 div.sk-label label.sk-toggleable__label,
+#sk-container-id-4 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-4 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-4 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-4 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-4 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-4 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-4 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-4 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-4 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-4 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-4 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-4 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-4 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-4" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=4, random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" checked><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=4, random_state=0)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot con 4 clusters.</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">df_usarrests</span><span class="p">,</span> <span class="n">kmeans1</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Caso 2 clusters</span>
+<span class="n">df_clusters2</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_clusters2</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_clusters2</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_clusters2</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="n">df_clusters2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box-plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters2</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Murder&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters2</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Assault&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters2</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;UrbanPop&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters2</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Rape&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Boxplot para features con 2 Clusters&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/df20434e426eeadb9e6f862161bfcf9a4b43b454f077b74d9f868d2b512b85d2.png" src="../_images/df20434e426eeadb9e6f862161bfcf9a4b43b454f077b74d9f868d2b512b85d2.png" />
+</div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>El cluster 1 tiene una alta tasa delictiva y predomina la población urbana.</p></li>
+<li><p>El cluster 0 tiene tasas bajas de delitos y una menor tasa que el cluster 1 de población urbana.</p></li>
+</ol>
+<p>Note que la solución en este caso es bastante simple, pues solo está teniendo en consideración las tasas de crimenes altos con “población urbana” y tasa de crimenes bajos con “población rural”. Esta solución parece ser buena, pues logra identificar los estados que tienen alto y bajo crimen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n</span><span class="p">,</span>                  <span class="c1"># Número de clusters</span>
+                <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                <span class="c1"># Semilla aleatoria.</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_transform</span><span class="p">)</span>                        <span class="c1"># Ajustamos el modelo.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-5 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-5 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-5 pre {
+  padding: 0;
+}
+
+#sk-container-id-5 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-5 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-5 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-5 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-5 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-5 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-5 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-5 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-5 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-5 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-5 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-5 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-5 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-5 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-5 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-5 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-5 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-5 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-5 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-5 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-5 div.sk-label label.sk-toggleable__label,
+#sk-container-id-5 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-5 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-5 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-5 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-5 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-5 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-5 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-5 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-5 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-5 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-5 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-5 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-5" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=4, random_state=0)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" checked><label for="sk-estimator-id-5" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;KMeans<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.KMeans.html">?<span>Documentation for KMeans</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>KMeans(n_clusters=4, random_state=0)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Caso 4 clusters</span>
+<span class="n">df_clusters4</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_clusters4</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_clusters4</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box-plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Murder&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Assault&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;UrbanPop&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Rape&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Boxplot para features con 4 Clusters&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bb76fbaca99ba591a917f7ae2f90b99c1083801b06779effab0ead50626040fd.png" src="../_images/bb76fbaca99ba591a917f7ae2f90b99c1083801b06779effab0ead50626040fd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box-plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Murder&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Assault&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;UrbanPop&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_clusters4</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Rape&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Boxplot para features con 4 Clusters&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bb76fbaca99ba591a917f7ae2f90b99c1083801b06779effab0ead50626040fd.png" src="../_images/bb76fbaca99ba591a917f7ae2f90b99c1083801b06779effab0ead50626040fd.png" />
+</div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>El cluster 3 tiene alto el índice de asesinatos. El cluster 2 tiene un menor índice de asesinatos.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Assault</span></code> y <code class="docutils literal notranslate"><span class="pre">Murder</span></code> tiene un comportamiento similar para los clusters.</p></li>
+<li><p>Note que el cluster 1 tiene una tasa más alta de asaltos que el cluster 3. A su vez el cluster 3 tiene más asesinatos. Los clusters 0 y 2 tiene un compartamiento similar en ambas features (<code class="docutils literal notranslate"><span class="pre">Assault</span></code> y <code class="docutils literal notranslate"><span class="pre">Murder</span></code>).</p></li>
+<li><p>En cuanto a <code class="docutils literal notranslate"><span class="pre">UrbanPop</span></code> el cluster 0 y tienen cluster 1 tiene las tasas más altas. Por su supuesto los individuos en los cluster 2 y 3 tiene una tasa baja de población urbana.</p></li>
+</ol>
+<p>Note que podemos caracterizar los cluster así:</p>
+<ul class="simple">
+<li><p><em><strong>Cluster 0:</strong></em> Baja tasa de delitos, y una alta tasa de población urbana.</p></li>
+<li><p><em><strong>Cluster 1.</strong></em> Alta tasa en todas las features.</p></li>
+<li><p><em><strong>Cluster 2.</strong></em> Baja tasa en todas las features.</p></li>
+<li><p><em><strong>Cluster 3.</strong></em> Alta tasa de <code class="docutils literal notranslate"><span class="pre">Murder</span></code> y <code class="docutils literal notranslate"><span class="pre">Assault</span></code> con baja tasa de población urbana y violaciones.</p></li>
+</ul>
+<p>Esta solución parece ser buena, en este caso podemos pensar en una segmentación basados en la feature <code class="docutils literal notranslate"><span class="pre">UrbanPop</span></code>, note que acá tenemos más información que con 2 clusters.</p>
+</section>
+<section id="referencias">
+<h2><em><strong>Referencias:</strong></em><a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><em>Análisis estadístico de datos multivariados. Díaz L &amp; Morales M. Editorial: Publicaciones Facultad de ciencias. UNAL.</em></p></li>
+<li><p><em>Multivariate Analysis I. Kassambara A. Disponible en: <a class="reference external" href="http://www.sthda.com/english/">http://www.sthda.com/english/</a></em></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py"><em>Selecting the number of clusters with silhouette analysis on KMeans clustering</em></a> <a class="reference external" href="https://scikit-learn.org/stable/"><em>by sklearn</em></a></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_8_Cluster_Jerarquico.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Clusters jerárquicos.</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_10_DBSCAN.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>DBSCAN clustering</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong><span class="math notranslate nohighlight">\(k\)</span>-means clustering</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-de-k-means"><em><strong>Algoritmo de <span class="math notranslate nohighlight">\(k\)</span>-means.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-k-means"><em><strong>Método <span class="math notranslate nohighlight">\(k\)</span>-means</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cuantos-cluster-debemos-seleccionar"><em><strong>¿Cuántos cluster debemos seleccionar?</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodo-del-codo"><em><strong>Método del codo.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-de-silhouette"><em><strong>Coeficiente de silhouette</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gap-statistic"><em><strong>GAP Statistic</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-los-cluster"><em><strong>Visualización de los cluster.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

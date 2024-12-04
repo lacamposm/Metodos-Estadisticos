@@ -1,0 +1,2821 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Análisis de correspondencias multiples. &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_6_ACM';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Análisis Factorial." href="Lectura_7_Factor_Analysis.html" />
+    <link rel="prev" title="Análisis de correspondencias simples." href="Lectura_5_AC.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_6_ACM.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_6_ACM.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Análisis de correspondencias multiples.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-librerias"><em><strong>Protocolo de librerias</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion"><em><strong>Introducción.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bases-del-analisis-de-correspondencias-multiples"><em><strong>Bases del análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-analisis-de-correspondencias-multiples"><em><strong>Propiedades del análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reglas-para-la-interpretacion"><em><strong>Reglas para la interpretación.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-burt"><em><strong>Matriz de Burt</strong></em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retomando-ejemplo-1"><em><strong>Retomando ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plots-de-los-individuos-y-modalidades"><em><strong>Plots de los individuos y modalidades.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-de-correspondencias-multiples">
+<h1><em><strong>Análisis de correspondencias multiples.</strong></em><a class="headerlink" href="#analisis-de-correspondencias-multiples" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+</section>
+<section id="protocolo-de-librerias">
+<h2><em><strong>Protocolo de librerias</strong></em><a class="headerlink" href="#protocolo-de-librerias" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">prince</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">utils.plots_mca</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="introduccion">
+<h2><em><strong>Introducción.</strong></em><a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>En la lectura pasada, describimos cómo calcular e interpretar el análisis de correspondencia simple, en esta lectura, mostraremos como calcular y visualizar el análisis de correspondencia múltiple en <code class="docutils literal notranslate"><span class="pre">Python</span></code> usando la librería <a class="reference external" href="https://github.com/MaxHalford/prince"><code class="docutils literal notranslate"><span class="pre">prince</span></code></a>, más algunas funciones creadas por el autor del cuaderno para la visualización de datos. Mostraremos cómo revelar las variables más importantes, es decir, aquellas que más contribuyen a explicar la
+variación en el conjunto de datos.</p>
+</section>
+<section id="id1">
+<h2><em><strong>Análisis de correspondencias múltiples.</strong></em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>El <em><strong>análisis de correspondencia múltiple (MCA)</strong></em> es una extensión del análisis de correspondencia simple para resumir y visualizar una tabla de datos que contiene más de dos variables categóricas.
+También puede verse como una generalización del <em><strong>PCA</strong></em> cuando las variables a ser analizadas son categóricas en lugar de cuantitativas. <em><strong>MCA</strong></em> se usa generalmente para analizar un conjunto de datos de una encuesta. El objetivo es identificar:</p>
+<ol class="arabic simple">
+<li><p>Un grupo de individuos con perfil similar en sus respuestas a las preguntas.</p></li>
+<li><p>Las asociaciones entre categorías de variables.</p></li>
+</ol>
+<p>El análisis de correspondencias puede extenderse a tablas de tres o más
+entradas, caso en el cual se aprecia más su afinidad con el método de componentes principales. <em><strong>Las filas de estas tablas se consideran como los objetos o
+individuos</strong></em> y <em><strong>las columnas como las modalidades de las variables categóricas en estudio</strong></em>. Es el caso de las encuestas, donde las filas son individuos, grupos humanos o instituciones y las columnas modalidades de respuesta a las preguntas formuladas en el cuestionario o instrumento. El análisis de correspondencias
+múltiple <em><strong>(CMA)</strong></em> es un análisis de correspondencias simple aplicado no solo a una tabla de contingencia sino a una <em><strong>tabla disyuntiva completa</strong></em>, en el sentido de que una variable categórica asigna a cada individuo de una población una modalidad, y, en consecuencia, particiona (de manera disyuntiva y exhaustiva) a los individuos de la población.</p>
+<p>A pesar de sus semejanzas con el análisis de correspondencias simple, el <em><strong>CMA</strong></em> tiene algunas particularidades, debido a la naturaleza misma de la tabla disyuntiva completa <span class="math notranslate nohighlight">\((\mathbb X)\)</span>. Vamos a comentar los principios del <em><strong>CMA</strong></em>, cuando éste se desarrolla sobre la <em><strong>tabla disyuntiva completa</strong></em>.</p>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<p>A manera de ilustración, consideremos un conjunto de <span class="math notranslate nohighlight">\(20\)</span> individuos a los cuales se les registra:</p>
+<ul class="simple">
+<li><p><em><strong>El grupo de edad</strong></em>. Modalidades: joven (1), adulto (2), anciano (3).</p></li>
+<li><p><em><strong>Sexo</strong></em>: Modalidades: masculino (1), femenino (2)</p></li>
+<li><p><em><strong>Nivel de estudios o escolaridad:</strong></em> Modalidades: primaria (1), secundaria (2), universitaria (3), otra
+(4)</p></li>
+<li><p><em><strong>Estrato socioeconómico</strong></em>. Modalidades: bajo (1), medio, (2), alto (3)</p></li>
+<li><p><em><strong>Posesión de vivienda.</strong></em> Modalidades: propietario (1), no propietario (2).</p></li>
+</ul>
+<p>Se tiene entonces una matriz de datos <span class="math notranslate nohighlight">\(R\)</span> con 20 filas (individuos) y cinco columnas. Las entradas de esta matriz son los códigos asociados a cada modalidad de respuesta por pregunta.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;Ex1_CMA.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gr_edad&quot;</span><span class="p">,</span><span class="s2">&quot;sexo&quot;</span><span class="p">,</span> <span class="s2">&quot;escolaridad&quot;</span><span class="p">,</span><span class="s2">&quot;estrato&quot;</span><span class="p">,</span><span class="s2">&quot;vivienda&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+                
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="n">R</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad</th>
+      <th>sexo</th>
+      <th>escolaridad</th>
+      <th>estrato</th>
+      <th>vivienda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Así, la primera fila de la matriz <span class="math notranslate nohighlight">\(R\)</span> indica un <em><strong>hombre adulto, con estudios de secundaria, de estrato socioeconómico medio quien tiene vivienda propia.</strong></em>
+Esta matriz o tabla de datos no es tratable vía análisis de correspondencias simples; pues la suma de estos números en filas o en columnas no tienen
+ningún sentido. Una salida para el análisis de esta tabla es una recodificación.</p>
+<p>Esta recodificación se logra cruzando los individuos con las combinaciones de modalidades para cada una de las preguntas; para el caso se tienen 5 preguntas
+con 3, 2, 4, 3 y 2 modalidades respectivamente; es decir, <span class="math notranslate nohighlight">\(3*2*4*3*2 = 144\)</span> posibles respuestas de los individuos.</p>
+<p>Mediante el uso de variables indicadoras (dummies) se convierte una tabla múltiple en una tabla de doble entrada. Supóngase, en general, que a una tabla con <span class="math notranslate nohighlight">\(k\)</span>-variables (o preguntas) donde cada una tiene <span class="math notranslate nohighlight">\(p_i\)</span> modalidades o categorías (para <span class="math notranslate nohighlight">\(i = 1, . . . , k\)</span>), se asocia, de manera adecuada, una variable indicadora a cada una de las modalidades asociadas con cada una de las variables columna de la tabla. La codificación dada por <span class="math notranslate nohighlight">\(p_i\)</span>, hace corresponder tantas variables binarias
+como modalidades tenga la variable categórica. El total de modalidades es igual a <span class="math notranslate nohighlight">\(\sum_{i}^{k}p_i = p\)</span>.</p>
+<p>Un individuo particular se codifica con uno (1) si el individuo posee el atributo de la respectiva modalidad y con cero (0) en las demás modalidades de la misma
+variable, pues se asume que las modalidades son excluyentes. Resulta entonces
+una matriz <span class="math notranslate nohighlight">\(\mathbb X\)</span> de tamaño <span class="math notranslate nohighlight">\((n×p)\)</span> formada por bloques columna, cada uno de los cuales hace referencia a una variable registrada sobre los <span class="math notranslate nohighlight">\(n\)</span> individuos.</p>
+<p>Para la matriz <span class="math notranslate nohighlight">\(R\)</span> anterior la codificación se realiza teniendo en cuenta que las modalidades de cada variable se consideran como variables de tipo dicotómico; cada individuo toma sólo el valor de 1 en una única modalidad y de 0 en las demás modalidades de la misma variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Variables dummies.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad_1</th>
+      <th>gr_edad_2</th>
+      <th>gr_edad_3</th>
+      <th>sexo_1</th>
+      <th>sexo_2</th>
+      <th>escolaridad_1</th>
+      <th>escolaridad_2</th>
+      <th>escolaridad_3</th>
+      <th>escolaridad_4</th>
+      <th>estrato_1</th>
+      <th>estrato_2</th>
+      <th>estrato_3</th>
+      <th>vivienda_1</th>
+      <th>vivienda_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La suma en cada una de las filas es constante, en este caso <span class="math notranslate nohighlight">\(p=5\)</span>, mientras que la suma en las columnas <span class="math notranslate nohighlight">\(n_j\)</span> <span class="math notranslate nohighlight">\((j = 1, . . . , 14)\)</span> suministra el número de individuos
+que participan en cada una de las 14 modalidades. La tabla o matriz <span class="math notranslate nohighlight">\(\mathbb X\)</span> con <span class="math notranslate nohighlight">\(n\)</span>-filas y <span class="math notranslate nohighlight">\(p\)</span>-columnas describe las <span class="math notranslate nohighlight">\(k\)</span>-respuestas de los <span class="math notranslate nohighlight">\(n\)</span>-individuos a través de un código binario (0 o 1) y se le llama <em><strong>tabla disyuntiva completa</strong></em>. Esta tabla
+es la unión de <span class="math notranslate nohighlight">\(k\)</span> tablas (una por pregunta).</p>
+<section id="bases-del-analisis-de-correspondencias-multiples">
+<h3><em><strong>Bases del análisis de correspondencias múltiples.</strong></em><a class="headerlink" href="#bases-del-analisis-de-correspondencias-multiples" title="Link to this heading">#</a></h3>
+<p><em><strong>El análisis de correspondencias múltiples es un análisis de correspondencia simple, aplicado a la tabla disyunta completa.</strong></em></p>
+<ol class="arabic simple">
+<li><p>Un grupo de individuos es similar si éstos asumen aproximadamente las mismas variables. La asociación entre variables se presenta porque son casi que los mismos individuos quienes asumen las mismas modalidades de diferentes variables.</p></li>
+<li><p>El análisis de correspondencias múltiples encuentra asociaciones entre variables de tipo categórico a través de las respectivas modalidades de éstas.</p></li>
+<li><p>En este análisis se considera la nube de puntos fila (<span class="math notranslate nohighlight">\(n\)</span> puntos) y la nube de puntos columna
+(<span class="math notranslate nohighlight">\(p\)</span> puntos).</p></li>
+<li><p>Las modalidades de frecuencia baja (las
+“raras”) están alejadas de las otras modalidades.</p></li>
+<li><p>Dos individuos están próximos si ellos han seleccionado las mismas modalidades. Los individuos están alejados si no han respondido de la misma manera.</p></li>
+</ol>
+</section>
+<section id="propiedades-del-analisis-de-correspondencias-multiples">
+<h3><em><strong>Propiedades del análisis de correspondencias múltiples.</strong></em><a class="headerlink" href="#propiedades-del-analisis-de-correspondencias-multiples" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>A diferencia del análisis de componentes principales, los primeros ejes, aún en forma creciente, explican una pequeña parte de la variabilidad total.</p></li>
+<li><p>La distancia de una modalidad al origen en el <em><strong>CMA</strong></em> es inversamente proporcional a su participación <span class="math notranslate nohighlight">\(n_j\)</span>. Es decir, modalidades con participación baja (<span class="math notranslate nohighlight">\(n_j\)</span> pequeño) aparecen más alejadas del origen que las modalidades de mayor frecuencia.</p></li>
+<li><p>Las modalidades o categorías de una variable están centradas; es decir, el centro de las modalidades de una misma variable es el origen del “nuevo”
+sistema de coordenadas. Así, las modalidades de una variable dicotómica se ubicarán en forma opuesta al origen.</p></li>
+<li><p>El <em><strong>CMA</strong></em> es una descomposición de la nube de puntos de la varianza o inercia total del espacio de individuos (filas) o del espacio de las modalidades (columnas), en ciertas direcciones ortogonales, de tal forma que en cada dirección se maximice la inercia explicada.</p></li>
+<li><p>Así como en el <em><strong>PCA</strong></em> la influencia de cada variable está dada por su varianza, las modalidades situadas a mayor distancia tienen la mayor inercia, luego son las más influyentes y de acuerdo con la propiedad (2.), son las que tienen menor número de individuos.</p></li>
+</ol>
+</section>
+<section id="reglas-para-la-interpretacion">
+<h3><em><strong>Reglas para la interpretación.</strong></em><a class="headerlink" href="#reglas-para-la-interpretacion" title="Link to this heading">#</a></h3>
+<p>Decir que existen afinidades entre respuestas, equivale a decir que hay individuos que han seleccionado simultáneamente todas o casi todas, las mismas respuestas. El análisis de correspondencias múltiples pone en evidencia a los individuos con perfiles semejantes respecto a los atributos seleccionados para su descripción.</p>
+<p>De acuerdo con las distancias entre elementos de la tabla disyuntiva completa y las relaciones baricéntricas (idea de que un individuo, en el análisis de correspondencias, se ubica en el espacio geométrico cerca del centro de gravedad (baricentro) de las categorías con las que está más asociado, reflejando sus relaciones con esas categorías de manera visual), se expresa:</p>
+<ol class="arabic simple">
+<li><p><em>La cercanía entre individuos en términos de semejanzas</em>; es decir, dos individuos son semejantes si han seleccionado globalmente las mismas
+modalidades.</p></li>
+<li><p><em>La proximidad entre modalidades de variables diferentes en términos de asociación</em>; es decir, estas modalidades corresponden a puntos medios
+de los individuos que las han seleccionado, y son próximas porque están ligadas a los mismos individuos o individuos parecidos.</p></li>
+<li><p><em>La proximidad entre dos modalidades de una misma variable en términos de semejanza</em>; por construcción, las modalidades de una misma variable son excluyentes. Si ellas están cerca, su proximidad se interpreta en términos de semejanza entre los grupos de individuos que las han seleccionado.</p></li>
+<li><p><em>La contribución de una variable a un factor se calcula sumando las contribuciones de las respectivas modalidades sobre ese factor</em>. Así, se debe prestar atención a las variables que participan en la definición
+del factor, de acuerdo con las modalidades más “responsables” de los ejes factoriales.</p></li>
+</ol>
+<p><em><strong>Las reglas de interpretación de los resultados, tales como coordenadas, contribuciones, cosenos cuadrados, son casi las mismas que las dispuestas para el
+análisis de correspondencias simples.</strong></em></p>
+<section id="matriz-de-burt">
+<h4><em><strong>Matriz de Burt</strong></em><a class="headerlink" href="#matriz-de-burt" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R_dummies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;estrato&quot;</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">burt_table</span> <span class="o">=</span> <span class="n">R_dummies</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">R_dummies</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">burt_table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad_1</th>
+      <th>gr_edad_2</th>
+      <th>gr_edad_3</th>
+      <th>sexo_1</th>
+      <th>sexo_2</th>
+      <th>escolaridad_1</th>
+      <th>escolaridad_2</th>
+      <th>escolaridad_3</th>
+      <th>escolaridad_4</th>
+      <th>vivienda_1</th>
+      <th>vivienda_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>gr_edad_1</th>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>gr_edad_2</th>
+      <td>0</td>
+      <td>7</td>
+      <td>0</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>gr_edad_3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>4</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>sexo_1</th>
+      <td>3</td>
+      <td>3</td>
+      <td>4</td>
+      <td>10</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>6</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>sexo_2</th>
+      <td>2</td>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+      <td>10</td>
+      <td>1</td>
+      <td>6</td>
+      <td>2</td>
+      <td>1</td>
+      <td>9</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>escolaridad_1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>escolaridad_2</th>
+      <td>2</td>
+      <td>5</td>
+      <td>2</td>
+      <td>3</td>
+      <td>6</td>
+      <td>0</td>
+      <td>9</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>escolaridad_3</th>
+      <td>2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>escolaridad_4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>vivienda_1</th>
+      <td>3</td>
+      <td>5</td>
+      <td>7</td>
+      <td>6</td>
+      <td>9</td>
+      <td>2</td>
+      <td>6</td>
+      <td>4</td>
+      <td>3</td>
+      <td>15</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>vivienda_2</th>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+<section id="retomando-ejemplo-1">
+<h2><em><strong>Retomando ejemplo 1.</strong></em><a class="headerlink" href="#retomando-ejemplo-1" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;Ex1_CMA.txt&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;gr_edad&quot;</span><span class="p">,</span> <span class="s2">&quot;sexo&quot;</span><span class="p">,</span> <span class="s2">&quot;escolaridad&quot;</span><span class="p">,</span> <span class="s2">&quot;estrato&quot;</span><span class="p">,</span> <span class="s2">&quot;vivienda&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+                
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 20 entries, 0 to 19
+Data columns (total 5 columns):
+ #   Column       Non-Null Count  Dtype   
+---  ------       --------------  -----   
+ 0   gr_edad      20 non-null     category
+ 1   sexo         20 non-null     category
+ 2   escolaridad  20 non-null     category
+ 3   estrato      20 non-null     category
+ 4   vivienda     20 non-null     category
+dtypes: category(5)
+memory usage: 944.0 bytes
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get_dummies()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad_1</th>
+      <th>gr_edad_2</th>
+      <th>gr_edad_3</th>
+      <th>sexo_1</th>
+      <th>sexo_2</th>
+      <th>escolaridad_1</th>
+      <th>escolaridad_2</th>
+      <th>escolaridad_3</th>
+      <th>escolaridad_4</th>
+      <th>estrato_1</th>
+      <th>estrato_2</th>
+      <th>estrato_3</th>
+      <th>vivienda_1</th>
+      <th>vivienda_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df_ex1 es el dataset del primer ejemplo</span>
+<span class="n">df_ex1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_ex1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;estrato&quot;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_ex1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad</th>
+      <th>sexo</th>
+      <th>escolaridad</th>
+      <th>vivienda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get_dummies()</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_ex1</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Número de &quot;dof&quot; para cada variable categórica = # Categorias - 1.</span>
+<span class="c1"># Número de valores propios no nulos. </span>
+<span class="nb">len</span><span class="p">(</span><span class="n">X1</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tabla de datos disyunta completa.</span>
+<span class="n">X1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df_ex1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">);</span> <span class="n">X1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gr_edad_1</th>
+      <th>gr_edad_2</th>
+      <th>gr_edad_3</th>
+      <th>sexo_1</th>
+      <th>sexo_2</th>
+      <th>escolaridad_1</th>
+      <th>escolaridad_2</th>
+      <th>escolaridad_3</th>
+      <th>escolaridad_4</th>
+      <th>vivienda_1</th>
+      <th>vivienda_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizamos CA en X1 que es get_dummies del DataFrame df_ex1</span>
+<span class="n">ca</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">CA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+<span class="n">ca</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;prince.ca.CA at 0x7f48ffe04cd0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>La proporción de varianzas retenidas por las diferentes dimensiones (ejes) se puede extraer usando el
+atributo: <code class="docutils literal notranslate"><span class="pre">eigenvalues_summary</span></code> del objeto <code class="docutils literal notranslate"><span class="pre">CA</span></code> de Prince</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca</span><span class="o">.</span><span class="n">eigenvalues_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eigenvalue</th>
+      <th>% of variance</th>
+      <th>% of variance (cumulative)</th>
+    </tr>
+    <tr>
+      <th>component</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.419</td>
+      <td>23.97%</td>
+      <td>23.97%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.389</td>
+      <td>22.24%</td>
+      <td>46.20%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.331</td>
+      <td>18.93%</td>
+      <td>65.13%</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.221</td>
+      <td>12.65%</td>
+      <td>77.78%</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.156</td>
+      <td>8.89%</td>
+      <td>86.68%</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.143</td>
+      <td>8.16%</td>
+      <td>94.83%</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.090</td>
+      <td>5.17%</td>
+      <td>100.00%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Tenemos 7 valores propios, la inercia ligada a cada valor propio varía entre <span class="math notranslate nohighlight">\(0.419\)</span> para el valor propio más grande y <span class="math notranslate nohighlight">\(0.090\)</span> para el más pequeño.</p></li>
+<li><p>Debemos tener cuidado de emplear los valores propios y las tasas de inercia como indicadores del número de ejes apropiados. Sin embargo, obsérvese que con los dos primeros ejes reúnen el <span class="math notranslate nohighlight">\(46.2\%\)</span> de la inercia total.</p></li>
+<li><p>Para efectos de interpretación de los datos, se puede y se debe hacer el análisis sobre el primer plano factorial y sobre otros planos tales como el <em>factor 1</em> vs el <em>factor 3</em>, por ejemplo.</p></li>
+</ol>
+<p>La calidad de la representación (<span class="math notranslate nohighlight">\(cos2\)</span>), mide el grado de asociación entre las categorías de las variables y un eje particular:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tabla con información sobre los 2 primeros factores.</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">column_coordinates</span><span class="p">(</span><span class="n">X1</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;factor_1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;factor_2&quot;</span><span class="p">})</span>
+<span class="n">tmp1</span> <span class="o">=</span> <span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)[[</span><span class="s2">&quot;Dim1&quot;</span><span class="p">,</span><span class="s2">&quot;Dim2&quot;</span><span class="p">]]</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">tmp1</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>factor_1</th>
+      <th>factor_2</th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>gr_edad_1</th>
+      <td>0.579237</td>
+      <td>-0.491174</td>
+      <td>0.111839</td>
+      <td>0.080417</td>
+    </tr>
+    <tr>
+      <th>gr_edad_2</th>
+      <td>0.192983</td>
+      <td>1.017513</td>
+      <td>0.020054</td>
+      <td>0.557487</td>
+    </tr>
+    <tr>
+      <th>gr_edad_3</th>
+      <td>-0.530883</td>
+      <td>-0.583340</td>
+      <td>0.187891</td>
+      <td>0.226857</td>
+    </tr>
+    <tr>
+      <th>sexo_1</th>
+      <td>0.518828</td>
+      <td>-0.530838</td>
+      <td>0.269182</td>
+      <td>0.281789</td>
+    </tr>
+    <tr>
+      <th>sexo_2</th>
+      <td>-0.518828</td>
+      <td>0.530838</td>
+      <td>0.269182</td>
+      <td>0.281789</td>
+    </tr>
+    <tr>
+      <th>escolaridad_1</th>
+      <td>1.016567</td>
+      <td>-0.727187</td>
+      <td>0.258352</td>
+      <td>0.132200</td>
+    </tr>
+    <tr>
+      <th>escolaridad_2</th>
+      <td>0.165705</td>
+      <td>0.916920</td>
+      <td>0.022466</td>
+      <td>0.687880</td>
+    </tr>
+    <tr>
+      <th>escolaridad_3</th>
+      <td>-0.704873</td>
+      <td>-1.002505</td>
+      <td>0.124211</td>
+      <td>0.251254</td>
+    </tr>
+    <tr>
+      <th>escolaridad_4</th>
+      <td>-0.912708</td>
+      <td>-0.444503</td>
+      <td>0.147006</td>
+      <td>0.034868</td>
+    </tr>
+    <tr>
+      <th>vivienda_1</th>
+      <td>-0.501799</td>
+      <td>-0.020746</td>
+      <td>0.755407</td>
+      <td>0.001291</td>
+    </tr>
+    <tr>
+      <th>vivienda_2</th>
+      <td>1.505398</td>
+      <td>0.062237</td>
+      <td>0.755407</td>
+      <td>0.001291</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La tabla anterior contiene las modalidades con sus respectivas etiquetas, las coordenadas de las modalidades sobre los dos primeros factores y
+los cuadrados de los cosenos de las modalidades sobre los dos primeros ejes factoriales.</p>
+<p>Con relación al primer factor se nota que está definido por la posesión de vivienda. Situación que se corrobora con los cosenos cuadrados; recordemos que un valor de éstos cercano a <span class="math notranslate nohighlight">\(1.0\)</span> muestra una alta asociación entre la modalidad y el eje.</p>
+<p>La correlación entre variables y dimensiones principales ayuda a identificar las variables que están más correlacionadas con cada dimensión. En este caso hacemos uso del <span class="math notranslate nohighlight">\(cos2\)</span> para graficarlas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Correlación variables con los ejes.</span>
+<span class="n">plot_var_corr</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_ex1</span><span class="p">,</span> <span class="n">X1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">mca_biplot()</span></code> se usa para dibujar el biplot de individuos y las categorías de las variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot primer plano factorial. (factor_1 and factor_2)</span>
+<span class="n">mca_biplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>El plot anterior muestra un patrón global dentro de los datos. Las filas (individuos) están representadas por puntos y columnas (categorías de variables) por triángulos. La distancia entre cualquier punto de fila o columna da una medida de su similitud (o disimilitud). Los puntos de fila con un perfil similar se cierran en el mapa de factores. Lo mismo vale para puntos de columna.</p>
+<p>El plot se puede interpretar de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>Muestra la disposición de las modalidades y los individuos en el primer plano factorial.</p></li>
+<li><p>Las modalidades de variables con un perfil similar se agrupan.</p></li>
+<li><p>Las modalidades de variables correlacionadas negativamente se colocan en lados opuestos del origen de la gráfica.</p></li>
+<li><p>La distancia entre los puntos de categoría y el origen mide la calidad de la variable categoría en el mapa de factores. Los puntos de categoría que están lejos del origen están bien representados en el mapa de factor.</p></li>
+</ol>
+<p>La contribución de las modalidades de las variables (en %) a la definición de las dimensiones se puede plotear de la siguiente manera.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contrib_mca</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">axes1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axes2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c3309c9fcc9e31663be40167ba152aef6a3e919b06349dd576c7279b97a13e0a.png" src="../_images/c3309c9fcc9e31663be40167ba152aef6a3e919b06349dd576c7279b97a13e0a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_triplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Se destaca la diferenciación mostrada entre el grupo etáreo “anciano” (<code class="docutils literal notranslate"><span class="pre">gr_edad_3</span></code>) y los demás; con una proximidad a la posesión de vivienda, lo que sugiere una relación directa entre la tenencia de vivienda y la edad. Similarmente se puede establecer para la edad y el nivel de escolaridad, los datos exhiben que el nivel de escolaridad superior (universitaria y otro) están asociadas con edades avanzadas.</p></li>
+<li><p>El segundo factor, se observa que es determinado por la escolaridad superior y secundaria.</p></li>
+<li><p>Respecto al género se puede afirmar, a partir de estos datos, que no definen los ejes (se ubican en una bisectriz).</p></li>
+<li><p>Para la variable edad la modalidad “joven” es indiferente en la definición de alguno de los dos ejes (se ubica en una bisectriz).</p></li>
+<li><p>Las modalidades adulto y anciano son opuestas y están altamente ligadas con el segundo eje.</p></li>
+</ol>
+<p><em><strong>Comentarios generales:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Se observa que el primer eje factorial (factor 1) está
+altamente determinado por la variable posesión de casa propia.</p></li>
+<li><p>El factor 1 determina dos tipologías de individuos, del lado izquierdo se puede afirmar que
+están quienes poseen un nivel de escolaridad universitario o más, con vivienda
+propia. En el lado derecho se encuentran quienes tienen un nivel de escolaridad a lo más de secundaria y que no tienen vivienda propia.</p></li>
+<li><p>El segundo eje factorial (factor 2) está definido por las modalidades asociadas a la escolaridad, discriminada
+ésta por la modalidad secundaria frente a la modalidad universitario u otro.</p></li>
+</ol>
+<hr class="docutils" />
+<p><em><strong>Nota</strong></em></p>
+<p>Podemos usar el objeto MCA de la libreria Prince.</p>
+<p>Pruebe este codigo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mca</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">MCA</span><span class="p">(</span>
+    <span class="n">n_components</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">check_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;sklearn&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">mca</span> <span class="o">=</span> <span class="n">mca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_ex1</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">mca</span><span class="o">.</span><span class="n">eigenvalues_summary</span><span class="p">)</span>
+
+<span class="c1"># Tabla con información sobre los 2 primeros factores.</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">mca</span><span class="o">.</span><span class="n">column_coordinates</span><span class="p">(</span><span class="n">df_ex1</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;factor_1&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;factor_2&quot;</span><span class="p">})</span>
+<span class="n">tmp1</span> <span class="o">=</span> <span class="n">get_cos2</span><span class="p">(</span><span class="n">mca</span><span class="p">,</span> <span class="n">df_ex1</span><span class="p">,</span> <span class="n">choice</span> <span class="o">=</span> <span class="s2">&quot;columns&quot;</span><span class="p">)[[</span><span class="s2">&quot;Dim1&quot;</span><span class="p">,</span><span class="s2">&quot;Dim2&quot;</span><span class="p">]]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">tmp1</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="c1"># Biplot librería prince</span>
+<span class="n">mca</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">df_ex1</span><span class="p">,</span>
+    <span class="n">x_component</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_component</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">show_column_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_row_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_column_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_row_labels</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejemplo-2">
+<h2><em><strong>Ejemplo 2.</strong></em><a class="headerlink" href="#ejemplo-2" title="Link to this heading">#</a></h2>
+<p>Para este ejemplo vamos a hacer uso del Dataset <code class="docutils literal notranslate"><span class="pre">poison.csv</span></code>. Estos datos son el resultado de una encuesta realizada a niños de primaria que sufrieron de malestares por presuntos alimentos en mal estado. Se les preguntó sobre sus síntomas y sobre lo que comían.</p>
+<p>Los datos contienen 55 filas (individuos) y 15 columnas (variables).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;poison.csv&quot;</span><span class="p">)</span>
+<span class="n">poison</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Time</th>
+      <th>Sick</th>
+      <th>Sex</th>
+      <th>Nausea</th>
+      <th>Vomiting</th>
+      <th>Abdominals</th>
+      <th>Fever</th>
+      <th>Diarrhae</th>
+      <th>Potato</th>
+      <th>Fish</th>
+      <th>Mayo</th>
+      <th>Courgette</th>
+      <th>Cheese</th>
+      <th>Icecream</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9</td>
+      <td>22</td>
+      <td>Sick_y</td>
+      <td>F</td>
+      <td>Nausea_y</td>
+      <td>Vomit_n</td>
+      <td>Abdo_y</td>
+      <td>Fever_y</td>
+      <td>Diarrhea_y</td>
+      <td>Potato_y</td>
+      <td>Fish_y</td>
+      <td>Mayo_y</td>
+      <td>Courg_y</td>
+      <td>Cheese_y</td>
+      <td>Icecream_y</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5</td>
+      <td>0</td>
+      <td>Sick_n</td>
+      <td>F</td>
+      <td>Nausea_n</td>
+      <td>Vomit_n</td>
+      <td>Abdo_n</td>
+      <td>Fever_n</td>
+      <td>Diarrhea_n</td>
+      <td>Potato_y</td>
+      <td>Fish_y</td>
+      <td>Mayo_y</td>
+      <td>Courg_y</td>
+      <td>Cheese_n</td>
+      <td>Icecream_y</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6</td>
+      <td>16</td>
+      <td>Sick_y</td>
+      <td>F</td>
+      <td>Nausea_n</td>
+      <td>Vomit_y</td>
+      <td>Abdo_y</td>
+      <td>Fever_y</td>
+      <td>Diarrhea_y</td>
+      <td>Potato_y</td>
+      <td>Fish_y</td>
+      <td>Mayo_y</td>
+      <td>Courg_y</td>
+      <td>Cheese_y</td>
+      <td>Icecream_y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>9</td>
+      <td>0</td>
+      <td>Sick_n</td>
+      <td>F</td>
+      <td>Nausea_n</td>
+      <td>Vomit_n</td>
+      <td>Abdo_n</td>
+      <td>Fever_n</td>
+      <td>Diarrhea_n</td>
+      <td>Potato_y</td>
+      <td>Fish_y</td>
+      <td>Mayo_n</td>
+      <td>Courg_y</td>
+      <td>Cheese_y</td>
+      <td>Icecream_y</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>14</td>
+      <td>Sick_y</td>
+      <td>M</td>
+      <td>Nausea_n</td>
+      <td>Vomit_y</td>
+      <td>Abdo_y</td>
+      <td>Fever_y</td>
+      <td>Diarrhea_y</td>
+      <td>Potato_y</td>
+      <td>Fish_y</td>
+      <td>Mayo_y</td>
+      <td>Courg_y</td>
+      <td>Cheese_y</td>
+      <td>Icecream_y</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Suponga que estamos interesados en establecer las relaciones entre las siguientes variables del Dataset:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Nausea</span></code> <code class="docutils literal notranslate"><span class="pre">Vomiting</span></code>, <code class="docutils literal notranslate"><span class="pre">Abdominals</span></code>, <code class="docutils literal notranslate"><span class="pre">Fever</span></code>, <code class="docutils literal notranslate"><span class="pre">Diarrhae</span></code>, <code class="docutils literal notranslate"><span class="pre">Potato</span></code>, <code class="docutils literal notranslate"><span class="pre">Fish</span></code>, <code class="docutils literal notranslate"><span class="pre">Mayo</span></code>, <code class="docutils literal notranslate"><span class="pre">Courgette</span></code>, <code class="docutils literal notranslate"><span class="pre">Cheese</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">poison</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">:]</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 55 entries, 0 to 54
+Data columns (total 11 columns):
+ #   Column      Non-Null Count  Dtype 
+---  ------      --------------  ----- 
+ 0   Nausea      55 non-null     object
+ 1   Vomiting    55 non-null     object
+ 2   Abdominals  55 non-null     object
+ 3   Fever       55 non-null     object
+ 4   Diarrhae    55 non-null     object
+ 5   Potato      55 non-null     object
+ 6   Fish        55 non-null     object
+ 7   Mayo        55 non-null     object
+ 8   Courgette   55 non-null     object
+ 9   Cheese      55 non-null     object
+ 10  Icecream    55 non-null     object
+dtypes: object(11)
+memory usage: 4.9+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>Vamos a cambiar los nombres de las modalidades por <code class="docutils literal notranslate"><span class="pre">y</span></code> y <code class="docutils literal notranslate"><span class="pre">n</span></code> en cada variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">replace_name_cate</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Esta función cambia los nombre de las categorías en cada una de las variables categóricas a usar.</span>
+<span class="sd">    </span>
+<span class="sd">    Example: &quot;Sick_y&quot;, se reemplaza por &quot;y&quot;. &quot;Abdo_n&quot; se reemplaza por &quot;n&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;(?&lt;=_)([\w]*)&quot;</span><span class="p">,</span><span class="n">string</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">replace_name_cate</span><span class="p">)</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Nausea</th>
+      <th>Vomiting</th>
+      <th>Abdominals</th>
+      <th>Fever</th>
+      <th>Diarrhae</th>
+      <th>Potato</th>
+      <th>Fish</th>
+      <th>Mayo</th>
+      <th>Courgette</th>
+      <th>Cheese</th>
+      <th>Icecream</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>y</td>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>n</td>
+      <td>y</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>n</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+      <td>y</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Recordemos que la cantidad de dimensiones máximas es:</p>
+<div class="math notranslate nohighlight">
+\[p-k = 22-11=11\]</div>
+<p>Donde <span class="math notranslate nohighlight">\(p\)</span> es el número de las distintas modalidades en las variables categóricas y <span class="math notranslate nohighlight">\(k\)</span> es el número de variables</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cantidad máxima de dimensiones.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">drop_first</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11
+</pre></div>
+</div>
+</div>
+</div>
+<p>Los gráficos siguientes se pueden utilizar para identificar categorías de variables con una frecuencia muy baja. Estas tipos de variables pueden distorsionar el análisis y deben eliminarse.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resumen de la información.</span>
+<span class="c1"># for col in df2.columns:</span>
+<span class="c1">#     plt.figure(figsize=(6,3))</span>
+<span class="c1">#     sns.countplot(df2[col])</span>
+<span class="c1">#     plt.show()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2_mca2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>                      <span class="c1"># Tabla disyunta (get_dummies data original).</span>
+
+<span class="n">mca2</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">CA</span><span class="p">(</span>
+    <span class="n">n_components</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>                     <span class="c1"># Creamos y ajustamos un objeto CA de la</span>
+    <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                    <span class="c1"># librería price sobre la tabla disyunta.</span>
+    <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;sklearn&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">mca2</span> <span class="o">=</span> <span class="n">mca2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df2_mca2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Varianzas retenidas.</span>
+<span class="n">get_eigenvalue</span><span class="p">(</span><span class="n">mca2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eigenvalue</th>
+      <th>variance_percent</th>
+      <th>cumulative_variance_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Dim1</th>
+      <td>0.335</td>
+      <td>33.523</td>
+      <td>33.523</td>
+    </tr>
+    <tr>
+      <th>Dim2</th>
+      <td>0.129</td>
+      <td>12.914</td>
+      <td>46.437</td>
+    </tr>
+    <tr>
+      <th>Dim3</th>
+      <td>0.107</td>
+      <td>10.735</td>
+      <td>57.172</td>
+    </tr>
+    <tr>
+      <th>Dim4</th>
+      <td>0.096</td>
+      <td>9.588</td>
+      <td>66.760</td>
+    </tr>
+    <tr>
+      <th>Dim5</th>
+      <td>0.079</td>
+      <td>7.883</td>
+      <td>74.643</td>
+    </tr>
+    <tr>
+      <th>Dim6</th>
+      <td>0.071</td>
+      <td>7.109</td>
+      <td>81.752</td>
+    </tr>
+    <tr>
+      <th>Dim7</th>
+      <td>0.060</td>
+      <td>6.017</td>
+      <td>87.769</td>
+    </tr>
+    <tr>
+      <th>Dim8</th>
+      <td>0.056</td>
+      <td>5.577</td>
+      <td>93.346</td>
+    </tr>
+    <tr>
+      <th>Dim9</th>
+      <td>0.041</td>
+      <td>4.121</td>
+      <td>97.467</td>
+    </tr>
+    <tr>
+      <th>Dim10</th>
+      <td>0.013</td>
+      <td>1.304</td>
+      <td>98.771</td>
+    </tr>
+    <tr>
+      <th>Dim11</th>
+      <td>0.012</td>
+      <td>1.229</td>
+      <td>100.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Para visualizar los porcentajes de inercia explicados por cada dimensión del <em><strong>CMA</strong></em>, usamos la función <code class="docutils literal notranslate"><span class="pre">mca_screeplot()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_screeplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/653c544f659c328c9514ab6303745c699f3b49ebf3fb0441b9e48aabc8eca988.png" src="../_images/653c544f659c328c9514ab6303745c699f3b49ebf3fb0441b9e48aabc8eca988.png" />
+</div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">mca_biplot()</span></code> se usa para dibujar el biplot de individuos y categorías de las variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_biplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>La correlación entre variables y dimensiones principales
+ayuda a identificar las variables que están más correlacionadas con cada dimensión. En este caso hacemos uso del <span class="math notranslate nohighlight">\(cos2\)</span> para graficarlas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_var_corr</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>Se puede observar que, las variables: <code class="docutils literal notranslate"><span class="pre">Diarrhae</span></code>, <code class="docutils literal notranslate"><span class="pre">Abdominals</span></code> y <code class="docutils literal notranslate"><span class="pre">Fever</span></code> son las más correlacionadas
+con dimensión 1. Así mismo, las variables <code class="docutils literal notranslate"><span class="pre">Courgette</span></code> y <code class="docutils literal notranslate"><span class="pre">Potato</span></code> son las más correlacionadas con la dimensión 2.</strong></em></p>
+<p>Las dimensiones 1 y 2 son suficientes para retener el <span class="math notranslate nohighlight">\(46\%\)</span> de la inercia total (variación) contenida en el
+datos. No todos los puntos se muestran igual de bien en las dos dimensiones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_plot_cos2</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">axes1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">axes2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Tenga en cuenta que las categorías variables <code class="docutils literal notranslate"><span class="pre">Fish_n</span></code>, <code class="docutils literal notranslate"><span class="pre">Fish_y</span></code>, <code class="docutils literal notranslate"><span class="pre">Icecream_n</span></code> y <code class="docutils literal notranslate"><span class="pre">Icecream_y</span></code> no están muy bien
+representada por las dos primeras dimensiones. Esto implica que la posición de los puntos correspondientes
+en el diagrama de dispersión debe interpretarse con cierta precaución.</p>
+<p>La contribución de las modalidades de las variables (en %) a la definición de las dimensiones se puede plotear de la siguiente manera.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contrib_mca</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c4aa366e95e2dddfcbce2ec79c046c2a6fcfa81b809b030ca91b0cada1af313e.png" src="../_images/c4aa366e95e2dddfcbce2ec79c046c2a6fcfa81b809b030ca91b0cada1af313e.png" />
+</div>
+</div>
+<p><em><strong>Del plot anterior se puede ver que:</strong></em></p>
+<ul class="simple">
+<li><p>Las categorías <code class="docutils literal notranslate"><span class="pre">Abdominals_n</span></code>, <code class="docutils literal notranslate"><span class="pre">Diarrhea_n</span></code>, <code class="docutils literal notranslate"><span class="pre">Fever_n</span></code> y <code class="docutils literal notranslate"><span class="pre">Mayo_n</span></code> son las más importantes en la definición
+de la primera dimensión.</p></li>
+<li><p>Las categorías <code class="docutils literal notranslate"><span class="pre">Courgette_n</span></code>, <code class="docutils literal notranslate"><span class="pre">Potato_n</span></code>, <code class="docutils literal notranslate"><span class="pre">Vomiting_y</span></code> y <code class="docutils literal notranslate"><span class="pre">Icecream_n</span></code> son las que más aportan a la dimensión
+2</p></li>
+</ul>
+<section id="plots-de-los-individuos-y-modalidades">
+<h3><em><strong>Plots de los individuos y modalidades.</strong></em><a class="headerlink" href="#plots-de-los-individuos-y-modalidades" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_biplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="n">dim1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim2</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_biplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="n">dim1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dim2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_biplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="n">dim1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim2</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mca_triplot</span><span class="p">(</span><span class="n">mca2</span><span class="p">,</span> <span class="n">df2_mca2</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>A apesar que no se tiene una alta inercia retenida por los 2 primeros ejes, se puede observar como se forman dos grupos de individuos que se relacionan via las modalidades de las diferentes variables categóricas. <em><strong>No olvide</strong></em> que los comentarios al respecto depende tanto de la contribución al eje y de los valores en <span class="math notranslate nohighlight">\(cos2\)</span>.</p>
+</section>
+</section>
+<section id="referencias">
+<h2><em><strong>Referencias:</strong></em><a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><em>Análisis estadístico de datos multivariados. Díaz L &amp; Morales M. Editorial: Publicaciones Facultad de ciencias. UNAL.</em></p></li>
+<li><p><em>Multivariate Analysis II. Kassambara A. Disponible en: <a class="reference external" href="http://www.sthda.com/english/">http://www.sthda.com/english/</a></em></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_5_AC.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Análisis de correspondencias simples.</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_7_Factor_Analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>Análisis Factorial.</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-librerias"><em><strong>Protocolo de librerias</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion"><em><strong>Introducción.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bases-del-analisis-de-correspondencias-multiples"><em><strong>Bases del análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-del-analisis-de-correspondencias-multiples"><em><strong>Propiedades del análisis de correspondencias múltiples.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reglas-para-la-interpretacion"><em><strong>Reglas para la interpretación.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-burt"><em><strong>Matriz de Burt</strong></em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retomando-ejemplo-1"><em><strong>Retomando ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plots-de-los-individuos-y-modalidades"><em><strong>Plots de los individuos y modalidades.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

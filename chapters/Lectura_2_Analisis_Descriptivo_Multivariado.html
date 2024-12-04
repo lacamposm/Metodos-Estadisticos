@@ -1,0 +1,3489 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analisis descriptivo multivariado. &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_2_Analisis_Descriptivo_Multivariado';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Analisis de compomente principales (PCA)." href="Lectura_3_ACP.html" />
+    <link rel="prev" title="Introducción al machine learning" href="Lectura_1_Intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_2_Analisis_Descriptivo_Multivariado.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_2_Analisis_Descriptivo_Multivariado.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis descriptivo multivariado.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cereal"><em><strong>Cereal</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1"><em><strong>Ejercicio 1.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2"><em><strong>Ejercicio 2.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-covarianzas-y-de-correlacion"><em><strong>Matriz de covarianzas y de correlación.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3"><em><strong>Ejercicio 3.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4"><em><strong>Ejercicio 4.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagramas-de-dispersion"><em><strong>Diagramas de dispersión</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5"><em><strong>Ejercicio 5.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tablas-de-contingencia"><em><strong>Tablas de contingencia.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Ejercicio 5.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta"><em><strong>Respuesta</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#otros-graficos-multivariados"><em><strong>Otros gráficos multivariados.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-6"><em><strong>Ejercicio 6.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-7"><em><strong>Ejercicio 7.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-8"><em><strong>Ejercicio 8.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-9"><em><strong>Ejercicio 9.</strong></em></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-descriptivo-multivariado">
+<h1><em><strong>Analisis descriptivo multivariado.</strong></em><a class="headerlink" href="#analisis-descriptivo-multivariado" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="c1">##</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cereal">
+<h2><em><strong>Cereal</strong></em><a class="headerlink" href="#cereal" title="Link to this heading">#</a></h2>
+<p>Vamos a cargar la base de datos de Cereal, que contiene información nutricional de diferentes marcas de cereales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/Cereal.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fabrica</th>
+      <th>Calorias</th>
+      <th>Proteina</th>
+      <th>Grasa</th>
+      <th>Sodio</th>
+      <th>Fibra</th>
+      <th>Carbohidratos</th>
+      <th>Azucares</th>
+      <th>Potasio</th>
+      <th>Vitaminas</th>
+    </tr>
+    <tr>
+      <th>Cereal</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100% Bran</th>
+      <td>N</td>
+      <td>212.12121</td>
+      <td>12.121212</td>
+      <td>3.030303</td>
+      <td>393.93939</td>
+      <td>30.303030</td>
+      <td>15.15152</td>
+      <td>18.181818</td>
+      <td>848.48485</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>All-Bran</th>
+      <td>K</td>
+      <td>212.12121</td>
+      <td>12.121212</td>
+      <td>3.030303</td>
+      <td>787.87879</td>
+      <td>27.272727</td>
+      <td>21.21212</td>
+      <td>15.151515</td>
+      <td>969.69697</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>All-Bran with Extra Fiber</th>
+      <td>K</td>
+      <td>100.00000</td>
+      <td>8.000000</td>
+      <td>0.000000</td>
+      <td>280.00000</td>
+      <td>28.000000</td>
+      <td>16.00000</td>
+      <td>0.000000</td>
+      <td>660.00000</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Apple Cinnamon Cheerios</th>
+      <td>G</td>
+      <td>146.66667</td>
+      <td>2.666667</td>
+      <td>2.666667</td>
+      <td>240.00000</td>
+      <td>2.000000</td>
+      <td>14.00000</td>
+      <td>13.333333</td>
+      <td>93.33333</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Apple Jacks</th>
+      <td>K</td>
+      <td>110.00000</td>
+      <td>2.000000</td>
+      <td>0.000000</td>
+      <td>125.00000</td>
+      <td>1.000000</td>
+      <td>11.00000</td>
+      <td>14.000000</td>
+      <td>30.00000</td>
+      <td>enriched</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Observamos los tipos de datos en cada una de las columna del DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fabrica           object
+Calorias         float64
+Proteina         float64
+Grasa            float64
+Sodio            float64
+Fibra            float64
+Carbohidratos    float64
+Azucares         float64
+Potasio          float64
+Vitaminas         object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Con el método <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html"><code class="docutils literal notranslate"><span class="pre">select_dtypes()</span></code></a> podemos obtener las columnas cuyos valores son numéricos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_numeric</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+<span class="n">df_numeric</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Calorias</th>
+      <th>Proteina</th>
+      <th>Grasa</th>
+      <th>Sodio</th>
+      <th>Fibra</th>
+      <th>Carbohidratos</th>
+      <th>Azucares</th>
+      <th>Potasio</th>
+    </tr>
+    <tr>
+      <th>Cereal</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100% Bran</th>
+      <td>212.12121</td>
+      <td>12.121212</td>
+      <td>3.030303</td>
+      <td>393.93939</td>
+      <td>30.303030</td>
+      <td>15.15152</td>
+      <td>18.181818</td>
+      <td>848.48485</td>
+    </tr>
+    <tr>
+      <th>All-Bran</th>
+      <td>212.12121</td>
+      <td>12.121212</td>
+      <td>3.030303</td>
+      <td>787.87879</td>
+      <td>27.272727</td>
+      <td>21.21212</td>
+      <td>15.151515</td>
+      <td>969.69697</td>
+    </tr>
+    <tr>
+      <th>All-Bran with Extra Fiber</th>
+      <td>100.00000</td>
+      <td>8.000000</td>
+      <td>0.000000</td>
+      <td>280.00000</td>
+      <td>28.000000</td>
+      <td>16.00000</td>
+      <td>0.000000</td>
+      <td>660.00000</td>
+    </tr>
+    <tr>
+      <th>Apple Cinnamon Cheerios</th>
+      <td>146.66667</td>
+      <td>2.666667</td>
+      <td>2.666667</td>
+      <td>240.00000</td>
+      <td>2.000000</td>
+      <td>14.00000</td>
+      <td>13.333333</td>
+      <td>93.33333</td>
+    </tr>
+    <tr>
+      <th>Apple Jacks</th>
+      <td>110.00000</td>
+      <td>2.000000</td>
+      <td>0.000000</td>
+      <td>125.00000</td>
+      <td>1.000000</td>
+      <td>11.00000</td>
+      <td>14.000000</td>
+      <td>30.00000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Triples</th>
+      <td>146.66667</td>
+      <td>2.666667</td>
+      <td>1.333333</td>
+      <td>333.33333</td>
+      <td>0.000000</td>
+      <td>28.00000</td>
+      <td>4.000000</td>
+      <td>80.00000</td>
+    </tr>
+    <tr>
+      <th>Trix</th>
+      <td>110.00000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>140.00000</td>
+      <td>0.000000</td>
+      <td>13.00000</td>
+      <td>12.000000</td>
+      <td>25.00000</td>
+    </tr>
+    <tr>
+      <th>Wheat Chex</th>
+      <td>149.25373</td>
+      <td>4.477612</td>
+      <td>1.492537</td>
+      <td>343.28358</td>
+      <td>4.477612</td>
+      <td>25.37313</td>
+      <td>4.477612</td>
+      <td>171.64179</td>
+    </tr>
+    <tr>
+      <th>Wheaties</th>
+      <td>100.00000</td>
+      <td>3.000000</td>
+      <td>1.000000</td>
+      <td>200.00000</td>
+      <td>3.000000</td>
+      <td>17.00000</td>
+      <td>3.000000</td>
+      <td>110.00000</td>
+    </tr>
+    <tr>
+      <th>Wheaties Honey Gold</th>
+      <td>146.66667</td>
+      <td>2.666667</td>
+      <td>1.333333</td>
+      <td>266.66667</td>
+      <td>1.333333</td>
+      <td>21.33333</td>
+      <td>10.666667</td>
+      <td>80.00000</td>
+    </tr>
+  </tbody>
+</table>
+<p>65 rows × 8 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Así mismo con las columnas de tipo &quot;object&quot;</span>
+<span class="n">df_object</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;object&quot;</span><span class="p">])</span>
+<span class="n">df_object</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fabrica</th>
+      <th>Vitaminas</th>
+    </tr>
+    <tr>
+      <th>Cereal</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>100% Bran</th>
+      <td>N</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>All-Bran</th>
+      <td>K</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>All-Bran with Extra Fiber</th>
+      <td>K</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Apple Cinnamon Cheerios</th>
+      <td>G</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Apple Jacks</th>
+      <td>K</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Triples</th>
+      <td>G</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Trix</th>
+      <td>G</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Wheat Chex</th>
+      <td>R</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Wheaties</th>
+      <td>G</td>
+      <td>enriched</td>
+    </tr>
+    <tr>
+      <th>Wheaties Honey Gold</th>
+      <td>G</td>
+      <td>enriched</td>
+    </tr>
+  </tbody>
+</table>
+<p>65 rows × 2 columns</p>
+</div></div></div>
+</div>
+<p>Vamos a recoger en un lista los nombres de las columnas que son de tipo “numerico”.</p>
+<section id="ejercicio-1">
+<h3><em><strong>Ejercicio 1.</strong></em><a class="headerlink" href="#ejercicio-1" title="Link to this heading">#</a></h3>
+<p>En un lista ubique todos los nombre de las columnas que son de tipo “numerico”. Piense en que el numéro de <em>features</em> podría ser banstante grande.</p>
+<p><em><strong>Respuesta:</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">features_numeric</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df_numeric</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">features_numeric</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Calorias&#39;,
+ &#39;Proteina&#39;,
+ &#39;Grasa&#39;,
+ &#39;Sodio&#39;,
+ &#39;Fibra&#39;,
+ &#39;Carbohidratos&#39;,
+ &#39;Azucares&#39;,
+ &#39;Potasio&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Así mismo lo podemos hacer para las no numéricas.</p>
+</section>
+<section id="ejercicio-2">
+<h3><em><strong>Ejercicio 2.</strong></em><a class="headerlink" href="#ejercicio-2" title="Link to this heading">#</a></h3>
+<p>Solucione el mismo problema que en el <em><strong>Ejercicio 1</strong></em> pero con las varibles de tipo “object”.</p>
+<p><em><strong>Respuesta:</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">features_categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">feature</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">df_object</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+<span class="n">features_categories</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Fabrica&#39;, &#39;Vitaminas&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="matriz-de-covarianzas-y-de-correlacion">
+<h2><em><strong>Matriz de covarianzas y de correlación.</strong></em><a class="headerlink" href="#matriz-de-covarianzas-y-de-correlacion" title="Link to this heading">#</a></h2>
+<p>Cuando se tiene un conjunto de variables cuantitativas, por cada par de ellas se calcula la covarianza:</p>
+<div class="math notranslate nohighlight">
+\[Cov(X,Y)=\frac{1}{n-1}\sum_{i=1}^n (X_i-\bar{X})(Y_i-\bar{Y})\]</div>
+<p>Estos valores conformarán la matriz de covarianzas.
+El coeficiente de correlación lineal se define como:</p>
+<div class="math notranslate nohighlight">
+\[\rho_{XY}=\frac{Cov(X;Y)}{sd(X)sd(Y)}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Matriz de varianzas-covarianzas</span>
+<span class="n">df_numeric</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Calorias</th>
+      <th>Proteina</th>
+      <th>Grasa</th>
+      <th>Sodio</th>
+      <th>Fibra</th>
+      <th>Carbohidratos</th>
+      <th>Azucares</th>
+      <th>Potasio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Calorias</th>
+      <td>3895.242099</td>
+      <td>116.442850</td>
+      <td>60.674383</td>
+      <td>4310.041188</td>
+      <td>148.608725</td>
+      <td>416.865952</td>
+      <td>180.380317</td>
+      <td>5362.723526</td>
+    </tr>
+    <tr>
+      <th>Proteina</th>
+      <td>116.442850</td>
+      <td>6.983432</td>
+      <td>1.790252</td>
+      <td>197.706130</td>
+      <td>13.122839</td>
+      <td>12.243296</td>
+      <td>2.850421</td>
+      <td>401.040187</td>
+    </tr>
+    <tr>
+      <th>Grasa</th>
+      <td>60.674383</td>
+      <td>1.790252</td>
+      <td>2.713399</td>
+      <td>55.851817</td>
+      <td>2.284043</td>
+      <td>2.550715</td>
+      <td>3.995474</td>
+      <td>96.005854</td>
+    </tr>
+    <tr>
+      <th>Sodio</th>
+      <td>4310.041188</td>
+      <td>197.706130</td>
+      <td>55.851817</td>
+      <td>17064.098428</td>
+      <td>396.983157</td>
+      <td>468.557877</td>
+      <td>161.021552</td>
+      <td>13109.507474</td>
+    </tr>
+    <tr>
+      <th>Fibra</th>
+      <td>148.608725</td>
+      <td>13.122839</td>
+      <td>2.284043</td>
+      <td>396.983157</td>
+      <td>37.618644</td>
+      <td>10.547819</td>
+      <td>5.329678</td>
+      <td>1065.826587</td>
+    </tr>
+    <tr>
+      <th>Carbohidratos</th>
+      <td>416.865952</td>
+      <td>12.243296</td>
+      <td>2.550715</td>
+      <td>468.557877</td>
+      <td>10.547819</td>
+      <td>71.714955</td>
+      <td>-2.017438</td>
+      <td>369.551907</td>
+    </tr>
+    <tr>
+      <th>Azucares</th>
+      <td>180.380317</td>
+      <td>2.850421</td>
+      <td>3.995474</td>
+      <td>161.021552</td>
+      <td>5.329678</td>
+      <td>-2.017438</td>
+      <td>34.050018</td>
+      <td>285.976158</td>
+    </tr>
+    <tr>
+      <th>Potasio</th>
+      <td>5362.723526</td>
+      <td>401.040187</td>
+      <td>96.005854</td>
+      <td>13109.507474</td>
+      <td>1065.826587</td>
+      <td>369.551907</td>
+      <td>285.976158</td>
+      <td>32503.973299</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Matriz de correlación lineal de pearson</span>
+<span class="n">df_numeric</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Calorias</th>
+      <th>Proteina</th>
+      <th>Grasa</th>
+      <th>Sodio</th>
+      <th>Fibra</th>
+      <th>Carbohidratos</th>
+      <th>Azucares</th>
+      <th>Potasio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Calorias</th>
+      <td>1.0000</td>
+      <td>0.7060</td>
+      <td>0.5902</td>
+      <td>0.5287</td>
+      <td>0.3882</td>
+      <td>0.7887</td>
+      <td>0.4953</td>
+      <td>0.4766</td>
+    </tr>
+    <tr>
+      <th>Proteina</th>
+      <td>0.7060</td>
+      <td>1.0000</td>
+      <td>0.4113</td>
+      <td>0.5727</td>
+      <td>0.8096</td>
+      <td>0.5471</td>
+      <td>0.1848</td>
+      <td>0.8418</td>
+    </tr>
+    <tr>
+      <th>Grasa</th>
+      <td>0.5902</td>
+      <td>0.4113</td>
+      <td>1.0000</td>
+      <td>0.2596</td>
+      <td>0.2261</td>
+      <td>0.1829</td>
+      <td>0.4157</td>
+      <td>0.3233</td>
+    </tr>
+    <tr>
+      <th>Sodio</th>
+      <td>0.5287</td>
+      <td>0.5727</td>
+      <td>0.2596</td>
+      <td>1.0000</td>
+      <td>0.4955</td>
+      <td>0.4236</td>
+      <td>0.2112</td>
+      <td>0.5566</td>
+    </tr>
+    <tr>
+      <th>Fibra</th>
+      <td>0.3882</td>
+      <td>0.8096</td>
+      <td>0.2261</td>
+      <td>0.4955</td>
+      <td>1.0000</td>
+      <td>0.2031</td>
+      <td>0.1489</td>
+      <td>0.9639</td>
+    </tr>
+    <tr>
+      <th>Carbohidratos</th>
+      <td>0.7887</td>
+      <td>0.5471</td>
+      <td>0.1829</td>
+      <td>0.4236</td>
+      <td>0.2031</td>
+      <td>1.0000</td>
+      <td>-0.0408</td>
+      <td>0.2420</td>
+    </tr>
+    <tr>
+      <th>Azucares</th>
+      <td>0.4953</td>
+      <td>0.1848</td>
+      <td>0.4157</td>
+      <td>0.2112</td>
+      <td>0.1489</td>
+      <td>-0.0408</td>
+      <td>1.0000</td>
+      <td>0.2718</td>
+    </tr>
+    <tr>
+      <th>Potasio</th>
+      <td>0.4766</td>
+      <td>0.8418</td>
+      <td>0.3233</td>
+      <td>0.5566</td>
+      <td>0.9639</td>
+      <td>0.2420</td>
+      <td>0.2718</td>
+      <td>1.0000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La matriz anterior muestra la relación lineal entre cada par de variables, por su supuesto en la diagonal principal tenemos la correlación de la variable con ella misma, es decir 1.</p>
+<section id="ejercicio-3">
+<h3><em><strong>Ejercicio 3.</strong></em><a class="headerlink" href="#ejercicio-3" title="Link to this heading">#</a></h3>
+<p>Haga uso de <code class="docutils literal notranslate"><span class="pre">plotly_express</span></code> para construir un scatter plot de las siguientes variables:</p>
+<ul class="simple">
+<li><p>Potasio vs. Fibra</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probra.</span>
+<span class="c1">## Grafico de fibra y potasio.</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_numeric</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">df_numeric</span><span class="o">.</span><span class="n">Potasio</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">df_numeric</span><span class="o">.</span><span class="n">Fibra</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>La relación de las variables anteriores muestra que al parecer a mayor contenido de Potasio se incrementa la fibra.</p>
+</section>
+<section id="ejercicio-4">
+<h3><em><strong>Ejercicio 4.</strong></em><a class="headerlink" href="#ejercicio-4" title="Link to this heading">#</a></h3>
+<p>Obtenga el valor de esta correlación haciendo uso de código.</p>
+<p><em><strong>Respuesta:</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">corr</span> <span class="o">=</span> <span class="n">df_numeric</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Fibra&quot;</span><span class="p">,</span><span class="s2">&quot;Potasio&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La correlación de la variable Fibra y la variable Potasio es </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">corr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La correlación de la variable Fibra y la variable Potasio es 0.964
+</pre></div>
+</div>
+</div>
+</div>
+<p>Recuerde que muchas veces un plot dice más que mil palabras… Veamos la matriz de correlación con un mapa de calor</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Mapa de calor de la matriz de correlación.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_numeric</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bfa6c6be8547d31874ec9eebdce14172e12b3d2ca58c2797aa8ac12d12df3f16.png" src="../_images/bfa6c6be8547d31874ec9eebdce14172e12b3d2ca58c2797aa8ac12d12df3f16.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="diagramas-de-dispersion">
+<h2><em><strong>Diagramas de dispersión</strong></em><a class="headerlink" href="#diagramas-de-dispersion" title="Link to this heading">#</a></h2>
+<p>El diagrama de dispersión sirve para visualizar relaciones entre un par de variables cuantitativas.</p>
+<section id="ejercicio-5">
+<h3><em><strong>Ejercicio 5.</strong></em><a class="headerlink" href="#ejercicio-5" title="Link to this heading">#</a></h3>
+<p>Construya un <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> de todas las variables numéricas en el conjunto de datos, y la diagonal presente un kde-plot.</p>
+<p><em><strong>Respuesta:</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df_numeric</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span><span class="s2">&quot;red&quot;</span><span class="p">})</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7ec9e31621c664b837acc51d7315984cd5d5f50222e830f2ffdaf7bc2f9196b9.png" src="../_images/7ec9e31621c664b837acc51d7315984cd5d5f50222e830f2ffdaf7bc2f9196b9.png" />
+</div>
+</div>
+<p>Un plot más dinámico incluyendo el nombre del cereal lo podemos ver con el siguiente código:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Scatter plot entre Carbohidratos y Azucares. use hover_name = df.index</span>
+<span class="c1">## Complete el siguiente código</span>
+<span class="c1">## fig = px.?????(df, x = ???? , y = ????, ?????=?????)</span>
+<span class="c1">## ???.show()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Replique los mismos gráficos mostrando un scatter-plot de:</p>
+<ul class="simple">
+<li><p>Potasio vs. Sodio</p></li>
+<li><p>Proteina vs. Fibra</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Potasio&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Sodio&quot;</span><span class="p">,</span> <span class="n">hover_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;Proteina&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Fibra&quot;</span><span class="p">,</span> <span class="n">hover_name</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+</section>
+<section id="tablas-de-contingencia">
+<h2><em><strong>Tablas de contingencia.</strong></em><a class="headerlink" href="#tablas-de-contingencia" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.crosstab.html"><code class="docutils literal notranslate"><span class="pre">pd.crosstab()</span></code></a> para construir una tabla de contingencia, recordando que dicha tabla contiene los conteos de una o más variables cualitativas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber1.csv&quot;</span>
+<span class="n">df_icfes1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin1&quot;</span><span class="p">,</span><span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_icfes1</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10000, 78)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crosstab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df_icfes1</span><span class="p">[</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">],</span> <span class="n">df_icfes1</span><span class="p">[</span><span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">])</span>
+<span class="n">crosstab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>FAMI_NIVEL_SISBEN</th>
+      <th>Esta clasificada en otro nivel del SISBEN</th>
+      <th>Estrato 1</th>
+      <th>Nivel 1</th>
+      <th>Nivel 2</th>
+      <th>Nivel 3</th>
+      <th>No est  clasificada por el SISBEN</th>
+    </tr>
+    <tr>
+      <th>FAMI_CUARTOSHOGAR</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Cinco</th>
+      <td>3</td>
+      <td>0</td>
+      <td>116</td>
+      <td>72</td>
+      <td>7</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>Cuatro</th>
+      <td>13</td>
+      <td>0</td>
+      <td>371</td>
+      <td>299</td>
+      <td>70</td>
+      <td>291</td>
+    </tr>
+    <tr>
+      <th>Diez o m s</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Dos</th>
+      <td>35</td>
+      <td>0</td>
+      <td>1757</td>
+      <td>1059</td>
+      <td>199</td>
+      <td>758</td>
+    </tr>
+    <tr>
+      <th>Nueve</th>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Ocho</th>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>5</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Seis</th>
+      <td>0</td>
+      <td>0</td>
+      <td>38</td>
+      <td>22</td>
+      <td>4</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>Siete</th>
+      <td>0</td>
+      <td>0</td>
+      <td>11</td>
+      <td>10</td>
+      <td>1</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Tres</th>
+      <td>47</td>
+      <td>0</td>
+      <td>1475</td>
+      <td>1076</td>
+      <td>276</td>
+      <td>936</td>
+    </tr>
+    <tr>
+      <th>Una</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Uno</th>
+      <td>8</td>
+      <td>0</td>
+      <td>460</td>
+      <td>214</td>
+      <td>43</td>
+      <td>141</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">crosstab</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.0f&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3354d0cf4e2e0b2b0c70daa5c1a94785c237f9afa3ceb39e4410494be0bc5194.png" src="../_images/3354d0cf4e2e0b2b0c70daa5c1a94785c237f9afa3ceb39e4410494be0bc5194.png" />
+</div>
+</div>
+<section id="id1">
+<h3><em><strong>Ejercicio 5.</strong></em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>¿Que puede comentar del mapa de calor anterior?</p>
+</section>
+<section id="respuesta">
+<h3><em><strong>Respuesta</strong></em><a class="headerlink" href="#respuesta" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="otros-graficos-multivariados">
+<h2><em><strong>Otros gráficos multivariados.</strong></em><a class="headerlink" href="#otros-graficos-multivariados" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df_icfes1</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">,</span> <span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">df_group</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FAMI_CUARTOSHOGAR  FAMI_NIVEL_SISBEN                        
+Cinco              Esta clasificada en otro nivel del SISBEN       3
+                   Nivel 1                                       116
+                   Nivel 2                                        72
+                   Nivel 3                                         7
+                   No est  clasificada por el SISBEN              72
+Cuatro             Esta clasificada en otro nivel del SISBEN      13
+                   Nivel 1                                       371
+                   Nivel 2                                       299
+                   Nivel 3                                        70
+                   No est  clasificada por el SISBEN             291
+Diez o m s         Nivel 1                                         1
+                   Nivel 2                                         3
+                   Nivel 3                                         1
+                   No est  clasificada por el SISBEN               3
+Dos                Esta clasificada en otro nivel del SISBEN      35
+                   Nivel 1                                      1757
+                   Nivel 2                                      1059
+                   Nivel 3                                       199
+                   No est  clasificada por el SISBEN             758
+Nueve              Nivel 1                                         4
+                   Nivel 2                                         2
+Ocho               Nivel 1                                         7
+                   Nivel 2                                         5
+                   Nivel 3                                         1
+                   No est  clasificada por el SISBEN               5
+Seis               Nivel 1                                        38
+                   Nivel 2                                        22
+                   Nivel 3                                         4
+                   No est  clasificada por el SISBEN              21
+Siete              Nivel 1                                        11
+                   Nivel 2                                        10
+                   Nivel 3                                         1
+                   No est  clasificada por el SISBEN               6
+Tres               Esta clasificada en otro nivel del SISBEN      47
+                   Nivel 1                                      1475
+                   Nivel 2                                      1076
+                   Nivel 3                                       276
+                   No est  clasificada por el SISBEN             936
+Una                Estrato 1                                       1
+Uno                Esta clasificada en otro nivel del SISBEN       8
+                   Nivel 1                                       460
+                   Nivel 2                                       214
+                   Nivel 3                                        43
+                   No est  clasificada por el SISBEN             141
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group</span> <span class="o">=</span> <span class="n">df_icfes1</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">,</span> <span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">df_group</span> <span class="o">=</span> <span class="n">df_group</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">,)</span>
+<span class="n">df_group</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FAMI_CUARTOSHOGAR</th>
+      <th>FAMI_NIVEL_SISBEN</th>
+      <th>Conteo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Cinco</td>
+      <td>Esta clasificada en otro nivel del SISBEN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Cinco</td>
+      <td>Nivel 1</td>
+      <td>116</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Cinco</td>
+      <td>Nivel 2</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Cinco</td>
+      <td>Nivel 3</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Cinco</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>72</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Cuatro</td>
+      <td>Esta clasificada en otro nivel del SISBEN</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Cuatro</td>
+      <td>Nivel 1</td>
+      <td>371</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Cuatro</td>
+      <td>Nivel 2</td>
+      <td>299</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Cuatro</td>
+      <td>Nivel 3</td>
+      <td>70</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Cuatro</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>291</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Diez o m s</td>
+      <td>Nivel 1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Diez o m s</td>
+      <td>Nivel 2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Diez o m s</td>
+      <td>Nivel 3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Diez o m s</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Dos</td>
+      <td>Esta clasificada en otro nivel del SISBEN</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Dos</td>
+      <td>Nivel 1</td>
+      <td>1757</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Dos</td>
+      <td>Nivel 2</td>
+      <td>1059</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Dos</td>
+      <td>Nivel 3</td>
+      <td>199</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Dos</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>758</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Nueve</td>
+      <td>Nivel 1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Nueve</td>
+      <td>Nivel 2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Ocho</td>
+      <td>Nivel 1</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Ocho</td>
+      <td>Nivel 2</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Ocho</td>
+      <td>Nivel 3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Ocho</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Seis</td>
+      <td>Nivel 1</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Seis</td>
+      <td>Nivel 2</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Seis</td>
+      <td>Nivel 3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Seis</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Siete</td>
+      <td>Nivel 1</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Siete</td>
+      <td>Nivel 2</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Siete</td>
+      <td>Nivel 3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Siete</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Tres</td>
+      <td>Esta clasificada en otro nivel del SISBEN</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Tres</td>
+      <td>Nivel 1</td>
+      <td>1475</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Tres</td>
+      <td>Nivel 2</td>
+      <td>1076</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Tres</td>
+      <td>Nivel 3</td>
+      <td>276</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Tres</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>936</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Una</td>
+      <td>Estrato 1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Uno</td>
+      <td>Esta clasificada en otro nivel del SISBEN</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Uno</td>
+      <td>Nivel 1</td>
+      <td>460</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Uno</td>
+      <td>Nivel 2</td>
+      <td>214</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Uno</td>
+      <td>Nivel 3</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Uno</td>
+      <td>No est  clasificada por el SISBEN</td>
+      <td>141</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_group</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<section id="ejercicio-6">
+<h3><em><strong>Ejercicio 6.</strong></em><a class="headerlink" href="#ejercicio-6" title="Link to this heading">#</a></h3>
+<p>¿Observa lo mismo que en el mapa de calor, o quizá se observa información no percibida antes?</p>
+<p><em><strong>Respuesta:</strong></em></p>
+<p>En el repositorio de Github, tenemos más tablas de resultados del ICFES, vamos a importarlas todas y formar un único pandas DataFrame.</p>
+</section>
+<section id="ejercicio-7">
+<h3><em><strong>Ejercicio 7.</strong></em><a class="headerlink" href="#ejercicio-7" title="Link to this heading">#</a></h3>
+<p>Construya el <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> solicitado en el párrafo anterior. Llame este DataFrame <code class="docutils literal notranslate"><span class="pre">df_icfes</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">url_main</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber&quot;</span>
+<span class="c1">##</span>
+<span class="n">df_icfes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">13</span><span class="p">):</span>
+  <span class="n">url</span> <span class="o">=</span> <span class="n">url_main</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>
+  <span class="n">df_temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;latin1&quot;</span><span class="p">,</span> <span class="n">low_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="s2">&quot; Shape:&quot;</span><span class="p">,</span><span class="n">df_temp</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">df_icfes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_icfes</span><span class="p">,</span><span class="n">df_temp</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">El tamaño del Dataframe resultante es: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">df_icfes</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber1.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber2.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber3.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber4.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber5.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber6.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber7.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber8.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber9.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber10.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber11.csv  Shape: (10000, 78)
+https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/PruebaSaber12.csv  Shape: (2504, 78)
+
+El tamaño del Dataframe resultante es: (112504, 78)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corre</span> <span class="o">=</span> <span class="n">df_icfes</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corre</span><span class="p">,</span><span class="n">annot</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1e6ce34dec6c61246f829a6ee82811c42c907d772555c8aef7e5257c4207a69a.png" src="../_images/1e6ce34dec6c61246f829a6ee82811c42c907d772555c8aef7e5257c4207a69a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">df_icfes</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;MOD_LECTURA_CRITICA_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;PUNT_GLOBAL&quot;</span><span class="p">,</span>
+                 <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Scatter-plot: Puntaje Lectura crítica y Puntaje global&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="ejercicio-8">
+<h3><em><strong>Ejercicio 8.</strong></em><a class="headerlink" href="#ejercicio-8" title="Link to this heading">#</a></h3>
+<p>Construya con <code class="docutils literal notranslate"><span class="pre">plotly_express</span></code> un bar plot del conteo de elementos del cruce entre las variables <code class="docutils literal notranslate"><span class="pre">FAMI_CUARTOSHOGAR</span></code> y <code class="docutils literal notranslate"><span class="pre">FAMI_NIVEL_SISBEN</span></code>. En el eje <span class="math notranslate nohighlight">\(x\)</span> debe estar la varible <code class="docutils literal notranslate"><span class="pre">FAMI_CUARTOSHOGAR</span></code> mientras que en el eje <span class="math notranslate nohighlight">\(y\)</span> el conteo y distinguible por la variable  <code class="docutils literal notranslate"><span class="pre">FAMI_NIVEL_SISBEN</span></code>.</p>
+<p><strong>Hint:</strong> Use el parámetro <code class="docutils literal notranslate"><span class="pre">color=&quot;FAMI_NIVEL_SISBEN&quot;</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group1</span> <span class="o">=</span> <span class="n">df_icfes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">,</span> <span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">df_group1</span> <span class="o">=</span> <span class="n">df_group1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df_group1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;FAMI_CUARTOSHOGAR&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;FAMI_NIVEL_SISBEN&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_icfes</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;MOD_RAZONA_CUANTITAT_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;MOD_LECTURA_CRITICA_PUNT&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Vamos a considerar el DataFrame de las medias para los distintos grupos al cruzar las variables género del estudiante (<code class="docutils literal notranslate"><span class="pre">ESTU_GENERO</span></code>) y el departamento (<code class="docutils literal notranslate"><span class="pre">ESTU_INST_DEPARTAMENTO</span></code>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_group2</span> <span class="o">=</span> <span class="n">df_icfes</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;ESTU_GENERO&quot;</span><span class="p">,</span> <span class="s2">&quot;ESTU_INST_DEPARTAMENTO&quot;</span><span class="p">])[</span>
+    <span class="n">df_icfes</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
+<span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_group2</span> <span class="o">=</span> <span class="n">df_group2</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">df_group2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ESTU_GENERO</th>
+      <th>ESTU_INST_DEPARTAMENTO</th>
+      <th>MOD_RAZONA_CUANTITAT_PUNT</th>
+      <th>MOD_RAZONA_CUANTITATIVO_PNAL</th>
+      <th>MOD_RAZONA_CUANTITATIVO_PGREF</th>
+      <th>MOD_LECTURA_CRITICA_PUNT</th>
+      <th>MOD_LECTURA_CRITICA_PNAL</th>
+      <th>MOD_LECTURA_CRITICA_PGREF</th>
+      <th>MOD_COMPETEN_CIUDADA_PUNT</th>
+      <th>MOD_COMPETEN_CIUDADA_PNAL</th>
+      <th>MOD_COMPETEN_CIUDADA_PGREF</th>
+      <th>MOD_INGLES_PUNT</th>
+      <th>MOD_INGLES_PGREF</th>
+      <th>MOD_COMUNI_ESCRITA_PUNT</th>
+      <th>MOD_COMUNI_ESCRITA_DESEM</th>
+      <th>MOD_COMUNI_ESCRITA_PNAL</th>
+      <th>MOD_COMUNI_ESCRITA_PGREF</th>
+      <th>PUNT_GLOBAL</th>
+      <th>PERCENTIL_GLOBAL</th>
+      <th>ESTU_INSE_INDIVIDUAL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>F</td>
+      <td>ANTIOQUIA</td>
+      <td>101.772414</td>
+      <td>53.034943</td>
+      <td>54.268046</td>
+      <td>105.693333</td>
+      <td>58.797241</td>
+      <td>58.834483</td>
+      <td>103.767356</td>
+      <td>55.794943</td>
+      <td>55.534713</td>
+      <td>102.144368</td>
+      <td>54.313103</td>
+      <td>106.400924</td>
+      <td>2.760739</td>
+      <td>59.833718</td>
+      <td>59.248961</td>
+      <td>103.862529</td>
+      <td>58.614713</td>
+      <td>100.549658</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>F</td>
+      <td>ATLANTICO</td>
+      <td>96.815789</td>
+      <td>45.671053</td>
+      <td>47.680099</td>
+      <td>99.495066</td>
+      <td>49.660362</td>
+      <td>50.739309</td>
+      <td>98.804276</td>
+      <td>48.567434</td>
+      <td>49.110197</td>
+      <td>100.341283</td>
+      <td>53.285362</td>
+      <td>100.752902</td>
+      <td>2.466003</td>
+      <td>51.095357</td>
+      <td>49.945274</td>
+      <td>99.069079</td>
+      <td>48.935033</td>
+      <td>133.363980</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>BOGOTA</td>
+      <td>96.969663</td>
+      <td>45.931150</td>
+      <td>46.851030</td>
+      <td>99.762009</td>
+      <td>50.002411</td>
+      <td>50.006228</td>
+      <td>100.119699</td>
+      <td>50.410588</td>
+      <td>50.068408</td>
+      <td>97.818383</td>
+      <td>48.282069</td>
+      <td>101.404134</td>
+      <td>2.529434</td>
+      <td>52.469595</td>
+      <td>51.670651</td>
+      <td>99.081668</td>
+      <td>49.123154</td>
+      <td>81.417541</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>F</td>
+      <td>BOGOTµ, D.C.</td>
+      <td>11.000000</td>
+      <td>109.000000</td>
+      <td>66.000000</td>
+      <td>69.000000</td>
+      <td>129.000000</td>
+      <td>92.000000</td>
+      <td>93.000000</td>
+      <td>107.000000</td>
+      <td>62.000000</td>
+      <td>61.000000</td>
+      <td>66.000000</td>
+      <td>68.000000</td>
+      <td>118.000000</td>
+      <td>3.000000</td>
+      <td>82.000000</td>
+      <td>80.000000</td>
+      <td>114.000000</td>
+      <td>84.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>BOLIVAR</td>
+      <td>95.093143</td>
+      <td>43.630286</td>
+      <td>43.432571</td>
+      <td>99.786857</td>
+      <td>50.230857</td>
+      <td>49.936571</td>
+      <td>98.901714</td>
+      <td>48.574286</td>
+      <td>48.072571</td>
+      <td>100.458286</td>
+      <td>50.823429</td>
+      <td>101.436563</td>
+      <td>2.524221</td>
+      <td>52.294694</td>
+      <td>51.540946</td>
+      <td>98.965143</td>
+      <td>48.772000</td>
+      <td>86.990817</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>F</td>
+      <td>BOYACA</td>
+      <td>96.460432</td>
+      <td>44.863309</td>
+      <td>46.924460</td>
+      <td>100.881295</td>
+      <td>51.410072</td>
+      <td>52.410072</td>
+      <td>102.143885</td>
+      <td>53.428058</td>
+      <td>53.906475</td>
+      <td>92.208633</td>
+      <td>42.607914</td>
+      <td>104.211679</td>
+      <td>2.664234</td>
+      <td>56.029197</td>
+      <td>54.861314</td>
+      <td>98.881295</td>
+      <td>48.568345</td>
+      <td>48.749746</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>F</td>
+      <td>BUCARAMANGA</td>
+      <td>68.000000</td>
+      <td>103.000000</td>
+      <td>55.000000</td>
+      <td>58.000000</td>
+      <td>103.000000</td>
+      <td>57.000000</td>
+      <td>57.000000</td>
+      <td>90.000000</td>
+      <td>31.000000</td>
+      <td>29.000000</td>
+      <td>10.000000</td>
+      <td>10.000000</td>
+      <td>116.000000</td>
+      <td>3.000000</td>
+      <td>79.000000</td>
+      <td>78.000000</td>
+      <td>97.000000</td>
+      <td>44.000000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>F</td>
+      <td>CALDAS</td>
+      <td>94.621415</td>
+      <td>42.338432</td>
+      <td>47.434034</td>
+      <td>97.403442</td>
+      <td>46.806883</td>
+      <td>52.315488</td>
+      <td>97.296367</td>
+      <td>46.191205</td>
+      <td>51.388145</td>
+      <td>95.642447</td>
+      <td>50.070746</td>
+      <td>103.402724</td>
+      <td>2.626459</td>
+      <td>55.324903</td>
+      <td>59.120623</td>
+      <td>97.311663</td>
+      <td>45.468451</td>
+      <td>45.701468</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>F</td>
+      <td>CAQUETA</td>
+      <td>106.714286</td>
+      <td>59.642857</td>
+      <td>59.500000</td>
+      <td>115.357143</td>
+      <td>68.000000</td>
+      <td>64.000000</td>
+      <td>110.785714</td>
+      <td>61.214286</td>
+      <td>55.785714</td>
+      <td>95.857143</td>
+      <td>44.785714</td>
+      <td>122.857143</td>
+      <td>3.571429</td>
+      <td>84.000000</td>
+      <td>80.071429</td>
+      <td>110.214286</td>
+      <td>68.214286</td>
+      <td>49.708245</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>F</td>
+      <td>CAUCA</td>
+      <td>96.644231</td>
+      <td>45.043269</td>
+      <td>45.197115</td>
+      <td>96.764423</td>
+      <td>45.423077</td>
+      <td>47.317308</td>
+      <td>98.538462</td>
+      <td>47.923077</td>
+      <td>50.307692</td>
+      <td>94.750000</td>
+      <td>45.076923</td>
+      <td>99.497585</td>
+      <td>2.454106</td>
+      <td>49.652174</td>
+      <td>51.903382</td>
+      <td>97.134615</td>
+      <td>45.317308</td>
+      <td>239.199711</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>F</td>
+      <td>CHOCO</td>
+      <td>102.500000</td>
+      <td>53.000000</td>
+      <td>49.000000</td>
+      <td>109.000000</td>
+      <td>66.000000</td>
+      <td>64.500000</td>
+      <td>110.000000</td>
+      <td>63.000000</td>
+      <td>62.500000</td>
+      <td>115.500000</td>
+      <td>75.500000</td>
+      <td>99.500000</td>
+      <td>2.500000</td>
+      <td>49.000000</td>
+      <td>51.500000</td>
+      <td>107.000000</td>
+      <td>62.000000</td>
+      <td>43.185549</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>F</td>
+      <td>CORDOBA</td>
+      <td>90.954545</td>
+      <td>36.909091</td>
+      <td>43.000000</td>
+      <td>93.136364</td>
+      <td>41.363636</td>
+      <td>43.454545</td>
+      <td>92.363636</td>
+      <td>38.772727</td>
+      <td>39.681818</td>
+      <td>88.818182</td>
+      <td>38.590909</td>
+      <td>97.090909</td>
+      <td>2.272727</td>
+      <td>44.000000</td>
+      <td>42.454545</td>
+      <td>92.500000</td>
+      <td>36.181818</td>
+      <td>45.198106</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>F</td>
+      <td>CUNDINAMARCA</td>
+      <td>105.243902</td>
+      <td>58.292683</td>
+      <td>54.829268</td>
+      <td>105.048780</td>
+      <td>57.073171</td>
+      <td>55.975610</td>
+      <td>103.121951</td>
+      <td>53.951220</td>
+      <td>54.000000</td>
+      <td>107.487805</td>
+      <td>58.048780</td>
+      <td>107.780488</td>
+      <td>2.780488</td>
+      <td>61.292683</td>
+      <td>62.682927</td>
+      <td>105.780488</td>
+      <td>62.682927</td>
+      <td>54.448160</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>F</td>
+      <td>HUILA</td>
+      <td>104.855072</td>
+      <td>58.289855</td>
+      <td>58.797101</td>
+      <td>105.086957</td>
+      <td>57.376812</td>
+      <td>58.478261</td>
+      <td>100.782609</td>
+      <td>51.057971</td>
+      <td>52.246377</td>
+      <td>102.927536</td>
+      <td>55.768116</td>
+      <td>108.608696</td>
+      <td>2.855072</td>
+      <td>63.710145</td>
+      <td>64.043478</td>
+      <td>104.507246</td>
+      <td>59.608696</td>
+      <td>47.899190</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>F</td>
+      <td>LA GUAJIRA</td>
+      <td>91.578947</td>
+      <td>39.017544</td>
+      <td>38.596491</td>
+      <td>90.421053</td>
+      <td>38.333333</td>
+      <td>39.877193</td>
+      <td>95.842105</td>
+      <td>44.578947</td>
+      <td>46.456140</td>
+      <td>88.929825</td>
+      <td>34.877193</td>
+      <td>96.910714</td>
+      <td>2.357143</td>
+      <td>46.696429</td>
+      <td>47.446429</td>
+      <td>92.438596</td>
+      <td>37.701754</td>
+      <td>44.642216</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>F</td>
+      <td>MAGDALENA</td>
+      <td>86.131387</td>
+      <td>30.133820</td>
+      <td>38.360097</td>
+      <td>90.416058</td>
+      <td>36.474453</td>
+      <td>40.982968</td>
+      <td>92.469586</td>
+      <td>38.880779</td>
+      <td>42.107056</td>
+      <td>86.520681</td>
+      <td>37.352798</td>
+      <td>96.606516</td>
+      <td>2.303258</td>
+      <td>45.293233</td>
+      <td>46.994987</td>
+      <td>89.863747</td>
+      <td>30.756691</td>
+      <td>44.257546</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>F</td>
+      <td>META</td>
+      <td>103.285714</td>
+      <td>56.000000</td>
+      <td>59.357143</td>
+      <td>104.642857</td>
+      <td>56.571429</td>
+      <td>54.785714</td>
+      <td>106.285714</td>
+      <td>59.000000</td>
+      <td>58.214286</td>
+      <td>103.285714</td>
+      <td>57.571429</td>
+      <td>101.923077</td>
+      <td>2.538462</td>
+      <td>52.153846</td>
+      <td>51.307692</td>
+      <td>102.428571</td>
+      <td>56.000000</td>
+      <td>51.887948</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>F</td>
+      <td>NARI¥O</td>
+      <td>99.586777</td>
+      <td>49.537190</td>
+      <td>53.636364</td>
+      <td>103.157025</td>
+      <td>55.520661</td>
+      <td>56.524793</td>
+      <td>101.123967</td>
+      <td>52.185950</td>
+      <td>52.706612</td>
+      <td>100.995868</td>
+      <td>55.111570</td>
+      <td>105.212500</td>
+      <td>2.695833</td>
+      <td>57.758333</td>
+      <td>57.408333</td>
+      <td>101.859504</td>
+      <td>55.276860</td>
+      <td>47.896739</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>F</td>
+      <td>NORTE SANTANDER</td>
+      <td>96.232353</td>
+      <td>45.014706</td>
+      <td>46.055882</td>
+      <td>96.329412</td>
+      <td>45.247059</td>
+      <td>45.270588</td>
+      <td>96.308824</td>
+      <td>45.238235</td>
+      <td>44.929412</td>
+      <td>92.811765</td>
+      <td>40.808824</td>
+      <td>101.339233</td>
+      <td>2.551622</td>
+      <td>52.572271</td>
+      <td>51.790560</td>
+      <td>96.538235</td>
+      <td>44.052941</td>
+      <td>141.779597</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>F</td>
+      <td>PUTUMAYO</td>
+      <td>98.586957</td>
+      <td>47.282609</td>
+      <td>46.326087</td>
+      <td>106.130435</td>
+      <td>58.304348</td>
+      <td>58.478261</td>
+      <td>107.086957</td>
+      <td>60.478261</td>
+      <td>61.173913</td>
+      <td>101.760870</td>
+      <td>53.717391</td>
+      <td>104.043478</td>
+      <td>2.608696</td>
+      <td>55.456522</td>
+      <td>56.804348</td>
+      <td>103.456522</td>
+      <td>56.543478</td>
+      <td>43.882931</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>F</td>
+      <td>QUINDIO</td>
+      <td>97.160000</td>
+      <td>46.091429</td>
+      <td>44.971429</td>
+      <td>97.920000</td>
+      <td>47.422857</td>
+      <td>45.314286</td>
+      <td>96.954286</td>
+      <td>45.988571</td>
+      <td>44.971429</td>
+      <td>103.771429</td>
+      <td>52.708571</td>
+      <td>105.988439</td>
+      <td>2.722543</td>
+      <td>59.028902</td>
+      <td>57.462428</td>
+      <td>100.148571</td>
+      <td>51.062857</td>
+      <td>55.444022</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>F</td>
+      <td>RISARALDA</td>
+      <td>102.338323</td>
+      <td>52.892216</td>
+      <td>53.224551</td>
+      <td>103.574850</td>
+      <td>54.964072</td>
+      <td>56.476048</td>
+      <td>103.188623</td>
+      <td>54.982036</td>
+      <td>56.697605</td>
+      <td>104.236527</td>
+      <td>58.479042</td>
+      <td>106.639640</td>
+      <td>2.774775</td>
+      <td>60.354354</td>
+      <td>62.684685</td>
+      <td>103.931138</td>
+      <td>57.278443</td>
+      <td>48.747086</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>F</td>
+      <td>SAN ANDRES</td>
+      <td>85.200000</td>
+      <td>28.300000</td>
+      <td>28.200000</td>
+      <td>97.900000</td>
+      <td>46.500000</td>
+      <td>47.000000</td>
+      <td>88.900000</td>
+      <td>35.300000</td>
+      <td>34.900000</td>
+      <td>121.700000</td>
+      <td>78.900000</td>
+      <td>102.888889</td>
+      <td>2.666667</td>
+      <td>56.222222</td>
+      <td>54.333333</td>
+      <td>97.300000</td>
+      <td>45.700000</td>
+      <td>48.792491</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>F</td>
+      <td>SANTANDER</td>
+      <td>102.139052</td>
+      <td>53.400639</td>
+      <td>53.045285</td>
+      <td>103.254129</td>
+      <td>54.831113</td>
+      <td>54.510922</td>
+      <td>102.790623</td>
+      <td>54.378796</td>
+      <td>53.924347</td>
+      <td>100.028237</td>
+      <td>50.905701</td>
+      <td>105.067878</td>
+      <td>2.699091</td>
+      <td>57.965794</td>
+      <td>57.605024</td>
+      <td>102.587640</td>
+      <td>55.923282</td>
+      <td>129.327564</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>F</td>
+      <td>SUCRE</td>
+      <td>84.000000</td>
+      <td>27.391304</td>
+      <td>31.956522</td>
+      <td>87.000000</td>
+      <td>31.782609</td>
+      <td>33.347826</td>
+      <td>87.739130</td>
+      <td>32.695652</td>
+      <td>33.391304</td>
+      <td>89.043478</td>
+      <td>39.260870</td>
+      <td>100.217391</td>
+      <td>2.521739</td>
+      <td>49.521739</td>
+      <td>49.043478</td>
+      <td>89.695652</td>
+      <td>28.869565</td>
+      <td>46.286020</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>F</td>
+      <td>TOLIMA</td>
+      <td>94.158831</td>
+      <td>41.922490</td>
+      <td>43.796696</td>
+      <td>96.062262</td>
+      <td>44.510801</td>
+      <td>46.048285</td>
+      <td>95.589581</td>
+      <td>44.176620</td>
+      <td>45.425667</td>
+      <td>92.886912</td>
+      <td>42.891995</td>
+      <td>98.982028</td>
+      <td>2.423620</td>
+      <td>49.218228</td>
+      <td>49.729140</td>
+      <td>95.331639</td>
+      <td>41.729352</td>
+      <td>228.120692</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>F</td>
+      <td>VALLE</td>
+      <td>100.744059</td>
+      <td>51.374771</td>
+      <td>52.452599</td>
+      <td>103.414381</td>
+      <td>55.513711</td>
+      <td>54.848930</td>
+      <td>101.316880</td>
+      <td>52.062157</td>
+      <td>51.798165</td>
+      <td>101.828763</td>
+      <td>52.672171</td>
+      <td>103.037585</td>
+      <td>2.617991</td>
+      <td>54.805299</td>
+      <td>54.018553</td>
+      <td>101.850701</td>
+      <td>54.382084</td>
+      <td>87.222468</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>M</td>
+      <td>ANTIOQUIA</td>
+      <td>109.816806</td>
+      <td>63.935804</td>
+      <td>62.572025</td>
+      <td>105.901879</td>
+      <td>58.693633</td>
+      <td>57.732777</td>
+      <td>104.268267</td>
+      <td>56.628392</td>
+      <td>56.127349</td>
+      <td>108.071503</td>
+      <td>58.626827</td>
+      <td>103.209424</td>
+      <td>2.604712</td>
+      <td>54.762304</td>
+      <td>55.265445</td>
+      <td>106.186326</td>
+      <td>62.670146</td>
+      <td>53.661166</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>M</td>
+      <td>ATLANTICO</td>
+      <td>101.709589</td>
+      <td>52.874886</td>
+      <td>52.311416</td>
+      <td>97.994521</td>
+      <td>47.587215</td>
+      <td>48.160731</td>
+      <td>96.626484</td>
+      <td>45.789954</td>
+      <td>46.510502</td>
+      <td>104.852968</td>
+      <td>57.042009</td>
+      <td>95.529248</td>
+      <td>2.246054</td>
+      <td>44.000000</td>
+      <td>44.220984</td>
+      <td>99.017352</td>
+      <td>49.296804</td>
+      <td>166.467902</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>M</td>
+      <td>BOGOTA</td>
+      <td>103.188834</td>
+      <td>54.833018</td>
+      <td>53.455043</td>
+      <td>99.886828</td>
+      <td>50.117522</td>
+      <td>49.752648</td>
+      <td>100.057469</td>
+      <td>50.483701</td>
+      <td>50.432245</td>
+      <td>101.509288</td>
+      <td>51.739701</td>
+      <td>97.743063</td>
+      <td>2.362631</td>
+      <td>47.108200</td>
+      <td>47.848990</td>
+      <td>100.289468</td>
+      <td>51.416560</td>
+      <td>98.756578</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>M</td>
+      <td>BOLIVAR</td>
+      <td>100.559278</td>
+      <td>51.036082</td>
+      <td>48.998711</td>
+      <td>96.900773</td>
+      <td>45.922036</td>
+      <td>45.236469</td>
+      <td>95.775129</td>
+      <td>44.567010</td>
+      <td>44.285438</td>
+      <td>101.637887</td>
+      <td>50.856959</td>
+      <td>95.801974</td>
+      <td>2.272368</td>
+      <td>44.223684</td>
+      <td>44.676974</td>
+      <td>97.750000</td>
+      <td>46.362758</td>
+      <td>91.415221</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>M</td>
+      <td>BOYACA</td>
+      <td>105.305085</td>
+      <td>58.186441</td>
+      <td>54.740113</td>
+      <td>100.734463</td>
+      <td>51.033898</td>
+      <td>51.141243</td>
+      <td>105.757062</td>
+      <td>58.378531</td>
+      <td>59.079096</td>
+      <td>96.853107</td>
+      <td>47.090395</td>
+      <td>100.171429</td>
+      <td>2.491429</td>
+      <td>50.754286</td>
+      <td>52.805714</td>
+      <td>101.536723</td>
+      <td>53.807910</td>
+      <td>48.400971</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>M</td>
+      <td>CALDAS</td>
+      <td>96.948370</td>
+      <td>46.103261</td>
+      <td>49.956522</td>
+      <td>94.605978</td>
+      <td>42.961957</td>
+      <td>47.573370</td>
+      <td>94.304348</td>
+      <td>42.581522</td>
+      <td>47.331522</td>
+      <td>95.516304</td>
+      <td>47.500000</td>
+      <td>97.754821</td>
+      <td>2.352617</td>
+      <td>46.911846</td>
+      <td>50.856749</td>
+      <td>95.576087</td>
+      <td>42.290761</td>
+      <td>192.208655</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>M</td>
+      <td>CALI</td>
+      <td>76.000000</td>
+      <td>97.000000</td>
+      <td>44.000000</td>
+      <td>47.000000</td>
+      <td>77.000000</td>
+      <td>13.000000</td>
+      <td>12.000000</td>
+      <td>92.000000</td>
+      <td>34.000000</td>
+      <td>33.000000</td>
+      <td>37.000000</td>
+      <td>38.000000</td>
+      <td>98.000000</td>
+      <td>2.000000</td>
+      <td>44.000000</td>
+      <td>41.000000</td>
+      <td>91.000000</td>
+      <td>28.000000</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>M</td>
+      <td>CAQUETA</td>
+      <td>94.000000</td>
+      <td>40.785714</td>
+      <td>38.500000</td>
+      <td>102.000000</td>
+      <td>52.285714</td>
+      <td>48.071429</td>
+      <td>98.642857</td>
+      <td>49.928571</td>
+      <td>46.785714</td>
+      <td>90.642857</td>
+      <td>33.714286</td>
+      <td>99.000000</td>
+      <td>2.357143</td>
+      <td>48.428571</td>
+      <td>44.928571</td>
+      <td>96.928571</td>
+      <td>43.357143</td>
+      <td>48.510087</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>M</td>
+      <td>CAUCA</td>
+      <td>99.751773</td>
+      <td>50.312057</td>
+      <td>48.773050</td>
+      <td>93.858156</td>
+      <td>42.063830</td>
+      <td>42.460993</td>
+      <td>93.588652</td>
+      <td>40.510638</td>
+      <td>41.971631</td>
+      <td>97.659574</td>
+      <td>46.134752</td>
+      <td>92.496403</td>
+      <td>2.172662</td>
+      <td>41.280576</td>
+      <td>42.848921</td>
+      <td>95.205674</td>
+      <td>41.553191</td>
+      <td>46.978423</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>M</td>
+      <td>CESAR</td>
+      <td>93.500000</td>
+      <td>44.000000</td>
+      <td>49.500000</td>
+      <td>90.500000</td>
+      <td>32.500000</td>
+      <td>44.000000</td>
+      <td>103.000000</td>
+      <td>54.500000</td>
+      <td>66.500000</td>
+      <td>98.500000</td>
+      <td>64.500000</td>
+      <td>96.000000</td>
+      <td>2.000000</td>
+      <td>46.000000</td>
+      <td>53.000000</td>
+      <td>96.000000</td>
+      <td>43.000000</td>
+      <td>50.954109</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>M</td>
+      <td>CHOCO</td>
+      <td>78.375000</td>
+      <td>21.000000</td>
+      <td>18.375000</td>
+      <td>74.250000</td>
+      <td>15.875000</td>
+      <td>15.500000</td>
+      <td>88.375000</td>
+      <td>30.125000</td>
+      <td>30.625000</td>
+      <td>89.625000</td>
+      <td>31.750000</td>
+      <td>72.000000</td>
+      <td>1.375000</td>
+      <td>17.500000</td>
+      <td>19.000000</td>
+      <td>80.500000</td>
+      <td>18.250000</td>
+      <td>47.082766</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>M</td>
+      <td>CORDOBA</td>
+      <td>105.916667</td>
+      <td>61.416667</td>
+      <td>68.416667</td>
+      <td>88.833333</td>
+      <td>35.166667</td>
+      <td>37.166667</td>
+      <td>88.833333</td>
+      <td>39.250000</td>
+      <td>40.333333</td>
+      <td>83.416667</td>
+      <td>30.416667</td>
+      <td>90.500000</td>
+      <td>1.833333</td>
+      <td>33.666667</td>
+      <td>31.833333</td>
+      <td>91.500000</td>
+      <td>33.500000</td>
+      <td>45.957908</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>M</td>
+      <td>CUNDINAMARCA</td>
+      <td>91.578740</td>
+      <td>38.652231</td>
+      <td>47.066929</td>
+      <td>89.620735</td>
+      <td>35.943570</td>
+      <td>45.872703</td>
+      <td>87.051181</td>
+      <td>32.517060</td>
+      <td>40.814961</td>
+      <td>96.337270</td>
+      <td>54.036745</td>
+      <td>90.784392</td>
+      <td>2.070106</td>
+      <td>37.916667</td>
+      <td>43.757937</td>
+      <td>90.950131</td>
+      <td>33.461942</td>
+      <td>178.863560</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>M</td>
+      <td>HUILA</td>
+      <td>106.775510</td>
+      <td>60.183673</td>
+      <td>59.775510</td>
+      <td>99.673469</td>
+      <td>49.755102</td>
+      <td>51.000000</td>
+      <td>98.653061</td>
+      <td>49.591837</td>
+      <td>50.775510</td>
+      <td>97.428571</td>
+      <td>50.551020</td>
+      <td>94.958333</td>
+      <td>2.291667</td>
+      <td>43.875000</td>
+      <td>46.208333</td>
+      <td>99.142857</td>
+      <td>49.816327</td>
+      <td>48.534396</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>M</td>
+      <td>LA GUAJIRA</td>
+      <td>97.774194</td>
+      <td>46.129032</td>
+      <td>44.064516</td>
+      <td>88.693548</td>
+      <td>34.032258</td>
+      <td>36.741935</td>
+      <td>88.790323</td>
+      <td>34.806452</td>
+      <td>38.016129</td>
+      <td>89.483871</td>
+      <td>35.645161</td>
+      <td>94.278689</td>
+      <td>2.213115</td>
+      <td>40.836066</td>
+      <td>43.278689</td>
+      <td>91.532258</td>
+      <td>33.870968</td>
+      <td>46.060031</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>M</td>
+      <td>MAGDALENA</td>
+      <td>90.629630</td>
+      <td>37.137566</td>
+      <td>45.312169</td>
+      <td>91.730159</td>
+      <td>38.148148</td>
+      <td>42.820106</td>
+      <td>93.111111</td>
+      <td>40.338624</td>
+      <td>43.783069</td>
+      <td>91.412698</td>
+      <td>44.084656</td>
+      <td>93.304813</td>
+      <td>2.128342</td>
+      <td>39.700535</td>
+      <td>41.112299</td>
+      <td>91.820106</td>
+      <td>34.936508</td>
+      <td>45.326718</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>M</td>
+      <td>META</td>
+      <td>100.666667</td>
+      <td>51.166667</td>
+      <td>48.833333</td>
+      <td>89.833333</td>
+      <td>32.000000</td>
+      <td>24.166667</td>
+      <td>100.166667</td>
+      <td>49.666667</td>
+      <td>44.500000</td>
+      <td>100.000000</td>
+      <td>39.000000</td>
+      <td>86.833333</td>
+      <td>1.500000</td>
+      <td>27.166667</td>
+      <td>26.500000</td>
+      <td>95.500000</td>
+      <td>40.833333</td>
+      <td>58.642623</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>M</td>
+      <td>NARI¥O</td>
+      <td>104.258427</td>
+      <td>56.247191</td>
+      <td>58.544944</td>
+      <td>100.640449</td>
+      <td>50.853933</td>
+      <td>52.415730</td>
+      <td>101.702247</td>
+      <td>51.994382</td>
+      <td>53.668539</td>
+      <td>102.471910</td>
+      <td>56.112360</td>
+      <td>100.610169</td>
+      <td>2.463277</td>
+      <td>50.468927</td>
+      <td>51.124294</td>
+      <td>101.825843</td>
+      <td>54.016854</td>
+      <td>49.799390</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>M</td>
+      <td>NORTE SANTANDER</td>
+      <td>101.960714</td>
+      <td>53.089286</td>
+      <td>50.832143</td>
+      <td>96.964286</td>
+      <td>46.585714</td>
+      <td>45.850000</td>
+      <td>97.789286</td>
+      <td>47.510714</td>
+      <td>47.400000</td>
+      <td>95.164286</td>
+      <td>42.285714</td>
+      <td>96.336957</td>
+      <td>2.300725</td>
+      <td>45.275362</td>
+      <td>46.362319</td>
+      <td>97.353571</td>
+      <td>45.821429</td>
+      <td>46.721598</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>M</td>
+      <td>PUTUMAYO</td>
+      <td>103.218750</td>
+      <td>55.968750</td>
+      <td>53.343750</td>
+      <td>103.093750</td>
+      <td>56.031250</td>
+      <td>55.218750</td>
+      <td>103.968750</td>
+      <td>55.062500</td>
+      <td>54.718750</td>
+      <td>102.625000</td>
+      <td>52.531250</td>
+      <td>102.281250</td>
+      <td>2.531250</td>
+      <td>53.250000</td>
+      <td>55.406250</td>
+      <td>103.062500</td>
+      <td>56.125000</td>
+      <td>41.657901</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>M</td>
+      <td>QUINDIO</td>
+      <td>109.084942</td>
+      <td>63.536680</td>
+      <td>60.888031</td>
+      <td>101.054054</td>
+      <td>51.590734</td>
+      <td>49.463320</td>
+      <td>99.772201</td>
+      <td>50.185328</td>
+      <td>49.478764</td>
+      <td>113.478764</td>
+      <td>63.030888</td>
+      <td>102.540856</td>
+      <td>2.603113</td>
+      <td>53.412451</td>
+      <td>53.311284</td>
+      <td>105.046332</td>
+      <td>59.934363</td>
+      <td>55.628366</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>M</td>
+      <td>RISARALDA</td>
+      <td>110.291566</td>
+      <td>64.356627</td>
+      <td>63.240964</td>
+      <td>104.380723</td>
+      <td>56.260241</td>
+      <td>57.081928</td>
+      <td>102.978313</td>
+      <td>54.407229</td>
+      <td>55.910843</td>
+      <td>111.253012</td>
+      <td>65.255422</td>
+      <td>104.884337</td>
+      <td>2.674699</td>
+      <td>57.159036</td>
+      <td>59.493976</td>
+      <td>106.763855</td>
+      <td>62.901205</td>
+      <td>50.474686</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>M</td>
+      <td>SAN ANDRES</td>
+      <td>86.333333</td>
+      <td>29.333333</td>
+      <td>27.833333</td>
+      <td>86.333333</td>
+      <td>27.833333</td>
+      <td>26.666667</td>
+      <td>82.000000</td>
+      <td>27.500000</td>
+      <td>27.166667</td>
+      <td>104.666667</td>
+      <td>56.000000</td>
+      <td>84.333333</td>
+      <td>1.833333</td>
+      <td>26.833333</td>
+      <td>25.333333</td>
+      <td>88.666667</td>
+      <td>28.666667</td>
+      <td>44.285651</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>M</td>
+      <td>SANTANDER</td>
+      <td>111.823529</td>
+      <td>66.230273</td>
+      <td>64.321377</td>
+      <td>105.875897</td>
+      <td>58.461263</td>
+      <td>57.911765</td>
+      <td>104.651363</td>
+      <td>56.788379</td>
+      <td>56.700143</td>
+      <td>105.660689</td>
+      <td>57.417504</td>
+      <td>102.475126</td>
+      <td>2.560923</td>
+      <td>53.693583</td>
+      <td>54.702956</td>
+      <td>105.982783</td>
+      <td>62.153515</td>
+      <td>92.774122</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>M</td>
+      <td>SUCRE</td>
+      <td>91.000000</td>
+      <td>37.191358</td>
+      <td>43.185185</td>
+      <td>90.253086</td>
+      <td>36.623457</td>
+      <td>44.345679</td>
+      <td>93.487654</td>
+      <td>41.339506</td>
+      <td>47.759259</td>
+      <td>93.851852</td>
+      <td>48.500000</td>
+      <td>94.277778</td>
+      <td>2.234568</td>
+      <td>42.728395</td>
+      <td>48.135802</td>
+      <td>92.561728</td>
+      <td>35.740741</td>
+      <td>47.704915</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>M</td>
+      <td>TOLIMA</td>
+      <td>101.195596</td>
+      <td>51.818653</td>
+      <td>49.582902</td>
+      <td>96.695596</td>
+      <td>45.715026</td>
+      <td>46.387306</td>
+      <td>94.814767</td>
+      <td>42.713731</td>
+      <td>43.971503</td>
+      <td>96.825130</td>
+      <td>45.930052</td>
+      <td>95.228162</td>
+      <td>2.242503</td>
+      <td>43.242503</td>
+      <td>44.633638</td>
+      <td>96.821244</td>
+      <td>44.252591</td>
+      <td>116.244638</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>M</td>
+      <td>VALLE</td>
+      <td>106.048924</td>
+      <td>58.889106</td>
+      <td>58.080235</td>
+      <td>102.902153</td>
+      <td>54.322244</td>
+      <td>53.395303</td>
+      <td>100.696021</td>
+      <td>51.896934</td>
+      <td>51.884540</td>
+      <td>106.052838</td>
+      <td>56.636660</td>
+      <td>97.157548</td>
+      <td>2.331575</td>
+      <td>46.121292</td>
+      <td>46.602505</td>
+      <td>102.386171</td>
+      <td>55.390085</td>
+      <td>91.522634</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El siguiente plot, por tanto, muestra un scatter-plot de las medias de 2 variables, separadas por género donde además podemos evidenciar de que departamento se trata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_group2</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;MOD_RAZONA_CUANTITAT_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;MOD_LECTURA_CRITICA_PUNT&quot;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;ESTU_GENERO&quot;</span><span class="p">,</span> <span class="n">hover_name</span> <span class="o">=</span> <span class="s2">&quot;ESTU_INST_DEPARTAMENTO&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="ejercicio-9">
+<h3><em><strong>Ejercicio 9.</strong></em><a class="headerlink" href="#ejercicio-9" title="Link to this heading">#</a></h3>
+<p>Construya un scatter-plot con <code class="docutils literal notranslate"><span class="pre">plotly_express</span></code> de los promedios de las varibles <code class="docutils literal notranslate"><span class="pre">MOD_RAZONA_CUANTITAT_PUNT</span></code>, <code class="docutils literal notranslate"><span class="pre">MOD_LECTURA_CRITICA_PUNT</span></code> con parámetro <code class="docutils literal notranslate"><span class="pre">size</span></code> igual a la cantidad de elementos en los grupos formados por el par de variables cualitativas <code class="docutils literal notranslate"><span class="pre">ESTU_GENERO</span></code> y <code class="docutils literal notranslate"><span class="pre">ESTU_INST_DEPARTAMENTO</span></code>, separe este plot por el género.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Celda de código para probar.</span>
+<span class="n">df_group3</span> <span class="o">=</span> <span class="n">df_icfes</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ESTU_GENERO&quot;</span><span class="p">,</span><span class="s2">&quot;ESTU_INST_DEPARTAMENTO&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<span class="n">df_group3</span> <span class="o">=</span> <span class="n">df_group3</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">)</span>
+<span class="n">df_group2</span><span class="p">[</span><span class="s2">&quot;Conteo&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_group3</span><span class="p">[</span><span class="s2">&quot;Conteo&quot;</span><span class="p">]</span>
+<span class="c1">##</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_group2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;MOD_RAZONA_CUANTITAT_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;MOD_LECTURA_CRITICA_PUNT&quot;</span><span class="p">,</span> 
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;ESTU_GENERO&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;Conteo&quot;</span><span class="p">,</span> 
+                 <span class="n">hover_name</span><span class="o">=</span><span class="s2">&quot;ESTU_INST_DEPARTAMENTO&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Finalmente unos gráficos más.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">density_contour</span><span class="p">(</span><span class="n">df_icfes</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;MOD_LECTURA_CRITICA_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;MOD_RAZONA_CUANTITAT_PUNT&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">contours_coloring</span><span class="o">=</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="n">contours_showlabels</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">density_contour</span><span class="p">(</span><span class="n">df_icfes</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;MOD_RAZONA_CUANTITAT_PUNT&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;MOD_COMPETEN_CIUDADA_PUNT&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_traces</span><span class="p">(</span><span class="n">contours_coloring</span><span class="o">=</span><span class="s2">&quot;fill&quot;</span><span class="p">,</span> <span class="n">contours_showlabels</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar_polar</span><span class="p">(</span><span class="n">df_group2</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="s2">&quot;MOD_COMUNI_ESCRITA_PUNT&quot;</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="s2">&quot;ESTU_INST_DEPARTAMENTO&quot;</span><span class="p">,</span>
+                   <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;ESTU_GENERO&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_dark&quot;</span><span class="p">,</span>
+                   <span class="n">color_discrete_sequence</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Plasma_r</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabla2</span><span class="o">=</span><span class="n">df_group2</span><span class="p">[</span><span class="n">df_group2</span><span class="p">[</span><span class="s2">&quot;Conteo&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar_polar</span><span class="p">(</span><span class="n">tabla2</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">df_group2</span><span class="o">.</span><span class="n">MOD_COMUNI_ESCRITA_PUNT</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">df_group2</span><span class="o">.</span><span class="n">ESTU_INST_DEPARTAMENTO</span><span class="p">,</span>
+                   <span class="n">color</span><span class="o">=</span><span class="n">df_group2</span><span class="o">.</span><span class="n">ESTU_GENERO</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_dark&quot;</span><span class="p">,</span>
+                   <span class="n">color_discrete_sequence</span><span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Plasma_r</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_1_Intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Introducción al machine learning</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_3_ACP.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>Analisis de compomente principales (PCA).</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cereal"><em><strong>Cereal</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-1"><em><strong>Ejercicio 1.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-2"><em><strong>Ejercicio 2.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matriz-de-covarianzas-y-de-correlacion"><em><strong>Matriz de covarianzas y de correlación.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-3"><em><strong>Ejercicio 3.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-4"><em><strong>Ejercicio 4.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagramas-de-dispersion"><em><strong>Diagramas de dispersión</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-5"><em><strong>Ejercicio 5.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tablas-de-contingencia"><em><strong>Tablas de contingencia.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><em><strong>Ejercicio 5.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#respuesta"><em><strong>Respuesta</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#otros-graficos-multivariados"><em><strong>Otros gráficos multivariados.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-6"><em><strong>Ejercicio 6.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-7"><em><strong>Ejercicio 7.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-8"><em><strong>Ejercicio 8.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejercicio-9"><em><strong>Ejercicio 9.</strong></em></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

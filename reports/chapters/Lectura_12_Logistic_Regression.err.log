@@ -1,0 +1,283 @@
+Traceback (most recent call last):
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/home/andres-campos/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+my_report = analyze(df_prestamos)
+my_report.show_notebook()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mKeyboardInterrupt[0m                         Traceback (most recent call last)
+Cell [0;32mIn[3], line 1[0m
+[0;32m----> 1[0m my_report [38;5;241m=[39m [43manalyze[49m[43m([49m[43mdf_prestamos[49m[43m)[49m
+[1;32m      2[0m my_report[38;5;241m.[39mshow_notebook()
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/sv_public.py:12[0m, in [0;36manalyze[0;34m(source, target_feat, feat_cfg, pairwise_analysis)[0m
+[1;32m      8[0m [38;5;28;01mdef[39;00m [38;5;21manalyze[39m(source: Union[pd[38;5;241m.[39mDataFrame, Tuple[pd[38;5;241m.[39mDataFrame, [38;5;28mstr[39m]],
+[1;32m      9[0m             target_feat: [38;5;28mstr[39m [38;5;241m=[39m [38;5;28;01mNone[39;00m,
+[1;32m     10[0m             feat_cfg: FeatureConfig [38;5;241m=[39m [38;5;28;01mNone[39;00m,
+[1;32m     11[0m             pairwise_analysis: [38;5;28mstr[39m [38;5;241m=[39m [38;5;124m'[39m[38;5;124mauto[39m[38;5;124m'[39m):
+[0;32m---> 12[0m     report [38;5;241m=[39m [43msweetviz[49m[38;5;241;43m.[39;49m[43mDataframeReport[49m[43m([49m[43msource[49m[43m,[49m[43m [49m[43mtarget_feat[49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m,[49m
+[1;32m     13[0m [43m                                      [49m[43mpairwise_analysis[49m[43m,[49m[43m [49m[43mfeat_cfg[49m[43m)[49m
+[1;32m     14[0m     [38;5;28;01mreturn[39;00m report
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/dataframe_report.py:277[0m, in [0;36mDataframeReport.__init__[0;34m(self, source, target_feature_name, compare, pairwise_analysis, fc, verbosity)[0m
+[1;32m    274[0m [38;5;28;01mfor[39;00m f [38;5;129;01min[39;00m features_to_process:
+[1;32m    275[0m     [38;5;66;03m# start = time.perf_counter()[39;00m
+[1;32m    276[0m     [38;5;28mself[39m[38;5;241m.[39mprogress_bar[38;5;241m.[39mset_description_str([38;5;124mf[39m[38;5;124m"[39m[38;5;124mFeature: [39m[38;5;132;01m{[39;00mf[38;5;241m.[39msource[38;5;241m.[39mname[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[0;32m--> 277[0m     [38;5;28mself[39m[38;5;241m.[39m_features[f[38;5;241m.[39msource[38;5;241m.[39mname] [38;5;241m=[39m [43msa[49m[38;5;241;43m.[39;49m[43manalyze_feature_to_dictionary[49m[43m([49m[43mf[49m[43m)[49m
+[1;32m    278[0m     [38;5;28mself[39m[38;5;241m.[39mprogress_bar[38;5;241m.[39mupdate([38;5;241m1[39m)
+[1;32m    279[0m     [38;5;66;03m# print(f"DONE FEATURE------> {f.source.name}"[39;00m
+[1;32m    280[0m     [38;5;66;03m#       f" {(time.perf_counter() - start):.2f}   {self._features[f.source.name]['type']}")[39;00m
+[1;32m    281[0m [38;5;66;03m# self.progress_bar.set_description_str('[FEATURES DONE]')[39;00m
+[1;32m    282[0m [38;5;66;03m# self.progress_bar.close()[39;00m
+[1;32m    283[0m 
+[1;32m    284[0m [38;5;66;03m# Wrap up summary[39;00m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/series_analyzer.py:142[0m, in [0;36manalyze_feature_to_dictionary[0;34m(to_process)[0m
+[1;32m    140[0m [38;5;66;03m# Perform full analysis on source/compare/target[39;00m
+[1;32m    141[0m [38;5;28;01mif[39;00m returned_feature_dict[[38;5;124m"[39m[38;5;124mtype[39m[38;5;124m"[39m] [38;5;241m==[39m FeatureType[38;5;241m.[39mTYPE_NUM:
+[0;32m--> 142[0m     [43msweetviz[49m[38;5;241;43m.[39;49m[43mseries_analyzer_numeric[49m[38;5;241;43m.[39;49m[43manalyze[49m[43m([49m[43mto_process[49m[43m,[49m[43m [49m[43mreturned_feature_dict[49m[43m)[49m
+[1;32m    143[0m [38;5;28;01melif[39;00m returned_feature_dict[[38;5;124m"[39m[38;5;124mtype[39m[38;5;124m"[39m] [38;5;241m==[39m FeatureType[38;5;241m.[39mTYPE_CAT:
+[1;32m    144[0m     sweetviz[38;5;241m.[39mseries_analyzer_cat[38;5;241m.[39manalyze(to_process, returned_feature_dict)
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/series_analyzer_numeric.py:105[0m, in [0;36manalyze[0;34m(to_process, feature_dict)[0m
+[1;32m    103[0m feature_dict[[38;5;124m"[39m[38;5;124mdetail_graphs[39m[38;5;124m"[39m] [38;5;241m=[39m [38;5;28mlist[39m()
+[1;32m    104[0m [38;5;28;01mfor[39;00m num_bins [38;5;129;01min[39;00m [[38;5;241m0[39m, [38;5;241m5[39m, [38;5;241m15[39m, [38;5;241m30[39m]:
+[0;32m--> 105[0m     new_graph [38;5;241m=[39m [43mGraphNumeric[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mdetail-[39;49m[38;5;124;43m"[39;49m[38;5;241;43m+[39;49m[38;5;28;43mstr[39;49m[43m([49m[43mnum_bins[49m[43m)[49m[43m,[49m[43m [49m[43mto_process[49m[43m)[49m
+[1;32m    106[0m     [38;5;28;01mif[39;00m new_graph:
+[1;32m    107[0m         feature_dict[[38;5;124m"[39m[38;5;124mdetail_graphs[39m[38;5;124m"[39m][38;5;241m.[39mappend(new_graph)
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/graph_numeric.py:222[0m, in [0;36mGraphNumeric.__init__[0;34m(self, which_graph, to_process)[0m
+[1;32m    219[0m padding_fraction[[38;5;241m1[39m] [38;5;241m=[39m padding_fraction[[38;5;241m1[39m] [38;5;241m/[39m ([38;5;28mself[39m[38;5;241m.[39msize_in_inches[[38;5;241m0[39m] [38;5;241m*[39m f[38;5;241m.[39mdpi)
+[1;32m    220[0m plt[38;5;241m.[39msubplots_adjust(top[38;5;241m=[39m([38;5;241m1.0[39m [38;5;241m-[39m padding_fraction[[38;5;241m0[39m]), left[38;5;241m=[39mpadding_fraction[[38;5;241m1[39m], \
+[1;32m    221[0m         bottom[38;5;241m=[39mpadding_fraction[[38;5;241m2[39m], right[38;5;241m=[39m([38;5;241m1.0[39m [38;5;241m-[39m padding_fraction[[38;5;241m3[39m]))
+[0;32m--> 222[0m [38;5;28mself[39m[38;5;241m.[39mgraph_base64 [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_encoded_base64[49m[43m([49m[43mf[49m[43m)[49m
+[1;32m    223[0m plt[38;5;241m.[39mclose([38;5;124m'[39m[38;5;124mall[39m[38;5;124m'[39m)
+[1;32m    224[0m [38;5;66;03m#plt.close(f)[39;00m
+[1;32m    225[0m [38;5;66;03m# print(matplotlib.rcParams)[39;00m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/sweetviz/graph.py:33[0m, in [0;36mGraph.get_encoded_base64[0;34m(figure)[0m
+[1;32m     30[0m [38;5;129m@staticmethod[39m
+[1;32m     31[0m [38;5;28;01mdef[39;00m [38;5;21mget_encoded_base64[39m(figure):
+[1;32m     32[0m     as_raw_bytes [38;5;241m=[39m BytesIO()
+[0;32m---> 33[0m     [43mfigure[49m[38;5;241;43m.[39;49m[43msavefig[49m[43m([49m[43mas_raw_bytes[49m[43m,[49m[43m [49m[38;5;28;43mformat[39;49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mpng[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mtransparent[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[1;32m     34[0m     as_raw_bytes[38;5;241m.[39mseek([38;5;241m0[39m)
+[1;32m     35[0m     [38;5;28;01mreturn[39;00m base64[38;5;241m.[39mb64encode(as_raw_bytes[38;5;241m.[39mread())
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/figure.py:3395[0m, in [0;36mFigure.savefig[0;34m(self, fname, transparent, **kwargs)[0m
+[1;32m   3393[0m     [38;5;28;01mfor[39;00m ax [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39maxes:
+[1;32m   3394[0m         _recursively_make_axes_transparent(stack, ax)
+[0;32m-> 3395[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mcanvas[49m[38;5;241;43m.[39;49m[43mprint_figure[49m[43m([49m[43mfname[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/backend_bases.py:2204[0m, in [0;36mFigureCanvasBase.print_figure[0;34m(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)[0m
+[1;32m   2200[0m [38;5;28;01mtry[39;00m:
+[1;32m   2201[0m     [38;5;66;03m# _get_renderer may change the figure dpi (as vector formats[39;00m
+[1;32m   2202[0m     [38;5;66;03m# force the figure dpi to 72), so we need to set it again here.[39;00m
+[1;32m   2203[0m     [38;5;28;01mwith[39;00m cbook[38;5;241m.[39m_setattr_cm([38;5;28mself[39m[38;5;241m.[39mfigure, dpi[38;5;241m=[39mdpi):
+[0;32m-> 2204[0m         result [38;5;241m=[39m [43mprint_method[49m[43m([49m
+[1;32m   2205[0m [43m            [49m[43mfilename[49m[43m,[49m
+[1;32m   2206[0m [43m            [49m[43mfacecolor[49m[38;5;241;43m=[39;49m[43mfacecolor[49m[43m,[49m
+[1;32m   2207[0m [43m            [49m[43medgecolor[49m[38;5;241;43m=[39;49m[43medgecolor[49m[43m,[49m
+[1;32m   2208[0m [43m            [49m[43morientation[49m[38;5;241;43m=[39;49m[43morientation[49m[43m,[49m
+[1;32m   2209[0m [43m            [49m[43mbbox_inches_restore[49m[38;5;241;43m=[39;49m[43m_bbox_inches_restore[49m[43m,[49m
+[1;32m   2210[0m [43m            [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m   2211[0m [38;5;28;01mfinally[39;00m:
+[1;32m   2212[0m     [38;5;28;01mif[39;00m bbox_inches [38;5;129;01mand[39;00m restore_bbox:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/backend_bases.py:2054[0m, in [0;36mFigureCanvasBase._switch_canvas_and_return_print_method.<locals>.<lambda>[0;34m(*args, **kwargs)[0m
+[1;32m   2050[0m     optional_kws [38;5;241m=[39m {  [38;5;66;03m# Passed by print_figure for other renderers.[39;00m
+[1;32m   2051[0m         [38;5;124m"[39m[38;5;124mdpi[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124mfacecolor[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124medgecolor[39m[38;5;124m"[39m, [38;5;124m"[39m[38;5;124morientation[39m[38;5;124m"[39m,
+[1;32m   2052[0m         [38;5;124m"[39m[38;5;124mbbox_inches_restore[39m[38;5;124m"[39m}
+[1;32m   2053[0m     skip [38;5;241m=[39m optional_kws [38;5;241m-[39m {[38;5;241m*[39minspect[38;5;241m.[39msignature(meth)[38;5;241m.[39mparameters}
+[0;32m-> 2054[0m     print_method [38;5;241m=[39m functools[38;5;241m.[39mwraps(meth)([38;5;28;01mlambda[39;00m [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs: [43mmeth[49m[43m([49m
+[1;32m   2055[0m [43m        [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43m{[49m[43mk[49m[43m:[49m[43m [49m[43mv[49m[43m [49m[38;5;28;43;01mfor[39;49;00m[43m [49m[43mk[49m[43m,[49m[43m [49m[43mv[49m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43mkwargs[49m[38;5;241;43m.[39;49m[43mitems[49m[43m([49m[43m)[49m[43m [49m[38;5;28;43;01mif[39;49;00m[43m [49m[43mk[49m[43m [49m[38;5;129;43;01mnot[39;49;00m[43m [49m[38;5;129;43;01min[39;49;00m[43m [49m[43mskip[49m[43m}[49m[43m)[49m)
+[1;32m   2056[0m [38;5;28;01melse[39;00m:  [38;5;66;03m# Let third-parties do as they see fit.[39;00m
+[1;32m   2057[0m     print_method [38;5;241m=[39m meth
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:496[0m, in [0;36mFigureCanvasAgg.print_png[0;34m(self, filename_or_obj, metadata, pil_kwargs)[0m
+[1;32m    449[0m [38;5;28;01mdef[39;00m [38;5;21mprint_png[39m([38;5;28mself[39m, filename_or_obj, [38;5;241m*[39m, metadata[38;5;241m=[39m[38;5;28;01mNone[39;00m, pil_kwargs[38;5;241m=[39m[38;5;28;01mNone[39;00m):
+[1;32m    450[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m    451[0m [38;5;124;03m    Write the figure to a PNG file.[39;00m
+[1;32m    452[0m 
+[0;32m   (...)[0m
+[1;32m    494[0m [38;5;124;03m        *metadata*, including the default 'Software' key.[39;00m
+[1;32m    495[0m [38;5;124;03m    """[39;00m
+[0;32m--> 496[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_print_pil[49m[43m([49m[43mfilename_or_obj[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mpng[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mpil_kwargs[49m[43m,[49m[43m [49m[43mmetadata[49m[43m)[49m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:444[0m, in [0;36mFigureCanvasAgg._print_pil[0;34m(self, filename_or_obj, fmt, pil_kwargs, metadata)[0m
+[1;32m    439[0m [38;5;28;01mdef[39;00m [38;5;21m_print_pil[39m([38;5;28mself[39m, filename_or_obj, fmt, pil_kwargs, metadata[38;5;241m=[39m[38;5;28;01mNone[39;00m):
+[1;32m    440[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m    441[0m [38;5;124;03m    Draw the canvas, then save it using `.image.imsave` (to which[39;00m
+[1;32m    442[0m [38;5;124;03m    *pil_kwargs* and *metadata* are forwarded).[39;00m
+[1;32m    443[0m [38;5;124;03m    """[39;00m
+[0;32m--> 444[0m     [43mFigureCanvasAgg[49m[38;5;241;43m.[39;49m[43mdraw[49m[43m([49m[38;5;28;43mself[39;49m[43m)[49m
+[1;32m    445[0m     mpl[38;5;241m.[39mimage[38;5;241m.[39mimsave(
+[1;32m    446[0m         filename_or_obj, [38;5;28mself[39m[38;5;241m.[39mbuffer_rgba(), [38;5;28mformat[39m[38;5;241m=[39mfmt, origin[38;5;241m=[39m[38;5;124m"[39m[38;5;124mupper[39m[38;5;124m"[39m,
+[1;32m    447[0m         dpi[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mfigure[38;5;241m.[39mdpi, metadata[38;5;241m=[39mmetadata, pil_kwargs[38;5;241m=[39mpil_kwargs)
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/backends/backend_agg.py:387[0m, in [0;36mFigureCanvasAgg.draw[0;34m(self)[0m
+[1;32m    384[0m [38;5;66;03m# Acquire a lock on the shared font cache.[39;00m
+[1;32m    385[0m [38;5;28;01mwith[39;00m ([38;5;28mself[39m[38;5;241m.[39mtoolbar[38;5;241m.[39m_wait_cursor_for_draw_cm() [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mtoolbar
+[1;32m    386[0m       [38;5;28;01melse[39;00m nullcontext()):
+[0;32m--> 387[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mfigure[49m[38;5;241;43m.[39;49m[43mdraw[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mrenderer[49m[43m)[49m
+[1;32m    388[0m     [38;5;66;03m# A GUI class may be need to update a window using this draw, so[39;00m
+[1;32m    389[0m     [38;5;66;03m# don't forget to call the superclass.[39;00m
+[1;32m    390[0m     [38;5;28msuper[39m()[38;5;241m.[39mdraw()
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/artist.py:95[0m, in [0;36m_finalize_rasterization.<locals>.draw_wrapper[0;34m(artist, renderer, *args, **kwargs)[0m
+[1;32m     93[0m [38;5;129m@wraps[39m(draw)
+[1;32m     94[0m [38;5;28;01mdef[39;00m [38;5;21mdraw_wrapper[39m(artist, renderer, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m---> 95[0m     result [38;5;241m=[39m [43mdraw[49m[43m([49m[43martist[49m[43m,[49m[43m [49m[43mrenderer[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m     96[0m     [38;5;28;01mif[39;00m renderer[38;5;241m.[39m_rasterizing:
+[1;32m     97[0m         renderer[38;5;241m.[39mstop_rasterizing()
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/artist.py:72[0m, in [0;36mallow_rasterization.<locals>.draw_wrapper[0;34m(artist, renderer)[0m
+[1;32m     69[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m     70[0m         renderer[38;5;241m.[39mstart_filter()
+[0;32m---> 72[0m     [38;5;28;01mreturn[39;00m [43mdraw[49m[43m([49m[43martist[49m[43m,[49m[43m [49m[43mrenderer[49m[43m)[49m
+[1;32m     73[0m [38;5;28;01mfinally[39;00m:
+[1;32m     74[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/figure.py:3162[0m, in [0;36mFigure.draw[0;34m(self, renderer)[0m
+[1;32m   3159[0m             [38;5;66;03m# ValueError can occur when resizing a window.[39;00m
+[1;32m   3161[0m     [38;5;28mself[39m[38;5;241m.[39mpatch[38;5;241m.[39mdraw(renderer)
+[0;32m-> 3162[0m     [43mmimage[49m[38;5;241;43m.[39;49m[43m_draw_list_compositing_images[49m[43m([49m
+[1;32m   3163[0m [43m        [49m[43mrenderer[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43martists[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43msuppressComposite[49m[43m)[49m
+[1;32m   3165[0m     renderer[38;5;241m.[39mclose_group([38;5;124m'[39m[38;5;124mfigure[39m[38;5;124m'[39m)
+[1;32m   3166[0m [38;5;28;01mfinally[39;00m:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/image.py:132[0m, in [0;36m_draw_list_compositing_images[0;34m(renderer, parent, artists, suppress_composite)[0m
+[1;32m    130[0m [38;5;28;01mif[39;00m not_composite [38;5;129;01mor[39;00m [38;5;129;01mnot[39;00m has_images:
+[1;32m    131[0m     [38;5;28;01mfor[39;00m a [38;5;129;01min[39;00m artists:
+[0;32m--> 132[0m         [43ma[49m[38;5;241;43m.[39;49m[43mdraw[49m[43m([49m[43mrenderer[49m[43m)[49m
+[1;32m    133[0m [38;5;28;01melse[39;00m:
+[1;32m    134[0m     [38;5;66;03m# Composite any adjacent images together[39;00m
+[1;32m    135[0m     image_group [38;5;241m=[39m []
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/artist.py:72[0m, in [0;36mallow_rasterization.<locals>.draw_wrapper[0;34m(artist, renderer)[0m
+[1;32m     69[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m     70[0m         renderer[38;5;241m.[39mstart_filter()
+[0;32m---> 72[0m     [38;5;28;01mreturn[39;00m [43mdraw[49m[43m([49m[43martist[49m[43m,[49m[43m [49m[43mrenderer[49m[43m)[49m
+[1;32m     73[0m [38;5;28;01mfinally[39;00m:
+[1;32m     74[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axes/_base.py:3137[0m, in [0;36m_AxesBase.draw[0;34m(self, renderer)[0m
+[1;32m   3134[0m [38;5;28;01mif[39;00m artists_rasterized:
+[1;32m   3135[0m     _draw_rasterized([38;5;28mself[39m[38;5;241m.[39mfigure, artists_rasterized, renderer)
+[0;32m-> 3137[0m [43mmimage[49m[38;5;241;43m.[39;49m[43m_draw_list_compositing_images[49m[43m([49m
+[1;32m   3138[0m [43m    [49m[43mrenderer[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43martists[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mfigure[49m[38;5;241;43m.[39;49m[43msuppressComposite[49m[43m)[49m
+[1;32m   3140[0m renderer[38;5;241m.[39mclose_group([38;5;124m'[39m[38;5;124maxes[39m[38;5;124m'[39m)
+[1;32m   3141[0m [38;5;28mself[39m[38;5;241m.[39mstale [38;5;241m=[39m [38;5;28;01mFalse[39;00m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/image.py:132[0m, in [0;36m_draw_list_compositing_images[0;34m(renderer, parent, artists, suppress_composite)[0m
+[1;32m    130[0m [38;5;28;01mif[39;00m not_composite [38;5;129;01mor[39;00m [38;5;129;01mnot[39;00m has_images:
+[1;32m    131[0m     [38;5;28;01mfor[39;00m a [38;5;129;01min[39;00m artists:
+[0;32m--> 132[0m         [43ma[49m[38;5;241;43m.[39;49m[43mdraw[49m[43m([49m[43mrenderer[49m[43m)[49m
+[1;32m    133[0m [38;5;28;01melse[39;00m:
+[1;32m    134[0m     [38;5;66;03m# Composite any adjacent images together[39;00m
+[1;32m    135[0m     image_group [38;5;241m=[39m []
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/artist.py:72[0m, in [0;36mallow_rasterization.<locals>.draw_wrapper[0;34m(artist, renderer)[0m
+[1;32m     69[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[1;32m     70[0m         renderer[38;5;241m.[39mstart_filter()
+[0;32m---> 72[0m     [38;5;28;01mreturn[39;00m [43mdraw[49m[43m([49m[43martist[49m[43m,[49m[43m [49m[43mrenderer[49m[43m)[49m
+[1;32m     73[0m [38;5;28;01mfinally[39;00m:
+[1;32m     74[0m     [38;5;28;01mif[39;00m artist[38;5;241m.[39mget_agg_filter() [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:1423[0m, in [0;36mAxis.draw[0;34m(self, renderer)[0m
+[1;32m   1420[0m     [38;5;28;01mreturn[39;00m
+[1;32m   1421[0m renderer[38;5;241m.[39mopen_group([38;5;18m__name__[39m, gid[38;5;241m=[39m[38;5;28mself[39m[38;5;241m.[39mget_gid())
+[0;32m-> 1423[0m ticks_to_draw [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_update_ticks[49m[43m([49m[43m)[49m
+[1;32m   1424[0m tlb1, tlb2 [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_get_ticklabel_bboxes(ticks_to_draw, renderer)
+[1;32m   1426[0m [38;5;28;01mfor[39;00m tick [38;5;129;01min[39;00m ticks_to_draw:
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:1302[0m, in [0;36mAxis._update_ticks[0;34m(self)[0m
+[1;32m   1300[0m major_locs [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_majorticklocs()
+[1;32m   1301[0m major_labels [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mmajor[38;5;241m.[39mformatter[38;5;241m.[39mformat_ticks(major_locs)
+[0;32m-> 1302[0m major_ticks [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mget_major_ticks[49m[43m([49m[38;5;28;43mlen[39;49m[43m([49m[43mmajor_locs[49m[43m)[49m[43m)[49m
+[1;32m   1303[0m [38;5;28;01mfor[39;00m tick, loc, label [38;5;129;01min[39;00m [38;5;28mzip[39m(major_ticks, major_locs, major_labels):
+[1;32m   1304[0m     tick[38;5;241m.[39mupdate_position(loc)
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:1670[0m, in [0;36mAxis.get_major_ticks[0;34m(self, numticks)[0m
+[1;32m   1666[0m     numticks [38;5;241m=[39m [38;5;28mlen[39m([38;5;28mself[39m[38;5;241m.[39mget_majorticklocs())
+[1;32m   1668[0m [38;5;28;01mwhile[39;00m [38;5;28mlen[39m([38;5;28mself[39m[38;5;241m.[39mmajorTicks) [38;5;241m<[39m numticks:
+[1;32m   1669[0m     [38;5;66;03m# Update the new tick label properties from the old.[39;00m
+[0;32m-> 1670[0m     tick [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_get_tick[49m[43m([49m[43mmajor[49m[38;5;241;43m=[39;49m[38;5;28;43;01mTrue[39;49;00m[43m)[49m
+[1;32m   1671[0m     [38;5;28mself[39m[38;5;241m.[39mmajorTicks[38;5;241m.[39mappend(tick)
+[1;32m   1672[0m     [38;5;28mself[39m[38;5;241m.[39m_copy_tick_props([38;5;28mself[39m[38;5;241m.[39mmajorTicks[[38;5;241m0[39m], tick)
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:1598[0m, in [0;36mAxis._get_tick[0;34m(self, major)[0m
+[1;32m   1594[0m     [38;5;28;01mraise[39;00m [38;5;167;01mNotImplementedError[39;00m(
+[1;32m   1595[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mThe Axis subclass [39m[38;5;132;01m{[39;00m[38;5;28mself[39m[38;5;241m.[39m[38;5;18m__class__[39m[38;5;241m.[39m[38;5;18m__name__[39m[38;5;132;01m}[39;00m[38;5;124m must define [39m[38;5;124m"[39m
+[1;32m   1596[0m         [38;5;124m"[39m[38;5;124m_tick_class or reimplement _get_tick()[39m[38;5;124m"[39m)
+[1;32m   1597[0m tick_kw [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_major_tick_kw [38;5;28;01mif[39;00m major [38;5;28;01melse[39;00m [38;5;28mself[39m[38;5;241m.[39m_minor_tick_kw
+[0;32m-> 1598[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_tick_class[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43maxes[49m[43m,[49m[43m [49m[38;5;241;43m0[39;49m[43m,[49m[43m [49m[43mmajor[49m[38;5;241;43m=[39;49m[43mmajor[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mtick_kw[49m[43m)[49m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:456[0m, in [0;36mYTick.__init__[0;34m(self, *args, **kwargs)[0m
+[1;32m    455[0m [38;5;28;01mdef[39;00m [38;5;21m__init__[39m([38;5;28mself[39m, [38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m--> 456[0m     [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[38;5;21;43m__init__[39;49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m    457[0m     [38;5;66;03m# x in axes coords, y in data coords[39;00m
+[1;32m    458[0m     ax [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39maxes
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/axis.py:159[0m, in [0;36mTick.__init__[0;34m(self, axes, loc, size, width, color, tickdir, pad, labelsize, labelcolor, labelfontfamily, zorder, gridOn, tick1On, tick2On, label1On, label2On, major, labelrotation, grid_color, grid_linestyle, grid_linewidth, grid_alpha, **kwargs)[0m
+[1;32m    152[0m grid_kw [38;5;241m=[39m {k[[38;5;241m5[39m:]: v [38;5;28;01mfor[39;00m k, v [38;5;129;01min[39;00m kwargs[38;5;241m.[39mitems()}
+[1;32m    154[0m [38;5;28mself[39m[38;5;241m.[39mtick1line [38;5;241m=[39m mlines[38;5;241m.[39mLine2D(
+[1;32m    155[0m     [], [],
+[1;32m    156[0m     color[38;5;241m=[39mcolor, linestyle[38;5;241m=[39m[38;5;124m"[39m[38;5;124mnone[39m[38;5;124m"[39m, zorder[38;5;241m=[39mzorder, visible[38;5;241m=[39mtick1On,
+[1;32m    157[0m     markeredgecolor[38;5;241m=[39mcolor, markersize[38;5;241m=[39msize, markeredgewidth[38;5;241m=[39mwidth,
+[1;32m    158[0m )
+[0;32m--> 159[0m [38;5;28mself[39m[38;5;241m.[39mtick2line [38;5;241m=[39m [43mmlines[49m[38;5;241;43m.[39;49m[43mLine2D[49m[43m([49m
+[1;32m    160[0m [43m    [49m[43m[[49m[43m][49m[43m,[49m[43m [49m[43m[[49m[43m][49m[43m,[49m
+[1;32m    161[0m [43m    [49m[43mcolor[49m[38;5;241;43m=[39;49m[43mcolor[49m[43m,[49m[43m [49m[43mlinestyle[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mnone[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[43mzorder[49m[38;5;241;43m=[39;49m[43mzorder[49m[43m,[49m[43m [49m[43mvisible[49m[38;5;241;43m=[39;49m[43mtick2On[49m[43m,[49m
+[1;32m    162[0m [43m    [49m[43mmarkeredgecolor[49m[38;5;241;43m=[39;49m[43mcolor[49m[43m,[49m[43m [49m[43mmarkersize[49m[38;5;241;43m=[39;49m[43msize[49m[43m,[49m[43m [49m[43mmarkeredgewidth[49m[38;5;241;43m=[39;49m[43mwidth[49m[43m,[49m
+[1;32m    163[0m [43m[49m[43m)[49m
+[1;32m    164[0m [38;5;28mself[39m[38;5;241m.[39mgridline [38;5;241m=[39m mlines[38;5;241m.[39mLine2D(
+[1;32m    165[0m     [], [],
+[1;32m    166[0m     color[38;5;241m=[39mgrid_color, alpha[38;5;241m=[39mgrid_alpha, visible[38;5;241m=[39mgridOn,
+[1;32m    167[0m     linestyle[38;5;241m=[39mgrid_linestyle, linewidth[38;5;241m=[39mgrid_linewidth, marker[38;5;241m=[39m[38;5;124m"[39m[38;5;124m"[39m,
+[1;32m    168[0m     [38;5;241m*[39m[38;5;241m*[39mgrid_kw,
+[1;32m    169[0m )
+[1;32m    170[0m [38;5;28mself[39m[38;5;241m.[39mgridline[38;5;241m.[39mget_path()[38;5;241m.[39m_interpolation_steps [38;5;241m=[39m \
+[1;32m    171[0m     GRIDLINE_INTERPOLATION_STEPS
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/lines.py:380[0m, in [0;36mLine2D.__init__[0;34m(self, xdata, ydata, linewidth, linestyle, color, gapcolor, marker, markersize, markeredgewidth, markeredgecolor, markerfacecolor, markerfacecoloralt, fillstyle, antialiased, dash_capstyle, solid_capstyle, dash_joinstyle, solid_joinstyle, pickradius, drawstyle, markevery, **kwargs)[0m
+[1;32m    378[0m     marker [38;5;241m=[39m [38;5;124m'[39m[38;5;124mnone[39m[38;5;124m'[39m  [38;5;66;03m# Default.[39;00m
+[1;32m    379[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28misinstance[39m(marker, MarkerStyle):
+[0;32m--> 380[0m     [38;5;28mself[39m[38;5;241m.[39m_marker [38;5;241m=[39m [43mMarkerStyle[49m[43m([49m[43mmarker[49m[43m,[49m[43m [49m[43mfillstyle[49m[43m)[49m
+[1;32m    381[0m [38;5;28;01melse[39;00m:
+[1;32m    382[0m     [38;5;28mself[39m[38;5;241m.[39m_marker [38;5;241m=[39m marker
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/markers.py:248[0m, in [0;36mMarkerStyle.__init__[0;34m(self, marker, fillstyle, transform, capstyle, joinstyle)[0m
+[1;32m    246[0m [38;5;28mself[39m[38;5;241m.[39m_user_joinstyle [38;5;241m=[39m JoinStyle(joinstyle) [38;5;28;01mif[39;00m joinstyle [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m [38;5;28;01melse[39;00m [38;5;28;01mNone[39;00m
+[1;32m    247[0m [38;5;28mself[39m[38;5;241m.[39m_set_fillstyle(fillstyle)
+[0;32m--> 248[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_set_marker[49m[43m([49m[43mmarker[49m[43m)[49m
+
+File [0;32m~/github_public/Metodos-Estadisticos/venv/lib/python3.10/site-packages/matplotlib/markers.py:310[0m, in [0;36mMarkerStyle._set_marker[0;34m(self, marker)[0m
+[1;32m    299[0m [38;5;28;01mdef[39;00m [38;5;21m_set_marker[39m([38;5;28mself[39m, marker):
+[1;32m    300[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m    301[0m [38;5;124;03m    Set the marker.[39;00m
+[1;32m    302[0m 
+[0;32m   (...)[0m
+[1;32m    308[0m [38;5;124;03m          `matplotlib.markers`.[39;00m
+[1;32m    309[0m [38;5;124;03m    """[39;00m
+[0;32m--> 310[0m     [38;5;28;01mif[39;00m [38;5;28misinstance[39m(marker, [38;5;28mstr[39m) [38;5;129;01mand[39;00m [43mcbook[49m[38;5;241;43m.[39;49m[43mis_math_text[49m[43m([49m[43mmarker[49m[43m)[49m:
+[1;32m    311[0m         [38;5;28mself[39m[38;5;241m.[39m_marker_function [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_set_mathtext_path
+[1;32m    312[0m     [38;5;28;01melif[39;00m [38;5;28misinstance[39m(marker, ([38;5;28mint[39m, [38;5;28mstr[39m)) [38;5;129;01mand[39;00m marker [38;5;129;01min[39;00m [38;5;28mself[39m[38;5;241m.[39mmarkers:
+
+[0;31mKeyboardInterrupt[0m: 
+

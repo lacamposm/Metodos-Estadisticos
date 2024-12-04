@@ -1,0 +1,2878 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Analisis de compomente principales (PCA). &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_3_ACP';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PCA: otros ejemplos y algunas funciones útiles." href="Lectura_4_ACP_examples.html" />
+    <link rel="prev" title="Analisis descriptivo multivariado." href="Lectura_2_Analisis_Descriptivo_Multivariado.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_3_ACP.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_3_ACP.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Analisis de compomente principales (PCA).</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apredizaje-no-supersivado"><em><strong>Apredizaje no supersivado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-componentes-principales-pca"><em><strong>Análisis de componentes principales (PCA)</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idea-central"><em><strong>Idea central:</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comentarios-previos"><em><strong>Comentarios previos:</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminos-clave-para-el-analisis-de-componentes-principales"><em><strong>Términos clave para el análisis de componentes principales.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-introductorio"><em><strong>Ejemplo introductorio:</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-de-un-pca"><em><strong>Construcción de un PCA</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-de-compomente-principales-pca">
+<h1><em><strong>Analisis de compomente principales (PCA).</strong></em><a class="headerlink" href="#analisis-de-compomente-principales-pca" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+</section>
+<section id="apredizaje-no-supersivado">
+<h2><em><strong>Apredizaje no supersivado.</strong></em><a class="headerlink" href="#apredizaje-no-supersivado" title="Link to this heading">#</a></h2>
+<p>EL aprendizaje no supervisado se refiere a métodos estadísticos que extraen significado
+a partir de datos sin entrenar un modelo con una variable target (resultado de interés). En el aprendizaje no supervisado se construye un modelo de los datos, pero sin distinguir entre una variable target y caracteriticas o features.</p>
+<p>El aprendizaje no supervisado se puede utilizar para:</p>
+<ol class="arabic simple">
+<li><p>Crear una regla predictiva en ausencia de una respuesta etiquetada.</p></li>
+<li><p>Se pueden utilizar para identificar grupos significativos de datos (cluster).</p></li>
+<li><p>Reducir la dimensión de los datos, de tal forma que con este conjunto reducido podría usarse como “nuevas” features en un modelo de predicción, tal como la regresión o la clasificación.</p></li>
+</ol>
+<p>Algunos ejemplo clásicos:</p>
+<ul class="simple">
+<li><p>Usando los clics en una página web y con datos demográficos de un usuario en un sitio web, podemos agrupar diferentes tipos de usuarios. El sitio web podría entonces personalizarse para estos diferentes tipos.</p></li>
+<li><p>Podemos tener miles de sensores para monitorear un proceso industrial. Al reducir los datos a un conjunto más pequeño de características, podemos ser capaces de construir un modelo más poderoso e interpretable para predecir la falla del proceso que podría construirse al incluir flujos de datos de miles de sensores.</p></li>
+<li><p>Podríamos querer predecir el tipo de vegetación en un área de un conjunto de datos tomados satelitalmente. Como no tenemos variable target para entrenar un modelo, el agrupamiento nos brinda una forma de identificar patrones comunes y categorizar las regiones. La agrupación en clústeres es una herramienta especialmente importante para el “problema del arranque en frío”.</p></li>
+</ul>
+<p>El aprendizaje no supervisado también es importante como elemento básico para técnicas de regresión y clasificación. Con grandes datos, si un pequeña
+subpoblación no está bien representada en la población total, el modelo entrenado puede no funcionar bien para esa subpoblación. Con agrupamiento, es posible identificar y etiquetar subpoblaciones. Luego se pueden ajustar modelos separados a las diferentes subpoblaciones. Alternativamente, la subpoblación se puede representar con su propia característica,
+obligando al modelo general a considerar explícitamente la subpoblación y su identidad como predictor.</p>
+<p>Finalmente, el aprendizaje no supervisado puede verse como una extensión del análisis exploratorio de datos exploratorios a situaciones en las que se enfrenta a un gran número de features y registros. El objetivo es obtener información sobre un conjunto de datos y cómo las diferentes variables se relacionan entre sí. Las técnicas no supervisadas le permiten tamizar y analizar a través de estas variables y descubrir relaciones.</p>
+<p><em><strong>Nota:</strong></em></p>
+<p>Otra aplicación común para algoritmos no supervisados
+se evidencia como un paso de preprocesamiento para algoritmos supervisados. Deducir una nueva representación de los datos a veces puede mejorar la precisión de los algoritmos supervisados, o pueden conducir a la reducción del consumo de memoria y tiempo.</p>
+</section>
+<section id="analisis-de-componentes-principales-pca">
+<h2><em><strong>Análisis de componentes principales (PCA)</strong></em><a class="headerlink" href="#analisis-de-componentes-principales-pca" title="Link to this heading">#</a></h2>
+<p>El PCA es una transformaciones no supervisadas de un conjunto de datos, es decir, son algoritmos que crean una nueva representación de los datos que podría ser más fácil de entender para humanos y algoritmos de machine learning en comparación con la representación original de los datos.</p>
+<p>Acá, tenemos una representación de alta dimensión de los datos, que consta de muchas features, y deseamos encontrar una nueva forma de representar estos datos que resuma las características esenciales con
+menos features. Deseamos por tanto, la reducción a pocas componentes con fines de visualización e interpretabilidad.</p>
+<p>En resumen deseamos “comprimir los datos” y encontrar una representación que sea más informativa para su posterior procesamiento.</p>
+<p>El análisis de componentes principales es un método que rota el conjunto de datos de tal manera que
+las características rotadas no están correlacionadas estadísticamente. Esta rotación suele ir seguida de
+la selección de solo un subconjunto de las “nuevas” features, de acuerdo con su importancia para la
+explicación los datos.</p>
+<p>El siguiente ejemplo ilustra el efecto de PCA
+en un conjunto de datos bidimensional:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">mglearn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="c1">##</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>            <span class="c1">## Principal component analysis</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span> <span class="c1">## Estandarizar datos</span>
+<span class="c1">##</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_pca_illustration</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7d6dec505bbe44f7b02d52a97e81ac9b972a084b83f7927d0542600c62d8bcb4.png" src="../_images/7d6dec505bbe44f7b02d52a97e81ac9b972a084b83f7927d0542600c62d8bcb4.png" />
+</div>
+</div>
+<p>El primer gráfico (arriba a la izquierda) muestra los puntos de datos originales, coloreados para distinguir entre a ellos. El algoritmo procede encontrando primero la dirección de máxima varianza, etiquetado como “Component 1”. Esta es la dirección (o vector) en los datos que contiene más información, o en otras palabras, la dirección a lo largo de la cual las características son más correlacionados entre sí. Entonces, el algoritmo encuentra la dirección que contiene la mayor parte de la información siendo ortogonal (en ángulo recto) a la primera dirección. En dos dimensiones, sólo hay una orientación posible que es en ángulo recto, pero en
+espacios de dimensiones superiores habría muchas direcciones ortogonales.</p>
+<p>Aunque los dos componentes se dibujan como flechas, en realidad no importa dónde esté la cabeza y la cola; podríamos haber dibujado la primera componente desde el centro hasta la parte superior izquierda en lugar de abajo a la parte inferior derecha. Las direcciones encontradas mediante este proceso se denominan componentes principales, ya que son las principales direcciones de varianza en el datos. En general, hay tantos componentes principales como features originales.</p>
+<p>La segunda gráfica (arriba a la derecha) muestra los mismos datos, pero ahora girados para que la primera
+componente principal se alinea con el eje <span class="math notranslate nohighlight">\(x\)</span> y el segundo componente principal se alinea con el eje <span class="math notranslate nohighlight">\(y\)</span>. Antes de la rotación, se restó la media de los datos, por lo que los datos transformados se centran alrededor de cero. En la representación rotada encontrada por PCA, los dos ejes no están correlacionados, lo que significa que la matriz de correlación de los datos en esta representación son cero excepto en la diagonal.</p>
+<p>Podemos usar PCA para la reducción de dimensionalidad reteniendo solo algunos de los principales componentes. En este ejemplo, podríamos mantener solo el primer componente principal, como se muestra en el tercer panel del plot (abajo a la izquierda). Esto reduce los datos de un conjunto de datos bidimensional a un conjunto de datos unidimensional. Tenga en cuenta, sin embargo, que en lugar de mantener solo una de las features originales, encontramos la dirección más interesante
+(arriba a la izquierda a abajo a la derecha en el primer plot) y mantuvo esta dirección, es decir la primera componente principal.</p>
+<p>Finalmente, podemos deshacer la rotación y volver a agregar la media a los datos. Esto resultará
+en los datos que se muestran en el último subplot de la figura anterior. Estos puntos están en el espacio original, pero conservamos sólo la información contenida en el primer componente principal. PCA se utiliza a veces para eliminar los efectos de ruido de los datos o visualizar qué parte de la información se retiene utilizando los componentes principales.</p>
+<section id="idea-central">
+<h3><em><strong>Idea central:</strong></em><a class="headerlink" href="#idea-central" title="Link to this heading">#</a></h3>
+<p>Se tiene un conjunto de <span class="math notranslate nohighlight">\(p\)</span> features cuantitativas y se quieren construir un numero de features <span class="math notranslate nohighlight">\(r\leq p\)</span> con independencia lineal y ortogonales, que contengan la mayor cantidad de información del dataset.</p>
+</section>
+</section>
+<section id="comentarios-previos">
+<h2><em><strong>Comentarios previos:</strong></em><a class="headerlink" href="#comentarios-previos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>A menudo, las features variarán juntas, y parte de la variación en una está en realidad duplicada por la variación en otra. Esta técnica se usa para descubrir la forma en que las features numéricas covarían.</p></li>
+<li><p>La idea en PCA es combinar múltiples features numéricas en un conjunto más pequeño de features, que son combinaciones lineales ponderadas del conjunto original. Este “pequeño” conjunto de features (las componentes principales), “explica” la mayor parte de la variabilidad del total de features originales, reduciendo la dimensión de los datos.</p></li>
+<li><p>Los pesos utilizados para formar las componentes principales revelan las contribuciones relativas de las features originales a las nuevas componentes principales.</p></li>
+</ol>
+</section>
+<section id="terminos-clave-para-el-analisis-de-componentes-principales">
+<h2><em><strong>Términos clave para el análisis de componentes principales.</strong></em><a class="headerlink" href="#terminos-clave-para-el-analisis-de-componentes-principales" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Componente principal:</strong> Una combinación lineal de las features originales.</p></li>
+<li><p><strong>Loading:</strong> Los pesos que transforman las features originales en las componentes principales.</p></li>
+<li><p><strong>Gráfico de sedimentación:</strong> Un plot de las varianzas de las componentes, que muestra la importancia relativa de las componentes, ya sea como varianza explicada o como proporción de la varianza explicada.</p></li>
+</ul>
+</section>
+<section id="ejemplo-introductorio">
+<h2><em><strong>Ejemplo introductorio:</strong></em><a class="headerlink" href="#ejemplo-introductorio" title="Link to this heading">#</a></h2>
+<p>Para dos features, <span class="math notranslate nohighlight">\(X_1\)</span> y <span class="math notranslate nohighlight">\(X_2\)</span>, hay dos componentes principales <span class="math notranslate nohighlight">\(Y_i (i= 1,2)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[Y_{i}= w_{i,1}X_{1} + w{i,2}X_{2}\]</div>
+<p>Los pesos <span class="math notranslate nohighlight">\(w_{i,1}X_{1} + w_{i,2}X_{2}\)</span> se conocen como loading de las componentes. Estos transforman las
+features originales en los componentes principales. El primer componente principal, <span class="math notranslate nohighlight">\(Y_1\)</span>, es la combinación lineal que mejor explica la variación total. El segundo componente, <span class="math notranslate nohighlight">\(Y_2\)</span>, es ortogonal a la primera y explica la mayor parte de la variabilidad restante. (Si hay más features cada componente adicional sigue la misma regla).</p>
+<p>Nota: También es común calcular los componentes principales de las desviaciones de las medias de las variables predictoras, en lugar de los valores originales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consideremos un dataframe como el siguiente:</span>
+<span class="n">example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;X1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s2">&quot;X2&quot;</span><span class="p">:[</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>9</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
+      <td>-3</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>-3</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Este dataframe tiene 2 features y 12 registros.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Consideremos la matriz de covarianza y de correlación lineal.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matriz de covarianas:&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">cov</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Matriz de correlación:&quot;</span><span class="p">)</span>
+<span class="n">example</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriz de covarianas:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>X1</th>
+      <td>23.090909</td>
+      <td>16.454545</td>
+    </tr>
+    <tr>
+      <th>X2</th>
+      <td>16.454545</td>
+      <td>21.090909</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matriz de correlación:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>X1</th>
+      <td>1.00000</td>
+      <td>0.74562</td>
+    </tr>
+    <tr>
+      <th>X2</th>
+      <td>0.74562</td>
+      <td>1.00000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Centramos los datos.</span>
+<span class="n">example</span><span class="p">[</span><span class="s2">&quot;X1*&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s1">&#39;X1&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;X1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">example</span><span class="p">[</span><span class="s2">&quot;X2*&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s2">&quot;X2&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;X2&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+      <th>X1*</th>
+      <th>X2*</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>8</td>
+      <td>8.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12</td>
+      <td>10</td>
+      <td>4.0</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13</td>
+      <td>6</td>
+      <td>5.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+      <td>2</td>
+      <td>3.0</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>8</td>
+      <td>2.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>9</td>
+      <td>-1</td>
+      <td>1.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8</td>
+      <td>4</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>6</td>
+      <td>-1.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
+      <td>-3</td>
+      <td>-3.0</td>
+      <td>-6.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>-1</td>
+      <td>-5.0</td>
+      <td>-4.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>-3</td>
+      <td>-6.0</td>
+      <td>-6.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>0</td>
+      <td>-8.0</td>
+      <td>-3.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note que la variabilidad total de los datos es:</p>
+<div class="math notranslate nohighlight">
+\[23.091 + 21.091=44.182\]</div>
+<p>Además:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La feature </span><span class="si">{}</span><span class="s2"> retiene el </span><span class="si">{:.4f}% d</span><span class="s2">e la variabilidad total.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mf">23.0909</span><span class="o">/</span><span class="mf">44.182</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La feature </span><span class="si">{}</span><span class="s2"> retiene el </span><span class="si">{:.4f}% d</span><span class="s2">e la variabilidad total.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mf">21.0909</span><span class="o">/</span><span class="mf">44.182</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La feature X1 retiene el 0.5226% de la variabilidad total.
+La feature X2 retiene el 0.4774% de la variabilidad total.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Un plot de los registros corregidos por la media</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">example</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;X2*&quot;</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Deseamos encontrar un nuevo eje que retenga la mayor cantidad de varianza. Para ello vamos a hacer uso de los eigenvalores y eigenvectores de la matriz de covarianzas de los datos corregidos por la media.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matrix</span> <span class="o">=</span> <span class="n">example</span><span class="p">[[</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span><span class="s2">&quot;X2*&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>               <span class="c1"># Matriz de covarianza de los datos corregidos por la media.</span>
+<span class="n">eigenvalores</span><span class="p">,</span> <span class="n">eigenvectores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores propios:&quot;</span><span class="p">,</span> <span class="n">eigenvalores</span><span class="p">)</span>             <span class="c1"># Valores propios de la matriz de covarianza anterior.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Vectores propios:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">eigenvectores</span><span class="p">)</span>       <span class="c1"># Vectores propios de la matriz de covarianza anterior.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Valores propios: [38.57581328  5.6060049 ]
+
+Vectores propios:
+ [[ 0.72823813 -0.68532417]
+ [ 0.68532417  0.72823813]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eigenvectores</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Eigenvector asociado al valor propio 38.57581328</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.72823813, 0.68532417])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">eigenvectores</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># Ax = \lambda*x</span>
+<span class="n">eigenvalores</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvectores</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[28.09237828 26.43693728]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([28.09237828, 26.43693728])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">eigenvectores</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># Ax = \lambda*x</span>
+<span class="n">eigenvalores</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvectores</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-3.84193067  4.08250655]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-3.84193067,  4.08250655])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Realizamos la operación:</p>
+<div class="math notranslate nohighlight">
+\[Y_{1}=X*\Gamma_1\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[[</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span><span class="s2">&quot;X2*&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="nd">@eigenvectores</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 9.25252593,  7.71022174,  5.69716318,  1.49939023,  4.88309713,
+       -2.01305855,  0.68532417,  1.32773438, -6.29665943, -6.38248736,
+       -8.48137383, -7.88187759])
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado obtenido en <span class="math notranslate nohighlight">\(Y_1\)</span> será la transformacion de los datos en la primera componente principal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;Y1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">example</span><span class="p">[[</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span><span class="s2">&quot;X2*&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="nd">@eigenvectores</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+      <th>X1*</th>
+      <th>X2*</th>
+      <th>Y1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>8</td>
+      <td>8.0</td>
+      <td>5.0</td>
+      <td>9.252526</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12</td>
+      <td>10</td>
+      <td>4.0</td>
+      <td>7.0</td>
+      <td>7.710222</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13</td>
+      <td>6</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>5.697163</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+      <td>2</td>
+      <td>3.0</td>
+      <td>-1.0</td>
+      <td>1.499390</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>8</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>4.883097</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>9</td>
+      <td>-1</td>
+      <td>1.0</td>
+      <td>-4.0</td>
+      <td>-2.013059</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8</td>
+      <td>4</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.685324</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>6</td>
+      <td>-1.0</td>
+      <td>3.0</td>
+      <td>1.327734</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
+      <td>-3</td>
+      <td>-3.0</td>
+      <td>-6.0</td>
+      <td>-6.296659</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>-1</td>
+      <td>-5.0</td>
+      <td>-4.0</td>
+      <td>-6.382487</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>-3</td>
+      <td>-6.0</td>
+      <td>-6.0</td>
+      <td>-8.481374</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>0</td>
+      <td>-8.0</td>
+      <td>-3.0</td>
+      <td>-7.881878</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Veamos las varianzas</span>
+<span class="n">example</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X1     23.090909
+X2     21.090909
+X1*    23.090909
+X2*    21.090909
+Y1     38.575813
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notemos que la varianza para la nueva variable satisface que:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;Y1&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La feature </span><span class="si">{}</span><span class="s2"> retiene el </span><span class="si">{:.3f}% d</span><span class="s2">e la variabilidad total.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="n">var</span><span class="o">/</span><span class="mf">44.182</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La feature Y1 retiene el 87.311% de la variabilidad total.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ahora, buscamos un nuevo eje <span class="math notranslate nohighlight">\(Y_2\)</span> que sea ortogonal a <span class="math notranslate nohighlight">\(Y_1\)</span> y que retenga la mayor variabilidad posible de los datos NO retenida por la primer componente principal. Para ello hacemos uso del hecho que eigenvectores asociados a eigenvalores propios distintos son ortogonales. Luego:</p>
+<div class="math notranslate nohighlight">
+\[Y_2=X*\Gamma_2\]</div>
+<p>donde <span class="math notranslate nohighlight">\(\Gamma_2\)</span> es el segundo eigenvector asociado al segundo eigenvalor de la matriz de covarianzas. <span class="math notranslate nohighlight">\(Y_2\)</span> será la transformacion de los datos originales con la segunda componente principal.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;Y2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">example</span><span class="p">[[</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span><span class="s2">&quot;X2*&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="nd">@eigenvectores</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X1</th>
+      <th>X2</th>
+      <th>X1*</th>
+      <th>X2*</th>
+      <th>Y1</th>
+      <th>Y2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>16</td>
+      <td>8</td>
+      <td>8.0</td>
+      <td>5.0</td>
+      <td>9.252526</td>
+      <td>-1.841403</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12</td>
+      <td>10</td>
+      <td>4.0</td>
+      <td>7.0</td>
+      <td>7.710222</td>
+      <td>2.356370</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13</td>
+      <td>6</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>5.697163</td>
+      <td>-1.241906</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11</td>
+      <td>2</td>
+      <td>3.0</td>
+      <td>-1.0</td>
+      <td>1.499390</td>
+      <td>-2.784211</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10</td>
+      <td>8</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>4.883097</td>
+      <td>2.270542</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>9</td>
+      <td>-1</td>
+      <td>1.0</td>
+      <td>-4.0</td>
+      <td>-2.013059</td>
+      <td>-3.598277</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>8</td>
+      <td>4</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.685324</td>
+      <td>0.728238</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>7</td>
+      <td>6</td>
+      <td>-1.0</td>
+      <td>3.0</td>
+      <td>1.327734</td>
+      <td>2.870039</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>5</td>
+      <td>-3</td>
+      <td>-3.0</td>
+      <td>-6.0</td>
+      <td>-6.296659</td>
+      <td>-2.313456</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>3</td>
+      <td>-1</td>
+      <td>-5.0</td>
+      <td>-4.0</td>
+      <td>-6.382487</td>
+      <td>0.513668</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>-3</td>
+      <td>-6.0</td>
+      <td>-6.0</td>
+      <td>-8.481374</td>
+      <td>-0.257484</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>0</td>
+      <td>0</td>
+      <td>-8.0</td>
+      <td>-3.0</td>
+      <td>-7.881878</td>
+      <td>3.297879</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Observemos lo siguiente:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[[</span><span class="s2">&quot;Y1&quot;</span><span class="p">,</span><span class="s2">&quot;Y2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Y1</th>
+      <th>Y2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Y1</th>
+      <td>1.000000e+00</td>
+      <td>6.588772e-17</td>
+    </tr>
+    <tr>
+      <th>Y2</th>
+      <td>6.588772e-17</td>
+      <td>1.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[[</span><span class="s2">&quot;Y1&quot;</span><span class="p">,</span><span class="s2">&quot;Y2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Y1    38.575813
+Y2     5.606005
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span><span class="p">[[</span><span class="s2">&quot;Y1&quot;</span><span class="p">,</span><span class="s2">&quot;Y2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Y1</th>
+      <td>12.0</td>
+      <td>2.960595e-16</td>
+      <td>6.210943</td>
+      <td>-8.481374</td>
+      <td>-6.318116</td>
+      <td>1.006529</td>
+      <td>5.086614</td>
+      <td>9.252526</td>
+    </tr>
+    <tr>
+      <th>Y2</th>
+      <td>12.0</td>
+      <td>3.700743e-17</td>
+      <td>2.367700</td>
+      <td>-3.598277</td>
+      <td>-1.959416</td>
+      <td>0.128092</td>
+      <td>2.291999</td>
+      <td>3.297879</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>De todo lo anterior podemos observar que:</p>
+<ol class="arabic simple">
+<li><p>Cada una de la nuevas features (componentes principales) es una combinación lineal de las features originales y se conservan centradas.</p></li>
+<li><p>La variabilidad total de las nuevas features (<span class="math notranslate nohighlight">\(38.576+5.606=44.182\)</span>) es la misma que la varibilidad total contenida en las features originales. Es decir, no hay perdida de información.</p></li>
+<li><p>Los porcentajes de la variabilidad retenida por las componentes principales <span class="math notranslate nohighlight">\(Y_1\)</span> y <span class="math notranslate nohighlight">\(Y_2\)</span> son, respectuvamente, <span class="math notranslate nohighlight">\(87.31\%\)</span> y <span class="math notranslate nohighlight">\(12.69\%\)</span>. La varianza reunida por la primera componente principal es mayor que cualquiera de las features originales.</p></li>
+<li><p>Las componentes principales son incorrelacionadas, es decir, su correlación es cero.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">data_frame</span><span class="o">=</span><span class="n">example</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;X1*&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;X2*&quot;</span><span class="p">,</span>
+    <span class="n">hover_name</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Componetes Principales&quot;</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">line_color</span> <span class="o">=</span> <span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">line_color</span> <span class="o">=</span> <span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">8.5</span><span class="p">,</span><span class="mf">8.5</span><span class="p">],</span><span class="n">name</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$Y_1$&quot;</span><span class="p">,</span><span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">),))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">7.52</span><span class="p">,</span><span class="o">-</span><span class="mf">7.52</span><span class="p">],</span><span class="n">name</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$Y_2$&quot;</span><span class="p">,</span><span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">),))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<p>Vamos a considerar en este primer ejemplo el dataframe <code class="docutils literal notranslate"><span class="pre">Global_Carbon_Budget_2018.csv</span></code>. Vamos a importarlo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/&quot;</span>
+<span class="n">df_name</span> <span class="o">=</span> <span class="s2">&quot;Global_Carbon_Budget_2018.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="n">df_name</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">index_col</span> <span class="o">=</span> <span class="s2">&quot;Year&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fossil fuel and industry</th>
+      <th>land-use change emissions</th>
+      <th>atmospheric growth</th>
+      <th>ocean sink</th>
+      <th>land sink</th>
+      <th>budget imbalance</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1750</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.08</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1751</th>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>-0.53</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1752</th>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>-0.27</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1753</th>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>-0.17</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1754</th>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>-0.06</td>
+      <td>NaN</td>
+      <td>-0.33</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<center>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>feature</p></th>
+<th class="head text-right"><p>Traducción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>fossil fuel and industry</p></td>
+<td class="text-right"><p>Combustible fósil e industría</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>land-use change emissions</p></td>
+<td class="text-right"><p>emisiones de cambio de uso de la tierra</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>atmospheric growth</p></td>
+<td class="text-right"><p>crecimiento atmosférico</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>ocean sink</p></td>
+<td class="text-right"><p>sumidero del oceano</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>land sink</p></td>
+<td class="text-right"><p>sumidero de tierra</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>budget imbalance</p></td>
+<td class="text-right"><p>desequilibrio presupuestario</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</center>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Información del DataFrame.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño de la data:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Valor nulos por feature:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tamaño de la data: (268, 6) 
+
+Valor nulos por feature:
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>fossil fuel and industry       1
+land-use change emissions    100
+atmospheric growth            13
+ocean sink                    38
+land sink                      0
+budget imbalance             113
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Primero observemos la matriz de correlaciones lineales</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuBu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/79c9a5f270a0ef06f43c7ca8033fda65c95005adc110d8419160206e796d25c0.png" src="../_images/79c9a5f270a0ef06f43c7ca8033fda65c95005adc110d8419160206e796d25c0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;fossil fuel and industry&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;ocean sink&quot;</span><span class="p">,</span>
+    <span class="n">trendline</span><span class="o">=</span><span class="s2">&quot;ols&quot;</span><span class="p">,</span>
+    <span class="n">trendline_color_override</span><span class="o">=</span><span class="s2">&quot;red&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;fossil fuel and industry&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;land sink&quot;</span><span class="p">,</span>
+    <span class="n">trendline</span> <span class="o">=</span> <span class="s2">&quot;ols&quot;</span><span class="p">,</span>
+    <span class="n">trendline_color_override</span><span class="o">=</span><span class="s2">&quot;red&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;ocean sink&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;land sink&quot;</span><span class="p">,</span>
+    <span class="n">trendline</span><span class="o">=</span><span class="s2">&quot;ols&quot;</span><span class="p">,</span>
+    <span class="n">trendline_color_override</span><span class="o">=</span><span class="s2">&quot;red&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Observamos que las tres variables anteriores revisten información altamente correlacionada.</p>
+</section>
+<section id="construccion-de-un-pca">
+<h2><em><strong>Construcción de un <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA">PCA</a></strong></em><a class="headerlink" href="#construccion-de-un-pca" title="Link to this heading">#</a></h2>
+<p>En primera instancia debemos eliminar los registros con datos faltantes, siguido debemos escalar la información, veremos la nueva información escalda.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_pca</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>                <span class="c1"># Debemos trabajar con datos no nulos.</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>           <span class="c1"># Cargando el escalador estandar</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_pca</span><span class="p">)</span>                  <span class="c1"># Calcula las medias y las desviaciones</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_pca</span><span class="p">)</span> <span class="c1"># Estandariza la data.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_pca</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_pca</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fossil fuel and industry</th>
+      <th>land-use change emissions</th>
+      <th>atmospheric growth</th>
+      <th>ocean sink</th>
+      <th>land sink</th>
+      <th>budget imbalance</th>
+    </tr>
+    <tr>
+      <th>Year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1850</th>
+      <td>-0.894207</td>
+      <td>-1.674175</td>
+      <td>-0.916270</td>
+      <td>-1.108640</td>
+      <td>-0.488486</td>
+      <td>-0.379313</td>
+    </tr>
+    <tr>
+      <th>1851</th>
+      <td>-0.894207</td>
+      <td>-1.674175</td>
+      <td>-0.970463</td>
+      <td>-1.092207</td>
+      <td>-1.120719</td>
+      <td>0.421450</td>
+    </tr>
+    <tr>
+      <th>1852</th>
+      <td>-0.889621</td>
+      <td>-1.640192</td>
+      <td>-1.024656</td>
+      <td>-1.092207</td>
+      <td>-0.804603</td>
+      <td>0.146188</td>
+    </tr>
+    <tr>
+      <th>1853</th>
+      <td>-0.889621</td>
+      <td>-1.640192</td>
+      <td>-1.078849</td>
+      <td>-1.092207</td>
+      <td>-1.011714</td>
+      <td>0.458986</td>
+    </tr>
+    <tr>
+      <th>1854</th>
+      <td>-0.885034</td>
+      <td>-1.640192</td>
+      <td>-1.124010</td>
+      <td>-1.092207</td>
+      <td>-0.902708</td>
+      <td>0.408938</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2000</th>
+      <td>2.155773</td>
+      <td>0.466778</td>
+      <td>2.028218</td>
+      <td>2.358708</td>
+      <td>3.250409</td>
+      <td>-2.281126</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>2.229156</td>
+      <td>-0.008989</td>
+      <td>2.037250</td>
+      <td>2.358708</td>
+      <td>1.528119</td>
+      <td>-0.291730</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>2.275020</td>
+      <td>0.534745</td>
+      <td>2.046282</td>
+      <td>2.457306</td>
+      <td>-0.106966</td>
+      <td>1.822786</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>2.444718</td>
+      <td>0.704662</td>
+      <td>2.046282</td>
+      <td>2.588769</td>
+      <td>1.419114</td>
+      <td>0.484010</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>2.609830</td>
+      <td>0.534745</td>
+      <td>2.055315</td>
+      <td>2.670934</td>
+      <td>2.672679</td>
+      <td>-0.629552</td>
+    </tr>
+  </tbody>
+</table>
+<p>155 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instanciamos un objeto PCA y determinamos el número de componentes principales que deseamos.</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>           <span class="c1"># Otra opcion pca = PCA(n_components=0.85).</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>                   <span class="c1"># Ajuste ese PCA a los datos estandarizados.</span>
+<span class="n">pca_array</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span> <span class="c1"># Convertimos nuestros datos con las nuevas dimensiones de PCA </span>
+                                    <span class="c1"># (calcula las nuevas variables).</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Cantidad de varianza retenida por las 2 primeras componentes principales.</span>
+<span class="n">ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">La cantidad de variabilidad retenida por las 2 primeras componentes es </span><span class="si">{</span><span class="n">ratio</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>La cantidad de variabilidad retenida por las 2 primeras componentes es 88.339%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ejemplo-2">
+<h2><em><strong>Ejemplo 2.</strong></em><a class="headerlink" href="#ejemplo-2" title="Link to this heading">#</a></h2>
+<p>Vamos a considerar el dataframe <code class="docutils literal notranslate"><span class="pre">Delitos_Colombia.csv</span></code> que contiene el número de delitos por departamento, en distintas categorías. Toda la información es numérica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/&quot;</span>
+<span class="n">df_name2</span> <span class="o">=</span> <span class="s2">&quot;Delitos_Colombia.csv&quot;</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="n">df_name2</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">decimal</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Delitos_Sexuales</th>
+      <th>Homicidios</th>
+      <th>Transito</th>
+      <th>Asalto</th>
+      <th>Intrafamiliar</th>
+      <th>Poblacion</th>
+    </tr>
+    <tr>
+      <th>Departamento</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Antioquia</th>
+      <td>2163</td>
+      <td>375</td>
+      <td>5079</td>
+      <td>11897</td>
+      <td>8205</td>
+      <td>6690977</td>
+    </tr>
+    <tr>
+      <th>Atlantico</th>
+      <td>1042</td>
+      <td>85</td>
+      <td>1928</td>
+      <td>59</td>
+      <td>3659</td>
+      <td>2546138</td>
+    </tr>
+    <tr>
+      <th>Bogota_D.C.</th>
+      <td>4211</td>
+      <td>1463</td>
+      <td>725</td>
+      <td>2725</td>
+      <td>19811</td>
+      <td>8181047</td>
+    </tr>
+    <tr>
+      <th>Bolivar</th>
+      <td>944</td>
+      <td>28</td>
+      <td>922</td>
+      <td>3812</td>
+      <td>2085</td>
+      <td>2171558</td>
+    </tr>
+    <tr>
+      <th>Boyaca</th>
+      <td>517</td>
+      <td>95</td>
+      <td>1167</td>
+      <td>4084</td>
+      <td>2707</td>
+      <td>1281979</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Seleccionamos las cuantitativas (PCA solo trabaja con cuantitativas). Cuando sea el caso seleccionamos </span>
+<span class="c1"># así: -----&gt; cuanti = df2.select_dtypes(np.number)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;PuBu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2554e42681671cbc31017a90c8d40a7b6d71c5f84d0a89e48ef151c10f01de86.png" src="../_images/2554e42681671cbc31017a90c8d40a7b6d71c5f84d0a89e48ef151c10f01de86.png" />
+</div>
+</div>
+<p>Para realizar un mejor análisis vamos considerar la siguiente tasa (para todas las variables):</p>
+<div class="math notranslate nohighlight">
+\[Tasa Delitos Sexuales=100.000\times \frac{Delitos Sexuales}{Poblacion}\]</div>
+<p>la cual representa la incidencia por cada <span class="math notranslate nohighlight">\(100.000\)</span> habitantes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;DSex_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span><span class="o">*</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Delitos_Sexuales&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Poblacion&quot;</span><span class="p">]</span>
+<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;DHom_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span><span class="o">*</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Homicidios&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Poblacion&quot;</span><span class="p">]</span>
+<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;DIntra_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span><span class="o">*</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Intrafamiliar&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Poblacion&quot;</span><span class="p">]</span>
+<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;DTransi_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span><span class="o">*</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Transito&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Poblacion&quot;</span><span class="p">]</span>
+<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;DAsal_p&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100000</span><span class="o">*</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Asalto&quot;</span><span class="p">]</span><span class="o">/</span><span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Poblacion&quot;</span><span class="p">]</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[[</span><span class="s2">&quot;DSex_p&quot;</span><span class="p">,</span> <span class="s2">&quot;DHom_p&quot;</span><span class="p">,</span> <span class="s2">&quot;DIntra_p&quot;</span><span class="p">,</span> <span class="s2">&quot;DTransi_p&quot;</span><span class="p">,</span> <span class="s2">&quot;DAsal_p&quot;</span><span class="p">]]</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DSex_p</th>
+      <th>DHom_p</th>
+      <th>DIntra_p</th>
+      <th>DTransi_p</th>
+      <th>DAsal_p</th>
+    </tr>
+    <tr>
+      <th>Departamento</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Antioquia</th>
+      <td>32.327118</td>
+      <td>5.604563</td>
+      <td>122.627831</td>
+      <td>75.908197</td>
+      <td>177.806619</td>
+    </tr>
+    <tr>
+      <th>Atlantico</th>
+      <td>40.924726</td>
+      <td>3.338389</td>
+      <td>143.707843</td>
+      <td>75.722526</td>
+      <td>2.317235</td>
+    </tr>
+    <tr>
+      <th>Bogota_D.C.</th>
+      <td>51.472629</td>
+      <td>17.882797</td>
+      <td>242.157269</td>
+      <td>8.861946</td>
+      <td>33.308695</td>
+    </tr>
+    <tr>
+      <th>Bolivar</th>
+      <td>43.471093</td>
+      <td>1.289397</td>
+      <td>96.014014</td>
+      <td>42.457996</td>
+      <td>175.542168</td>
+    </tr>
+    <tr>
+      <th>Boyaca</th>
+      <td>40.328274</td>
+      <td>7.410418</td>
+      <td>211.157905</td>
+      <td>91.031132</td>
+      <td>318.569961</td>
+    </tr>
+    <tr>
+      <th>Caldas</th>
+      <td>44.573234</td>
+      <td>6.540091</td>
+      <td>98.101361</td>
+      <td>125.569743</td>
+      <td>225.683439</td>
+    </tr>
+    <tr>
+      <th>Caqueta</th>
+      <td>44.532928</td>
+      <td>3.627116</td>
+      <td>90.476402</td>
+      <td>24.382282</td>
+      <td>131.785226</td>
+    </tr>
+    <tr>
+      <th>Cauca</th>
+      <td>29.657980</td>
+      <td>4.378083</td>
+      <td>104.156001</td>
+      <td>60.798859</td>
+      <td>167.920658</td>
+    </tr>
+    <tr>
+      <th>Cesar</th>
+      <td>52.644568</td>
+      <td>4.128986</td>
+      <td>131.564501</td>
+      <td>79.013773</td>
+      <td>258.718494</td>
+    </tr>
+    <tr>
+      <th>Cordoba</th>
+      <td>29.631319</td>
+      <td>0.782714</td>
+      <td>36.172573</td>
+      <td>49.255080</td>
+      <td>95.938385</td>
+    </tr>
+    <tr>
+      <th>Cundinamarca</th>
+      <td>52.028394</td>
+      <td>12.873372</td>
+      <td>22.359015</td>
+      <td>91.611340</td>
+      <td>367.051584</td>
+    </tr>
+    <tr>
+      <th>Choco</th>
+      <td>30.863838</td>
+      <td>0.388224</td>
+      <td>56.874871</td>
+      <td>19.605331</td>
+      <td>102.491236</td>
+    </tr>
+    <tr>
+      <th>Huila</th>
+      <td>41.602307</td>
+      <td>5.680636</td>
+      <td>184.286525</td>
+      <td>92.143262</td>
+      <td>318.700404</td>
+    </tr>
+    <tr>
+      <th>La_Guajira</th>
+      <td>30.667386</td>
+      <td>2.595672</td>
+      <td>72.390412</td>
+      <td>18.650385</td>
+      <td>119.593191</td>
+    </tr>
+    <tr>
+      <th>Magdalena</th>
+      <td>38.504130</td>
+      <td>1.925206</td>
+      <td>141.849215</td>
+      <td>53.135699</td>
+      <td>230.485722</td>
+    </tr>
+    <tr>
+      <th>Meta</th>
+      <td>81.245475</td>
+      <td>9.245853</td>
+      <td>272.359227</td>
+      <td>108.491234</td>
+      <td>370.424286</td>
+    </tr>
+    <tr>
+      <th>narigno</th>
+      <td>10.998723</td>
+      <td>4.255787</td>
+      <td>82.960215</td>
+      <td>98.988504</td>
+      <td>199.248218</td>
+    </tr>
+    <tr>
+      <th>Norte_de_Santander</th>
+      <td>26.880059</td>
+      <td>4.887283</td>
+      <td>156.968044</td>
+      <td>76.830970</td>
+      <td>235.883297</td>
+    </tr>
+    <tr>
+      <th>Quindio</th>
+      <td>69.570057</td>
+      <td>14.087937</td>
+      <td>169.750939</td>
+      <td>211.666899</td>
+      <td>354.633366</td>
+    </tr>
+    <tr>
+      <th>Risaralda</th>
+      <td>55.797805</td>
+      <td>7.543037</td>
+      <td>144.247660</td>
+      <td>222.054599</td>
+      <td>232.594185</td>
+    </tr>
+    <tr>
+      <th>Santander</th>
+      <td>62.127724</td>
+      <td>8.943714</td>
+      <td>19.035284</td>
+      <td>156.730216</td>
+      <td>357.461592</td>
+    </tr>
+    <tr>
+      <th>Sucre</th>
+      <td>46.064874</td>
+      <td>1.938373</td>
+      <td>123.485788</td>
+      <td>30.899953</td>
+      <td>192.469077</td>
+    </tr>
+    <tr>
+      <th>Tolima</th>
+      <td>43.381595</td>
+      <td>4.788877</td>
+      <td>150.849638</td>
+      <td>186.132397</td>
+      <td>300.220359</td>
+    </tr>
+    <tr>
+      <th>Valle_del_Cauca</th>
+      <td>39.341767</td>
+      <td>5.950679</td>
+      <td>108.205629</td>
+      <td>117.730920</td>
+      <td>198.832574</td>
+    </tr>
+    <tr>
+      <th>Arauca</th>
+      <td>82.745985</td>
+      <td>15.884274</td>
+      <td>316.577271</td>
+      <td>79.421369</td>
+      <td>291.827356</td>
+    </tr>
+    <tr>
+      <th>Casanare</th>
+      <td>69.285665</td>
+      <td>15.456033</td>
+      <td>344.562941</td>
+      <td>160.422962</td>
+      <td>368.812923</td>
+    </tr>
+    <tr>
+      <th>Putumayo</th>
+      <td>56.840979</td>
+      <td>6.129910</td>
+      <td>114.517855</td>
+      <td>39.844412</td>
+      <td>194.485311</td>
+    </tr>
+    <tr>
+      <th>San_Andres</th>
+      <td>29.331871</td>
+      <td>5.101195</td>
+      <td>300.970502</td>
+      <td>137.732264</td>
+      <td>629.997577</td>
+    </tr>
+    <tr>
+      <th>Amazonas</th>
+      <td>83.724470</td>
+      <td>3.805658</td>
+      <td>258.784727</td>
+      <td>30.445262</td>
+      <td>318.406698</td>
+    </tr>
+    <tr>
+      <th>Guainia</th>
+      <td>85.163191</td>
+      <td>39.129034</td>
+      <td>135.800764</td>
+      <td>64.447820</td>
+      <td>202.550292</td>
+    </tr>
+    <tr>
+      <th>Guaviare</th>
+      <td>49.210474</td>
+      <td>5.180050</td>
+      <td>113.961098</td>
+      <td>18.130175</td>
+      <td>123.457856</td>
+    </tr>
+    <tr>
+      <th>Vaupes</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>4.451567</td>
+      <td>0.000000</td>
+      <td>2.225783</td>
+    </tr>
+    <tr>
+      <th>Vichada</th>
+      <td>15.528754</td>
+      <td>1.294063</td>
+      <td>38.821885</td>
+      <td>51.762514</td>
+      <td>78.937833</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;PuBu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/16f4ed91a682c7ce3c5133692e82a9ce00841d908921836a5f6d50f7ac1489e9.png" src="../_images/16f4ed91a682c7ce3c5133692e82a9ce00841d908921836a5f6d50f7ac1489e9.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler2</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>        <span class="c1"># Cargando el escalador estandar</span>
+<span class="n">scaler2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>                  <span class="c1"># Calcula las medias y las desviaciones</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span> <span class="c1"># Estandariza la data.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DSex_p</th>
+      <th>DHom_p</th>
+      <th>DIntra_p</th>
+      <th>DTransi_p</th>
+      <th>DAsal_p</th>
+    </tr>
+    <tr>
+      <th>Departamento</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Antioquia</th>
+      <td>-0.663883</td>
+      <td>-0.196509</td>
+      <td>-0.199243</td>
+      <td>-0.104096</td>
+      <td>-0.361624</td>
+    </tr>
+    <tr>
+      <th>Atlantico</th>
+      <td>-0.239343</td>
+      <td>-0.508407</td>
+      <td>0.046727</td>
+      <td>-0.107368</td>
+      <td>-1.747823</td>
+    </tr>
+    <tr>
+      <th>Bogota_D.C.</th>
+      <td>0.281500</td>
+      <td>1.493371</td>
+      <td>1.195478</td>
+      <td>-1.285749</td>
+      <td>-1.503020</td>
+    </tr>
+    <tr>
+      <th>Bolivar</th>
+      <td>-0.113606</td>
+      <td>-0.790414</td>
+      <td>-0.509785</td>
+      <td>-0.693637</td>
+      <td>-0.379511</td>
+    </tr>
+    <tr>
+      <th>Boyaca</th>
+      <td>-0.268795</td>
+      <td>0.052035</td>
+      <td>0.833764</td>
+      <td>0.162437</td>
+      <td>0.750273</td>
+    </tr>
+    <tr>
+      <th>Caldas</th>
+      <td>-0.059184</td>
+      <td>-0.067750</td>
+      <td>-0.485429</td>
+      <td>0.771161</td>
+      <td>0.016557</td>
+    </tr>
+    <tr>
+      <th>Caqueta</th>
+      <td>-0.061174</td>
+      <td>-0.468669</td>
+      <td>-0.574400</td>
+      <td>-1.012212</td>
+      <td>-0.725149</td>
+    </tr>
+    <tr>
+      <th>Cauca</th>
+      <td>-0.795682</td>
+      <td>-0.365312</td>
+      <td>-0.414780</td>
+      <td>-0.370390</td>
+      <td>-0.439714</td>
+    </tr>
+    <tr>
+      <th>Cesar</th>
+      <td>0.339369</td>
+      <td>-0.399596</td>
+      <td>-0.094966</td>
+      <td>-0.049362</td>
+      <td>0.277503</td>
+    </tr>
+    <tr>
+      <th>Cordoba</th>
+      <td>-0.796998</td>
+      <td>-0.860150</td>
+      <td>-1.208040</td>
+      <td>-0.573843</td>
+      <td>-1.008305</td>
+    </tr>
+    <tr>
+      <th>Cundinamarca</th>
+      <td>0.308943</td>
+      <td>0.803913</td>
+      <td>-1.369223</td>
+      <td>0.172663</td>
+      <td>1.133231</td>
+    </tr>
+    <tr>
+      <th>Choco</th>
+      <td>-0.736138</td>
+      <td>-0.914445</td>
+      <td>-0.966477</td>
+      <td>-1.096403</td>
+      <td>-0.956544</td>
+    </tr>
+    <tr>
+      <th>Huila</th>
+      <td>-0.205885</td>
+      <td>-0.186039</td>
+      <td>0.520217</td>
+      <td>0.182038</td>
+      <td>0.751303</td>
+    </tr>
+    <tr>
+      <th>La_Guajira</th>
+      <td>-0.745839</td>
+      <td>-0.610629</td>
+      <td>-0.785435</td>
+      <td>-1.113233</td>
+      <td>-0.821455</td>
+    </tr>
+    <tr>
+      <th>Magdalena</th>
+      <td>-0.358869</td>
+      <td>-0.702906</td>
+      <td>0.025040</td>
+      <td>-0.505449</td>
+      <td>0.054491</td>
+    </tr>
+    <tr>
+      <th>Meta</th>
+      <td>1.751649</td>
+      <td>0.304650</td>
+      <td>1.547887</td>
+      <td>0.470162</td>
+      <td>1.159873</td>
+    </tr>
+    <tr>
+      <th>narigno</th>
+      <td>-1.717055</td>
+      <td>-0.382144</td>
+      <td>-0.662102</td>
+      <td>0.302682</td>
+      <td>-0.192256</td>
+    </tr>
+    <tr>
+      <th>Norte_de_Santander</th>
+      <td>-0.932852</td>
+      <td>-0.295230</td>
+      <td>0.201453</td>
+      <td>-0.087833</td>
+      <td>0.097127</td>
+    </tr>
+    <tr>
+      <th>Quindio</th>
+      <td>1.175131</td>
+      <td>0.971076</td>
+      <td>0.350610</td>
+      <td>2.288576</td>
+      <td>1.035139</td>
+    </tr>
+    <tr>
+      <th>Risaralda</th>
+      <td>0.495073</td>
+      <td>0.070287</td>
+      <td>0.053026</td>
+      <td>2.471654</td>
+      <td>0.071146</td>
+    </tr>
+    <tr>
+      <th>Santander</th>
+      <td>0.807637</td>
+      <td>0.263066</td>
+      <td>-1.408006</td>
+      <td>1.320347</td>
+      <td>1.057480</td>
+    </tr>
+    <tr>
+      <th>Sucre</th>
+      <td>0.014472</td>
+      <td>-0.701094</td>
+      <td>-0.189232</td>
+      <td>-0.897342</td>
+      <td>-0.245805</td>
+    </tr>
+    <tr>
+      <th>Tolima</th>
+      <td>-0.118026</td>
+      <td>-0.308773</td>
+      <td>0.130061</td>
+      <td>1.838545</td>
+      <td>0.605328</td>
+    </tr>
+    <tr>
+      <th>Valle_del_Cauca</th>
+      <td>-0.317508</td>
+      <td>-0.148872</td>
+      <td>-0.367528</td>
+      <td>0.633006</td>
+      <td>-0.195539</td>
+    </tr>
+    <tr>
+      <th>Arauca</th>
+      <td>1.825743</td>
+      <td>1.218310</td>
+      <td>2.063842</td>
+      <td>-0.042178</td>
+      <td>0.539031</td>
+    </tr>
+    <tr>
+      <th>Casanare</th>
+      <td>1.161088</td>
+      <td>1.159370</td>
+      <td>2.390391</td>
+      <td>1.385430</td>
+      <td>1.147144</td>
+    </tr>
+    <tr>
+      <th>Putumayo</th>
+      <td>0.546583</td>
+      <td>-0.124204</td>
+      <td>-0.293874</td>
+      <td>-0.739700</td>
+      <td>-0.229878</td>
+    </tr>
+    <tr>
+      <th>San_Andres</th>
+      <td>-0.811785</td>
+      <td>-0.265788</td>
+      <td>1.881736</td>
+      <td>0.985519</td>
+      <td>3.210255</td>
+    </tr>
+    <tr>
+      <th>Amazonas</th>
+      <td>1.874059</td>
+      <td>-0.444096</td>
+      <td>1.389494</td>
+      <td>-0.905355</td>
+      <td>0.748983</td>
+    </tr>
+    <tr>
+      <th>Guainia</th>
+      <td>1.945102</td>
+      <td>4.417535</td>
+      <td>-0.045536</td>
+      <td>-0.306079</td>
+      <td>-0.166173</td>
+    </tr>
+    <tr>
+      <th>Guaviare</th>
+      <td>0.169798</td>
+      <td>-0.254935</td>
+      <td>-0.300370</td>
+      <td>-1.122402</td>
+      <td>-0.790928</td>
+    </tr>
+    <tr>
+      <th>Vaupes</th>
+      <td>-2.260159</td>
+      <td>-0.967877</td>
+      <td>-1.578175</td>
+      <td>-1.441936</td>
+      <td>-1.748546</td>
+    </tr>
+    <tr>
+      <th>Vichada</th>
+      <td>-1.493367</td>
+      <td>-0.789772</td>
+      <td>-1.177127</td>
+      <td>-0.529650</td>
+      <td>-1.142594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizamos la rutina habitual.</span>
+<span class="n">pca2</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> 
+<span class="n">pca2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">df2_pca</span> <span class="o">=</span> <span class="n">pca2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">pca2_trans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df2_pca</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span><span class="s2">&quot;PC2&quot;</span><span class="p">,])</span>
+<span class="n">pca2_trans</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+    </tr>
+    <tr>
+      <th>Departamento</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Antioquia</th>
+      <td>-0.712187</td>
+      <td>0.151438</td>
+    </tr>
+    <tr>
+      <th>Atlantico</th>
+      <td>-1.168391</td>
+      <td>-0.511234</td>
+    </tr>
+    <tr>
+      <th>Bogota_D.C.</th>
+      <td>0.086747</td>
+      <td>-2.423493</td>
+    </tr>
+    <tr>
+      <th>Bolivar</th>
+      <td>-1.062042</td>
+      <td>-0.059052</td>
+    </tr>
+    <tr>
+      <th>Boyaca</th>
+      <td>0.694155</td>
+      <td>0.482570</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Se ajustó un PCA a una data de tamaño:&quot;</span><span class="p">,</span><span class="n">df2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Se obtuvo un ajuste por PCA de tamaño:&quot;</span><span class="p">,</span><span class="n">pca2_trans</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">expl</span> <span class="o">=</span> <span class="n">pca2</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cantidad de varianza explicada: </span><span class="si">{:.3f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">expl</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Se ajustó un PCA a una data de tamaño: (33, 5)
+Se obtuvo un ajuste por PCA de tamaño: (33, 2)
+Cantidad de varianza explicada: 74.419%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># La correlación lineal debe ser 0.</span>
+<span class="n">pca2_trans</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PC1</th>
+      <th>PC2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>PC1</th>
+      <td>1.000000e+00</td>
+      <td>-5.974580e-18</td>
+    </tr>
+    <tr>
+      <th>PC2</th>
+      <td>-5.974580e-18</td>
+      <td>1.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">pca2</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span><span class="n">xticklabels</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ACP1&quot;</span><span class="p">,</span><span class="s2">&quot;ACP2&quot;</span><span class="p">],</span> 
+            <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;PuBu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">pca2_trans</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;PC2&quot;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">pca2_trans</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">hover_name</span><span class="o">=</span><span class="n">pca2_trans</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Interpretación&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">line_color</span> <span class="o">=</span> <span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">line_color</span> <span class="o">=</span> <span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a20c00fa2100345058b76d91143ae19921a4e0353e228fa200d0973abbdd4ac.png" src="../_images/8a20c00fa2100345058b76d91143ae19921a4e0353e228fa200d0973abbdd4ac.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_2_Analisis_Descriptivo_Multivariado.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Analisis descriptivo multivariado.</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_4_ACP_examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apredizaje-no-supersivado"><em><strong>Apredizaje no supersivado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-componentes-principales-pca"><em><strong>Análisis de componentes principales (PCA)</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#idea-central"><em><strong>Idea central:</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comentarios-previos"><em><strong>Comentarios previos:</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminos-clave-para-el-analisis-de-componentes-principales"><em><strong>Términos clave para el análisis de componentes principales.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-introductorio"><em><strong>Ejemplo introductorio:</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construccion-de-un-pca"><em><strong>Construcción de un PCA</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

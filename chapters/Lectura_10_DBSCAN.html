@@ -1,0 +1,1707 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DBSCAN clustering &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_10_DBSCAN';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linear Regression" href="Lectura_11_Linear_Regression.html" />
+    <link rel="prev" title="K-means clustering" href="Lectura_9_Kmeans.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_10_DBSCAN.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_10_DBSCAN.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DBSCAN clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-y-limitaciones-de-k-means-y-agglomerative"><em><strong>Clustering y Limitaciones de K-means y Agglomerative</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means"><em><strong>K-means</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agglomerativeclustering"><em><strong>AgglomerativeClustering</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan"><em><strong>DBSCAN</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan-density-based-spatial-clustering-of-applications-with-noise"><em><strong>DBSCAN (Density-based spatial clustering of applications with noise)</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideas-del-metodo"><em><strong>Ideas del método.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-dbscan"><em><strong>Algoritmo DBSCAN</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo"><em><strong>Algoritmo.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-parametros"><em><strong>Selección de parámetros.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-de-dbscan"><em><strong>Ventajas de DBSCAN.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desventajas-de-dbscan"><em><strong>Desventajas de DBSCAN.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otro-escalador"><em><strong>OTRO ESCALADOR.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dbscan-clustering">
+<h1><em><strong>DBSCAN clustering</strong></em><a class="headerlink" href="#dbscan-clustering" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">DBSCAN</span><span class="p">,</span> <span class="n">AgglomerativeClustering</span><span class="p">,</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
+<span class="kn">from</span> <span class="nn">utils.plots_clustering</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos-Estadisticos/main/data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="clustering-y-limitaciones-de-k-means-y-agglomerative">
+<h2><em><strong>Clustering y Limitaciones de K-means y Agglomerative</strong></em><a class="headerlink" href="#clustering-y-limitaciones-de-k-means-y-agglomerative" title="Link to this heading">#</a></h2>
+<p>El clustering es una técnica utilizada para agrupar datos similares. Los algoritmos <em><strong>K-means</strong></em> y <em><strong>Agglomerative Clustering</strong></em> son populares, pero tienen limitaciones con datos de formas no lineales.</p>
+<ul class="simple">
+<li><p><em><strong>KMeans:</strong></em>
+Agrupa puntos en función de su distancia a un centroide buscando formar clusters esféricos. En datos con formas complejas K-means tiende a fallar porque intenta forzar grupos esféricos.</p></li>
+<li><p><em><strong>Agglomerative Clustering:</strong></em>
+Agrupa jerárquicamente los puntos según su cercanía. Aunque más flexible que K-means, también tiene problemas con clusters no convexos o formas irregulares.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_moons</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feature_1&quot;</span><span class="p">,</span><span class="s2">&quot;feature_2&quot;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df_moons</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_moons</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature_2&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Make moons - Dataset&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature_1</th>
+      <th>feature_2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.021001</td>
+      <td>0.490179</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.678201</td>
+      <td>-0.201987</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.282245</td>
+      <td>0.858785</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.021440</td>
+      <td>0.176281</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.504842</td>
+      <td>-0.391043</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="k-means">
+<h3><em><strong>K-means</strong></em><a class="headerlink" href="#k-means" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_kmeans</span> <span class="o">=</span> <span class="n">df_moons</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler_moons</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_kmeans</span><span class="p">)</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaler_moons</span><span class="p">)</span>
+<span class="n">df_kmeans</span><span class="p">[</span><span class="s2">&quot;cluster_kmeans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_kmeans</span><span class="p">[</span><span class="s2">&quot;cluster_kmeans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_kmeans</span><span class="p">[</span><span class="s2">&quot;cluster_kmeans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_kmeans</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature_2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cluster_kmeans&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Clustering with k-means&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="agglomerativeclustering">
+<h3><em><strong>AgglomerativeClustering</strong></em><a class="headerlink" href="#agglomerativeclustering" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_aglome</span> <span class="o">=</span> <span class="n">df_moons</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">aglome</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">aglome</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaler_moons</span><span class="p">)</span>
+<span class="n">df_aglome</span><span class="p">[</span><span class="s2">&quot;cluster_aglome&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aglome</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_aglome</span><span class="p">[</span><span class="s2">&quot;cluster_aglome&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_aglome</span><span class="p">[</span><span class="s2">&quot;cluster_aglome&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_aglome</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature_2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cluster_aglome&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Clustering with Agglomerative&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="dbscan">
+<h3><em><strong>DBSCAN</strong></em><a class="headerlink" href="#dbscan" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Con DBSCAN</span>
+<span class="n">df_dbscan</span> <span class="o">=</span> <span class="n">df_moons</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">dbscan</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">dbscan</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_dbscan</span><span class="p">)</span>
+<span class="n">df_dbscan</span><span class="p">[</span><span class="s2">&quot;cluster_DBSCAN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_dbscan</span><span class="p">[</span><span class="s2">&quot;cluster_DBSCAN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_dbscan</span><span class="p">[</span><span class="s2">&quot;cluster_DBSCAN&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_dbscan</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_1&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature_2&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cluster_DBSCAN&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Clustering with DBSCAN&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># ***Note el único método que segmentó de manera adecuada fue DBSCAN.***</span>
+
+<span class="c1"># Cuando se aplican algoritmos de clustering, por lo general no existe una &quot;verdad&quot; básica con la cual comparar los resultados.</span>
+<span class="c1"># Hay métricas de puntuación para el clustering como el coeficiente de silueta. Este coeficiente calcula la compacidad de un clúster, </span>
+<span class="c1"># donde un valor más alto es mejor, con una puntuación perfecta de 1. Si bien los clústeres compactos son buenos, la compacidad no </span>
+<span class="c1"># trabaja bien en formas complejas formas.</span>
+
+<span class="n">algoritms</span> <span class="o">=</span> <span class="p">[</span><span class="n">kmeans</span><span class="p">,</span> <span class="n">aglome</span><span class="p">,</span> <span class="n">dbscan</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">algoritm</span> <span class="ow">in</span> <span class="n">algoritms</span><span class="p">:</span>
+    <span class="n">clusters</span> <span class="o">=</span> <span class="n">algoritm</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">scaler_moons</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">scaler_moons</span><span class="p">,</span> <span class="n">clusters</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Algoritmo: </span><span class="si">{</span><span class="n">algoritm</span><span class="si">}</span><span class="s2"> ---&gt; silhouette_score: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algoritmo: KMeans(n_clusters=2) ---&gt; silhouette_score:  0.499
+Algoritmo: AgglomerativeClustering() ---&gt; silhouette_score:  0.457
+Algoritmo: DBSCAN(eps=0.2, min_samples=4) ---&gt; silhouette_score:  0.392
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(K\)</span>-means obtiene la puntuación de silueta más alta, aunque se prefiere el resultado obtenido por DBSCAN.</p>
+</section>
+</section>
+<section id="dbscan-density-based-spatial-clustering-of-applications-with-noise">
+<h2><em><strong>DBSCAN (Density-based spatial clustering of applications with noise)</strong></em><a class="headerlink" href="#dbscan-density-based-spatial-clustering-of-applications-with-noise" title="Link to this heading">#</a></h2>
+<p>DBSCAN (“clustering con ruido basado en la densidad”) es un algoritmo de clustering que busca la identificación de regiones “pobladas”, es decir donde muchos registros están muy juntos, estas regiones se conocen como  <em><strong>regiones densas en el espacio de datos.</strong></em></p>
+<p>La idea básica detrás de este enfoque de clustering se deriva de un método humano de agrupamiento intuitivo. Es decir, el cerebro humano puede identificar clusters observando los puntos que están cerca y además dejando sin ninguna asignación a registros que están aíslados (ruído). Así, <em><strong>los clusters son regiones densas en el espacio de datos, separadas por regiones de menor densidad de
+puntos</strong></em>. El algoritmo DBSCAN se basa en esta noción intuitiva de “clusters” y “ruido”. La idea clave es que para cada punto de un cluster, la vecindad tiene que contener al menos un número mínimo de puntos.</p>
+<p>Los principales beneficios de <em>DBSCAN</em> son que no requiere que el usuario establezca el número de clusters a priori, puede capturar clusters de formas complejas y puede identificar puntos que no forman parte de ningún cluster. El algoritmo DBSCAN es algo más lento que el clustering aglomerativo y que <span class="math notranslate nohighlight">\(K\)</span>-means. Este algoritmo puede utilizarse para identificar clusters de cualquier forma en un Dataset que contenga ruido y valores atípicos.</p>
+</section>
+<section id="ideas-del-metodo">
+<h2><em><strong>Ideas del método.</strong></em><a class="headerlink" href="#ideas-del-metodo" title="Link to this heading">#</a></h2>
+<p>La idea detrás de DBSCAN es que <em><strong>los clusters forman  regiones  densas de datos</strong></em>, separadas por regiones que están relativamente vacías. Los puntos que están dentro de una región densa se denominan <em>core points</em> (core points). Hay dos parámetros en DBSCAN: <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> y <code class="docutils literal notranslate"><span class="pre">eps</span></code>. Si hay al menos <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> puntos dentro de una distancia <code class="docutils literal notranslate"><span class="pre">eps</span></code> (<span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad), ese punto se clasifica como un <em>core point</em>.  <em>Core points</em> que están más cerca
+entre sí que la distancia <code class="docutils literal notranslate"><span class="pre">eps</span></code> el algoritmo DBSCAN los coloca en el mismo cluster.</p>
+<p>El algoritmo funciona eligiendo un punto arbitrario para comenzar. Luego encuentra <em><strong>todos los puntos con distancia menor o igual a la dada en <code class="docutils literal notranslate"><span class="pre">eps</span></code> (definición de <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad)</strong></em>. Si hay menos de <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> puntos dentro de la distancia <code class="docutils literal notranslate"><span class="pre">eps</span></code> del punto de partida, <em><strong>este punto se etiqueta como ruido,  lo que significa que no pertenece a ningún cluster (por ahora)</strong></em>. Si hay más de <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> puntos dentro de una distancia <code class="docutils literal notranslate"><span class="pre">eps</span></code>, el punto se etiqueta como <em>core point</em> y se le asigna una nueva etiqueta de cluster. Luego, se visitan todos los vecinos (“viaja” por la <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad)  del punto, a estos puntos se les asigna la nueva etiqueta de cluster que se acaba de crear. Si
+son <em>core points</em>, sus vecinos son visitados a su vez, y así sucesivamente. El cluster crece hasta que no hay más <em>core points</em> a una distancia <code class="docutils literal notranslate"><span class="pre">eps</span></code> del cluster. Después
+se elige otro punto que aún no ha sido visitado, y se sigue el mismo procedimiento anterior.</p>
+<center>
+<p><em><strong>ALGORITMO DBSCAN</strong></em></p>
+<img src="https://miro.medium.com/proxy/1*tc8UF-h0nQqUfLC8-0uInQ.gif" alt="drawing" width="600" height = "300"/>
+</center>
+</section>
+<section id="algoritmo-dbscan">
+<h2><em><strong>Algoritmo DBSCAN</strong></em><a class="headerlink" href="#algoritmo-dbscan" title="Link to this heading">#</a></h2>
+<p>Vamos a definir tres conceptos:</p>
+<ul class="simple">
+<li><p><em><strong>Core point:</strong></em> Una observación que tiene en su <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad un número de observaciones vecinas igual o mayor que <code class="docutils literal notranslate"><span class="pre">min_sample</span></code>.</p></li>
+<li><p><em><strong>Boder point:</strong></em> Una observación que no satisface el número mínimo de observaciones vecinas para ser <em>core point</em>, pero pertenece a la <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad de otra observación que si es <em>core point</em>.</p></li>
+<li><p><em><strong>Noise u outlier:</strong></em> Una observación que no es <em>core point</em> ni <em>border point</em>.</p></li>
+</ul>
+<p>Basados en las tres categorías anteriores se pueden definir tres niveles de conectividad entre observaciones:</p>
+<ul class="simple">
+<li><p><em><strong>Directamente alcanzable (direct density reachable):</strong></em> Una observación <span class="math notranslate nohighlight">\(B\)</span> es directamente alcanzable desde otra observación <span class="math notranslate nohighlight">\(A\)</span> si <span class="math notranslate nohighlight">\(B\)</span> forma parte de la <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad de <span class="math notranslate nohighlight">\(A\)</span> y <span class="math notranslate nohighlight">\(A\)</span> es un <em>core point</em>. Por definición, las observaciones solo pueden ser directamente alcanzables desde un <em>core point</em>.</p></li>
+<li><p><em><strong>Alcanzable (density reachable):</strong></em> Una observación <span class="math notranslate nohighlight">\(A\)</span> es alcanzable desde otra observación <span class="math notranslate nohighlight">\(B\)</span> si existe una secuencia de <em>core points</em> que van desde <span class="math notranslate nohighlight">\(B\)</span> a <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><em><strong>Densamente conectadas (density conected):</strong></em> Dos observaciones <span class="math notranslate nohighlight">\(B\)</span> y <span class="math notranslate nohighlight">\(C\)</span> están densamente conectadas si existe una observación <span class="math notranslate nohighlight">\(A\)</span> que es un <em>core point</em>, tal que <span class="math notranslate nohighlight">\(B\)</span> y <span class="math notranslate nohighlight">\(C\)</span> son alcanzables desde <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+</ul>
+<center>
+<img src="https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/images/DBSCAN-Illustration.svg" alt="drawing" width="400" height = "200"/>
+<p><em><strong>Tomado de <a class="reference external" href="https://es.wikipedia.org/wiki/DBSCAN">wikipedía</a></strong></em></p>
+</center>
+<p><em><strong>La imagen anterior muestra las conexiones existentes entre un conjunto de observaciones con <code class="docutils literal notranslate"><span class="pre">min_samples=4</span></code>. La observación <span class="math notranslate nohighlight">\(A\)</span> y el resto de observaciones marcadas con rojo son core points, ya que todas ellas contienen al menos 4 observaciones vecinas (incluyéndose a ellas mismas) en su <span class="math notranslate nohighlight">\(\epsilon\)</span>-vecindad. Como todas son alcanzables entre ellas, forman un cluster. Las observaciones <span class="math notranslate nohighlight">\(B\)</span> y <span class="math notranslate nohighlight">\(C\)</span> no son core points, pero son densamente alcanzables desde <span class="math notranslate nohighlight">\(A\)</span> y densamente conectados con A, y por lo tanto pertenecen al mismo clúster. La observación <span class="math notranslate nohighlight">\(N\)</span> no es ni <em>core point</em> ni es directamente alcanzable, por lo tanto se considera como noise (ruido)</strong></em></p>
+<section id="algoritmo">
+<h3><em><strong>Algoritmo.</strong></em><a class="headerlink" href="#algoritmo" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Para cada observación <span class="math notranslate nohighlight">\(x_i\)</span> calcular la distancia entre ella y el resto de observaciones. Si en su <span class="math notranslate nohighlight">\(ϵ\)</span>-vecindad hay un número de observaciones <em><strong>mayor o igual</strong></em> a <code class="docutils literal notranslate"><span class="pre">min_sample</span></code> marcar la observación como <em>core point</em>, de lo contrario marcarla como visitada.</p></li>
+<li><p>Para cada observación <span class="math notranslate nohighlight">\(x_i\)</span> marcada como <em>core point</em>, si todavía no ha sido asignada a ningún cluster, crear uno nuevo y asignarla a él. Encontrar recursivamente <em><strong>todas las observaciones densamente conectadas a ella</strong></em> y asignarlas al mismo cluster.</p></li>
+<li><p>Iterar el mismo proceso para todas las observaciones que no hayan sido visitadas.</p></li>
+<li><p>Aquellas observaciones que tras haber sido visitadas no pertenecen a ningún cluster se marcan como outliers.</p></li>
+</ol>
+<p><em><strong>NOTA:</strong></em> Como resultado, todo cluster cumple dos propiedades:</p>
+<ol class="arabic simple">
+<li><p>Todos los puntos que forman parte de un mismo cluster están <em><strong>densamente conectados entre ellos.</strong></em></p></li>
+<li><p>Si una observación <span class="math notranslate nohighlight">\(A\)</span> es <em><strong>densamente alcanzable desde cualquier otra observación</strong></em> de un cluster, entonces <span class="math notranslate nohighlight">\(A\)</span> también pertenece al cluster.</p></li>
+</ol>
+</section>
+</section>
+<section id="seleccion-de-parametros">
+<h2><em><strong>Selección de parámetros.</strong></em><a class="headerlink" href="#seleccion-de-parametros" title="Link to this heading">#</a></h2>
+<p>Como ocurre en muchas otras técnicas estadísticas, en DBSCAN no existe una forma única y exacta de encontrar el valor adecuado de epsilon (<code class="docutils literal notranslate"><span class="pre">eps</span></code>) y <code class="docutils literal notranslate"><span class="pre">min_samples</span></code>. A modo orientativo se pueden seguir las siguientes premisas:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min_samples</span></code>: Cuanto mayor sea el tamaño del Dataset, mayor debe ser el valor mínimo de observaciones vecinas. En el libro de la referencia 1, recomiendan no bajar nunca de 3. Si los datos contienen niveles altos de ruido, aumentar <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> favorecerá la creación de clusters significativos menos influenciados por outliers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eps</span></code>: Una buena forma de escoger este valor consiste en calcular las distancias al <span class="math notranslate nohighlight">\(k\)</span>-ésimo vecino más cercano (donde <span class="math notranslate nohighlight">\(k\)</span> corresponde a <code class="docutils literal notranslate"><span class="pre">min_samples</span></code>). Luego, estas k-ésimas distancias se trazan en orden ascendente. El objetivo es determinar la “rodilla”, que corresponde al parámetro eps óptimo. Una rodilla corresponde a un umbral donde se produce un cambio brusco a lo largo de la curva de las k-ésimas distancias. Si el valor de eps escogido es muy pequeño, una proporción alta de las observaciones no se asignarán a ningún clúster, mientras que si el valor es demasiado grande, la mayoría de las observaciones se agruparán en un único clúster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Distancia</span> <span class="pre">k</span> <span class="pre">de</span> <span class="pre">la</span> <span class="pre">curva</span></code>: Estudiar las distancias promedio entre las <span class="math notranslate nohighlight">\(k\)</span> (<code class="docutils literal notranslate"><span class="pre">min_samples</span></code>) observaciones más próximas. Al representar estas distancias en función de <code class="docutils literal notranslate"><span class="pre">eps</span></code>, el punto de inflexión de la curva suele ser un valor óptimo. Si el valor de <code class="docutils literal notranslate"><span class="pre">eps</span></code> escogido es muy pequeño, una proporción alta de las observaciones no se asignarán a ningún cluster, por el contrario, si el valor es demasiado grande, la mayoría de observaciones se agruparán en un único cluster.</p></li>
+</ul>
+<section id="ventajas-de-dbscan">
+<h3><em><strong>Ventajas de DBSCAN.</strong></em><a class="headerlink" href="#ventajas-de-dbscan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A diferencia de <span class="math notranslate nohighlight">\(K\)</span>-means, DBSCAN no requiere que el usuario especifique el número de clusters a generar.</p></li>
+<li><p>DBSCAN es independiente de la forma que tengan los clusters, no tienen por qué ser circulares o convexos.</p></li>
+<li><p>DBSCAN puede identificar outliers, por lo que los clusters generados no son influenciados por ellos.</p></li>
+</ul>
+</section>
+<section id="desventajas-de-dbscan">
+<h3><em><strong>Desventajas de DBSCAN.</strong></em><a class="headerlink" href="#desventajas-de-dbscan" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>No es un método totalmente determinístico: los border points que son alcanzables desde más de un cluster pueden asignarse a uno u otro dependiendo del orden en el que se procesen los datos.</p></li>
+<li><p>No genera buenos resultados cuando la densidad de los grupos es muy distinta, ya que no es posible encontrar los parámetros <code class="docutils literal notranslate"><span class="pre">eps</span></code> y <code class="docutils literal notranslate"><span class="pre">min_samples</span></code> que sirvan para todos a la vez.</p></li>
+</ul>
+</section>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html"><code class="docutils literal notranslate"><span class="pre">sklearn.cluster.DBSCAN</span></code></a> para trabajar con el algoritmo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_usarrests</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;USArrests.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_usarrests</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Escalamos la información.</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="c1">#</span>
+<span class="n">df_scaler</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df_scaler</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>1.255179</td>
+      <td>0.790787</td>
+      <td>-0.526195</td>
+      <td>-0.003451</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0.513019</td>
+      <td>1.118060</td>
+      <td>-1.224067</td>
+      <td>2.509424</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0.072361</td>
+      <td>1.493817</td>
+      <td>1.009122</td>
+      <td>1.053466</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0.234708</td>
+      <td>0.233212</td>
+      <td>-1.084492</td>
+      <td>-0.186794</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0.281093</td>
+      <td>1.275635</td>
+      <td>1.776781</td>
+      <td>2.088814</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>0.025976</td>
+      <td>0.402909</td>
+      <td>0.869548</td>
+      <td>1.883901</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_plot_dbscan</span><span class="p">(</span><span class="n">df_scaler</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos una instancia de DBSCAN</span>
+<span class="n">clustering</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">1.349</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">clustering</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-1,  0,  1,  2]), array([ 5,  8, 32,  5]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ajustamos un PCA</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler</span><span class="p">)</span>
+<span class="n">pca_array</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_scaler</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot con 2 clusters.</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">df_usarrests</span><span class="p">,</span> <span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparando clusters.</span>
+<span class="n">df_cluster</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_cluster</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_cluster</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_cluster_plot</span> <span class="o">=</span> <span class="n">df_cluster</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;cluster !=-1&quot;</span><span class="p">)</span>
+<span class="n">df_cluster_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_cluster_plot</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Box-plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_cluster_plot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Murder&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_cluster_plot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Assault&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_cluster_plot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;UrbanPop&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_cluster_plot</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;Rape&quot;</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/45a8e98996ed0833346aaeb159fe8c2f4357072b98102094dacdefef886d2837.png" src="../_images/45a8e98996ed0833346aaeb159fe8c2f4357072b98102094dacdefef886d2837.png" />
+</div>
+</div>
+<section id="otro-escalador">
+<h3><em><strong>OTRO ESCALADOR.</strong></em><a class="headerlink" href="#otro-escalador" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Escalamos la información.</span>
+<span class="n">scaler_min_max</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">min_max_transform</span> <span class="o">=</span> <span class="n">scaler_min_max</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">)</span>
+<span class="c1">##</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">min_max_transform</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0.746988</td>
+      <td>0.654110</td>
+      <td>0.440678</td>
+      <td>0.359173</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0.554217</td>
+      <td>0.746575</td>
+      <td>0.271186</td>
+      <td>0.961240</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0.439759</td>
+      <td>0.852740</td>
+      <td>0.813559</td>
+      <td>0.612403</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0.481928</td>
+      <td>0.496575</td>
+      <td>0.305085</td>
+      <td>0.315245</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0.493976</td>
+      <td>0.791096</td>
+      <td>1.000000</td>
+      <td>0.860465</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>0.427711</td>
+      <td>0.544521</td>
+      <td>0.779661</td>
+      <td>0.811370</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_plot_dbscan</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clustering</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">clustering</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-1,  0,  1,  2]), array([ 4,  8, 32,  6]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0, -1,  2,  0, -1,  1,  1,  1, -1,  0,  1,  1,  2,  1,  1,  1,  1,
+        0,  1,  0,  1,  2,  1,  0,  1,  1,  1,  2,  1,  1,  2,  2, -1,  1,
+        1,  1,  1,  1,  1,  0,  1,  0,  1,  1,  1,  1,  1,  1,  1,  1])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)</span>
+<span class="n">pca_transform_min_max</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca_transform_min_max</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.293082</td>
+      <td>-0.273177</td>
+      <td>-0.098603</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.497299</td>
+      <td>-0.225498</td>
+      <td>0.501542</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.460302</td>
+      <td>0.201380</td>
+      <td>0.003031</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.006003</td>
+      <td>-0.275698</td>
+      <td>0.028729</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.612016</td>
+      <td>0.409985</td>
+      <td>0.143261</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_plot_dbscan</span><span class="p">(</span><span class="n">pca_transform_min_max</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clustering</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.258</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">clustering</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_transform_min_max</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-1,  0,  1,  2]), array([ 8,  6, 30,  6]))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-2">
+<h2><em><strong>Ejemplo 2.</strong></em><a class="headerlink" href="#ejemplo-2" title="Link to this heading">#</a></h2>
+<p>Vamos a considerar la siguiente data de clientes, la idea será realizar una segmentación de esta información</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clientes </span>
+<span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;clientes_clustering.csv&quot;</span>
+<span class="n">clientes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">clientes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Genre</th>
+      <th>Age</th>
+      <th>Annual Income (k$)</th>
+      <th>Spending Score (1-100)</th>
+    </tr>
+    <tr>
+      <th>CustomerID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Male</td>
+      <td>19</td>
+      <td>15</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Male</td>
+      <td>21</td>
+      <td>15</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Female</td>
+      <td>20</td>
+      <td>16</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Female</td>
+      <td>23</td>
+      <td>16</td>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Female</td>
+      <td>31</td>
+      <td>17</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>Female</td>
+      <td>35</td>
+      <td>120</td>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Female</td>
+      <td>45</td>
+      <td>126</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>Male</td>
+      <td>32</td>
+      <td>126</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>Male</td>
+      <td>32</td>
+      <td>137</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Male</td>
+      <td>30</td>
+      <td>137</td>
+      <td>83</td>
+    </tr>
+  </tbody>
+</table>
+<p>200 rows × 4 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">clientes</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Annual Income (k$)&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Spending Score (1-100)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Genre&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">clientes</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;Spending Score (1-100)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Genre&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">clientes</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Annual Income (k$)</th>
+      <th>Spending Score (1-100)</th>
+    </tr>
+    <tr>
+      <th>CustomerID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>19</td>
+      <td>15</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>21</td>
+      <td>15</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20</td>
+      <td>16</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23</td>
+      <td>16</td>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>31</td>
+      <td>17</td>
+      <td>40</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+
+<span class="n">df2_dbscan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">clientes</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">df2_dbscan</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Annual Income (k$)</th>
+      <th>Spending Score (1-100)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1.424569</td>
+      <td>-1.738999</td>
+      <td>-0.434801</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.281035</td>
+      <td>-1.738999</td>
+      <td>1.195704</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.352802</td>
+      <td>-1.700830</td>
+      <td>-1.715913</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.137502</td>
+      <td>-1.700830</td>
+      <td>1.040418</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.563369</td>
+      <td>-1.662660</td>
+      <td>-0.395980</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>-0.276302</td>
+      <td>2.268791</td>
+      <td>1.118061</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>0.441365</td>
+      <td>2.497807</td>
+      <td>-0.861839</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>-0.491602</td>
+      <td>2.497807</td>
+      <td>0.923953</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>-0.491602</td>
+      <td>2.917671</td>
+      <td>-1.250054</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>-0.635135</td>
+      <td>2.917671</td>
+      <td>1.273347</td>
+    </tr>
+  </tbody>
+</table>
+<p>200 rows × 3 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_plot_dbscan</span><span class="p">(</span><span class="n">df2_dbscan</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clustering2</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mf">0.606</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">clustering2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df2_dbscan</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">clustering2</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([-1,  0,  1,  2,  3,  4]), array([ 33, 106,   5,   4,  34,  18]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df2_dbscan</span><span class="p">)</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">clientes</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Genre&quot;</span><span class="p">]),</span> <span class="n">clustering2</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="referencias">
+<h2><em><strong>Referencias:</strong></em><a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><em>Multivariate Analysis I. Kassambara A. Disponible en: <a class="reference external" href="http://www.sthda.com/english/">http://www.sthda.com/english/</a></em></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_silhouette_analysis.html#sphx-glr-auto-examples-cluster-plot-kmeans-silhouette-analysis-py"><em>Selecting the number of clusters with silhouette analysis on KMeans clustering</em></a> <a class="reference external" href="https://scikit-learn.org/stable/"><em>by sklearn</em></a></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_9_Kmeans.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>K-means clustering</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_11_Linear_Regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>Linear Regression</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-y-limitaciones-de-k-means-y-agglomerative"><em><strong>Clustering y Limitaciones de K-means y Agglomerative</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means"><em><strong>K-means</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agglomerativeclustering"><em><strong>AgglomerativeClustering</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan"><em><strong>DBSCAN</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dbscan-density-based-spatial-clustering-of-applications-with-noise"><em><strong>DBSCAN (Density-based spatial clustering of applications with noise)</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideas-del-metodo"><em><strong>Ideas del método.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo-dbscan"><em><strong>Algoritmo DBSCAN</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algoritmo"><em><strong>Algoritmo.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-parametros"><em><strong>Selección de parámetros.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-de-dbscan"><em><strong>Ventajas de DBSCAN.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#desventajas-de-dbscan"><em><strong>Desventajas de DBSCAN.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#otro-escalador"><em><strong>OTRO ESCALADOR.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

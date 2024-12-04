@@ -1,0 +1,3164 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Análisis de correspondencias simples. &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_5_AC';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Análisis de correspondencias multiples." href="Lectura_6_ACM.html" />
+    <link rel="prev" title="PCA: otros ejemplos y algunas funciones útiles." href="Lectura_4_ACP_examples.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_8_Cluster_Jerarquico.html"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_5_AC.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_5_AC.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Análisis de correspondencias simples.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-librerias-y-funciones-auxiliares"><em><strong>Protocolo de librerias y funciones auxiliares.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion"><em><strong>Introducción</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representacion-geometrica-de-una-tabla-de-contingencia"><em><strong>Representación geometrica de una tabla de contingencia</strong></em>.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semejanza-entre-perfiles"><em><strong>Semejanza entre perfiles.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ajuste-de-las-dos-nubes-de-puntos"><em><strong>Ajuste de las dos nubes de puntos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#puntos-extremos-y-la-composicion-de-su-perfil"><em><strong>Puntos Extremos y la Composición de su Perfil</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-cuasi-baricentricas-en-la-representacion-de-filas-y-columnas"><em><strong>Relaciones Cuasi-Baricéntricas en la Representación de Filas y Columnas</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-los-ejes-factoriales"><em><strong>Interpretacion de los ejes factoriales.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contribucion-absoluta-de-cada-eje-a-la-variabilidad-total">1. <em><strong>Contribución absoluta de cada eje a la variabilidad total.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cos2-cosenos-cuadrados-y-contribucion-de-los-perfiles"><em><strong>2. Cos2 (Cosenos Cuadrados) y Contribución de los Perfiles.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retomando-el-ejemplo-1"><em><strong>Retomando el Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-espacio-fila"><em><strong>Información espacio fila.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-espacio-columna"><em><strong>Información espacio columna</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#espacio-fila"><em><strong>Espacio fila</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-espacio-fila"><em><strong>Conclusiones espacio fila.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#espacio-columna"><em><strong>Espacio columna.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-espacio-columna"><em><strong>Conclusiones espacio columna.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-ejemplo-2"><em><strong>Conclusiones ejemplo 2.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-3"><em><strong>Ejemplo 3.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="analisis-de-correspondencias-simples">
+<h1><em><strong>Análisis de correspondencias simples.</strong></em><a class="headerlink" href="#analisis-de-correspondencias-simples" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de la librería <a class="reference external" href="https://pypi.org/project/prince/">prince</a>.</p>
+<ul class="simple">
+<li><p>Un pequenio <a class="reference external" href="https://maxhalford.github.io/prince/ca/">tutotial</a> de su aplicacion.</p></li>
+</ul>
+</section>
+<section id="protocolo-de-librerias-y-funciones-auxiliares">
+<h2><em><strong>Protocolo de librerias y funciones auxiliares.</strong></em><a class="headerlink" href="#protocolo-de-librerias-y-funciones-auxiliares" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">prince</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
+<span class="kn">from</span> <span class="nn">utils.plots_mca</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">utils.dataframes</span> <span class="kn">import</span> <span class="n">dataframes_example_ca</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importamos la data del ejemplo 1.</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">example_df</span><span class="p">,</span> <span class="n">example_dfi</span><span class="p">,</span> <span class="n">pf_row</span><span class="p">,</span> <span class="n">pf_col</span> <span class="o">=</span> <span class="n">dataframes_example_ca</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="introduccion">
+<h2><em><strong>Introducción</strong></em><a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h2>
+<p>En diversas áreas del análisis de datos, es común encontrarse con matrices que representan la relación entre dos variables categóricas. Estas matrices, conocidas como tablas de contingencia, contienen en sus celdas la frecuencia absoluta o relativa de los individuos que pertenecen a cada combinación de categorías. El análisis de estas tablas es fundamental para entender las relaciones subyacentes entre las variables y cómo se distribuyen los individuos en las diferentes categorías.</p>
+<p>Para explorar la información contenida en las filas y columnas de estas tablas, se utiliza una técnica estadística llamada análisis de correspondencias (AC). Esta técnica permite encontrar la mejor representación posible de los datos en un espacio reducido, de manera que tanto las filas como las columnas puedan interpretarse en un contexto multidimensional. El AC, al igual que el análisis de componentes principales (PCA), busca reducir la dimensionalidad del conjunto de datos, pero lo hace en el contexto de datos categóricos.</p>
+<p>El objetivo del análisis de correspondencias es identificar y caracterizar los patrones de asociación entre las filas y columnas, encontrando aquellas que se “corresponden” en términos de la información que aportan. Es decir, el AC permite identificar grupos de filas o columnas que proporcionan información similar sobre un conjunto de individuos, facilitando la interpretación y comprensión de la estructura de los datos.</p>
+<p>En lugar de comparar filas o columnas usando probabilidades condicionales, el AC reduce el problema a unas pocas dimensiones clave. La primera dimensión captura la mayor parte de la asociación total entre las filas y columnas (medida típicamente por el estadístico chi-cuadrado), mientras que las dimensiones subsiguientes explican la variabilidad residual no capturada por las dimensiones anteriores. Este proceso continúa hasta que se han explicado todas las asociaciones relevantes entre filas y columnas.</p>
+<p>El número máximo de dimensiones que el análisis puede extraer es igual al menor número de categorías de cualquiera de las dos variables (fila o columna) menos uno. Sin embargo, en la práctica, dos o tres dimensiones suelen ser suficientes para capturar la mayoría de la asociación entre las variables. Estas dimensiones son conceptualmente análogas a las componentes principales en el PCA, proporcionando un resumen compacto y visual de la estructura de los datos.</p>
+<p>El análisis de correspondencias se puede aplicar a dos tipos principales de tablas de datos. El primero es el análisis de correspondencias simples, que se utiliza para tablas que contienen las frecuencias de las modalidades de dos variables categóricas. El segundo es el análisis de correspondencias múltiples, que extiende el concepto para manejar múltiples variables categóricas simultáneamente, permitiendo el análisis de relaciones más complejas entre las categorías.</p>
+<p>En resumen, el análisis de correspondencias es una herramienta poderosa para descomponer la asociación entre dos variables categóricas en un número reducido de dimensiones, facilitando la interpretación de los datos y proporcionando una visión clara de las relaciones entre las categorías de las variables.</p>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<p>Consideremos la tabla de contingencias <code class="docutils literal notranslate"><span class="pre">example_df</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Color Cabello</th>
+      <th>Rubio(ru)</th>
+      <th>Rojo(r)</th>
+      <th>Medio(m)</th>
+      <th>Oscuro(o)</th>
+      <th>Negro(n)</th>
+      <th>Total_(fi.)</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>688</td>
+      <td>116</td>
+      <td>584</td>
+      <td>188</td>
+      <td>4</td>
+      <td>1580</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>326</td>
+      <td>38</td>
+      <td>241</td>
+      <td>110</td>
+      <td>3</td>
+      <td>718</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>343</td>
+      <td>84</td>
+      <td>909</td>
+      <td>412</td>
+      <td>26</td>
+      <td>1774</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>98</td>
+      <td>48</td>
+      <td>403</td>
+      <td>681</td>
+      <td>85</td>
+      <td>1315</td>
+    </tr>
+    <tr>
+      <th>Total_(f.j)</th>
+      <td>1455</td>
+      <td>286</td>
+      <td>2137</td>
+      <td>1391</td>
+      <td>118</td>
+      <td>5387</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En esta tabla las filas <span class="math notranslate nohighlight">\((i = 1, 2, 3, 4)\)</span>
+son el color de los ojos y las columnas <span class="math notranslate nohighlight">\((j = 1, 2, 3, 4, 5)\)</span> el color del cabello. Para encontrar la representación más adecuada de estos datos, es necesario <em><strong>comparar las filas</strong></em> y <em><strong>las columnas de la tabla</strong></em>. Tal comparación implica hacer uso de una medida de distancia apropiada. El análisis de correspondencias permite describir las proximidades existentes entre los perfiles, color del cabello (perfil fila) y color de los ojos (perfil columna), de acuerdo con la partición que se haga de los individuos, sea
+por filas o por columnas.</p>
+<p>La matriz de densidades o frecuencias relativas <span class="math notranslate nohighlight">\((f_{ij})\)</span> y las densidades marginales de filas <span class="math notranslate nohighlight">\((fi.)\)</span> y columnas <span class="math notranslate nohighlight">\((f.j)\)</span> son las siguientes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example_dfi</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Rubio(ru)</th>
+      <th>Rojo(r)</th>
+      <th>Medio(m)</th>
+      <th>Oscuro(o)</th>
+      <th>Negro(n)</th>
+      <th>Total_(fi.)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>12.77</td>
+      <td>2.15</td>
+      <td>10.84</td>
+      <td>3.49</td>
+      <td>0.07</td>
+      <td>29.33</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>6.05</td>
+      <td>0.71</td>
+      <td>4.47</td>
+      <td>2.04</td>
+      <td>0.06</td>
+      <td>13.33</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>6.37</td>
+      <td>1.56</td>
+      <td>16.87</td>
+      <td>7.65</td>
+      <td>0.48</td>
+      <td>32.93</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>1.82</td>
+      <td>0.89</td>
+      <td>7.48</td>
+      <td>12.64</td>
+      <td>1.58</td>
+      <td>24.41</td>
+    </tr>
+    <tr>
+      <th>Total_(f.j)</th>
+      <td>27.01</td>
+      <td>5.31</td>
+      <td>39.67</td>
+      <td>25.82</td>
+      <td>2.19</td>
+      <td>100.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Los números son dados como porcentaje y representan el <span class="math notranslate nohighlight">\(f_{ij}*100\%\)</span>. Los números a la derecha de
+cada fila, presentan las densidades marginales, como el porcentaje <span class="math notranslate nohighlight">\(fi.*100\%\)</span>, y la última fila representa las densidades marginales por columna <span class="math notranslate nohighlight">\(f.j*100\%\)</span>. En
+resumen, la mayoría de las personas tienen el color de los ojos medio <span class="math notranslate nohighlight">\((32.93\%)\)</span> y el color de cabello más común es también medio <span class="math notranslate nohighlight">\((39.67\%)\)</span>.</p>
+</section>
+<section id="representacion-geometrica-de-una-tabla-de-contingencia">
+<h2><em><strong>Representación geometrica de una tabla de contingencia</strong></em>.<a class="headerlink" href="#representacion-geometrica-de-una-tabla-de-contingencia" title="Link to this heading">#</a></h2>
+<p>En una tabla de contingencia (matriz de datos) pueden considerarse dos espacios, el espacio fila <span class="math notranslate nohighlight">\((\mathbb R^{p})\)</span> o el espacio columna <span class="math notranslate nohighlight">\((\mathbb R^{n})\)</span>. Para el ejemplo anterior, el espacio <em>color de los ojos</em> <span class="math notranslate nohighlight">\((\mathbb R^{5})\)</span> y el espacio <em>color del cabello</em> <span class="math notranslate nohighlight">\((\mathbb R^{4})\)</span>, respectivamente.</p>
+<p>La matriz de datos <span class="math notranslate nohighlight">\(X\)</span>, tiene <span class="math notranslate nohighlight">\(n\)</span>–filas y <span class="math notranslate nohighlight">\(p\)</span>–columnas, <span class="math notranslate nohighlight">\(n_{ij}\)</span> representa el numero de individuos de la fila <span class="math notranslate nohighlight">\(i\)</span> y la columna <span class="math notranslate nohighlight">\(j\)</span>. En el ejemplo, <span class="math notranslate nohighlight">\(n_{ij}\)</span> es el numero de individuos con el color de los ojos <span class="math notranslate nohighlight">\(i\)</span> y color del cabello <span class="math notranslate nohighlight">\(j\)</span>.
+El numero total de individuos por fila es la sumatoria por fila, así mismo será para el total de individuos por columna.</p>
+<p><em><strong>Perfil fila.</strong></em></p>
+<p>Las densidades condicionales por fila son llamadas perfiles fila.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pf_row</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Color Cabello</th>
+      <th>Rubio(ru)</th>
+      <th>Rojo(r)</th>
+      <th>Medio(m)</th>
+      <th>Oscuro(o)</th>
+      <th>Negro(n)</th>
+      <th>Total_(fi.)</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>0.435443</td>
+      <td>0.073418</td>
+      <td>0.369620</td>
+      <td>0.118987</td>
+      <td>0.002532</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>0.454039</td>
+      <td>0.052925</td>
+      <td>0.335655</td>
+      <td>0.153203</td>
+      <td>0.004178</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>0.193348</td>
+      <td>0.047351</td>
+      <td>0.512401</td>
+      <td>0.232244</td>
+      <td>0.014656</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>0.074525</td>
+      <td>0.036502</td>
+      <td>0.306464</td>
+      <td>0.517871</td>
+      <td>0.064639</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>Total_(f.j)</th>
+      <td>0.270095</td>
+      <td>0.053091</td>
+      <td>0.396696</td>
+      <td>0.258214</td>
+      <td>0.021905</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La tabla anterior muestra la distribución del <em><strong>color del cabello</strong></em> por cada uno de los <em><strong>colores de los ojos</strong></em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot perfil fila.</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">pf_row</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="n">X_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">X_axis</span><span class="p">,</span><span class="n">temp</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Color de ojos&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perfiles fila&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c892e81c88a2b715a2b3b1bc0cd8a319328a301964e304756b6d66e0e609105d.png" src="../_images/c892e81c88a2b715a2b3b1bc0cd8a319328a301964e304756b6d66e0e609105d.png" />
+</div>
+</div>
+<p><em><strong>Perfil columna.</strong></em></p>
+<p>Las densidades condicionales por columna son llamadas perfiles columna.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pf_col</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Color Cabello</th>
+      <th>Rubio(ru)</th>
+      <th>Rojo(r)</th>
+      <th>Medio(m)</th>
+      <th>Oscuro(o)</th>
+      <th>Negro(n)</th>
+      <th>Total_(fi.)</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>0.472852</td>
+      <td>0.405594</td>
+      <td>0.273280</td>
+      <td>0.135155</td>
+      <td>0.033898</td>
+      <td>0.293299</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>0.224055</td>
+      <td>0.132867</td>
+      <td>0.112775</td>
+      <td>0.079080</td>
+      <td>0.025424</td>
+      <td>0.133284</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>0.235739</td>
+      <td>0.293706</td>
+      <td>0.425363</td>
+      <td>0.296190</td>
+      <td>0.220339</td>
+      <td>0.329311</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>0.067354</td>
+      <td>0.167832</td>
+      <td>0.188582</td>
+      <td>0.489576</td>
+      <td>0.720339</td>
+      <td>0.244106</td>
+    </tr>
+    <tr>
+      <th>Total_(f.j)</th>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La tabla anterior suministra el perfil columna, el cual muestra la distribución del <em><strong>color de ojos</strong></em> manteniendo constante el <em><strong>color del cabello</strong></em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot perfil columna.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">pf_col</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="n">X_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="c1">#</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">X_axis</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">],</span><span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">X_axis</span><span class="p">,</span><span class="n">temp</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Color de cabello&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perfiles columna&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2c3a814ac662b0da7b5af9745b7b6debcfc8a9f003affc2053d68215fb469a59.png" src="../_images/2c3a814ac662b0da7b5af9745b7b6debcfc8a9f003affc2053d68215fb469a59.png" />
+</div>
+</div>
+<p>Para el perfil color del cabello (plot anterior), se encuentra una alta <em><strong>semejanza entre los perfiles
+cabello rubio y rojo</strong></em>, además de una <em><strong>semejanza entre los cabellos oscuro y negro</strong></em>; el perfil asociado con <em><strong>cabello medio</strong></em> es bastante diferente de los demás.</p>
+<ul class="simple">
+<li><p>Los perfiles de fila y columna pueden compararse con las distribuciones marginales de las columnas y filas, ponderadas por sus respectivos pesos, para evaluar su grado de desviación respecto a lo esperado bajo la independencia. Esta comparación permite juzgar en qué medida los perfiles se apartan de la independencia. Si los perfiles de fila y columna son similares a sus respectivas distribuciones marginales, esto sugiere que no hay una fuerte asociación entre las filas y columnas, y que los datos se aproximan a un escenario de independencia. Por otro lado, si los perfiles difieren significativamente de las distribuciones marginales, esto indica una desviación considerable de la independencia, revelando una asociación más marcada entre las categorías de las filas y columnas.</p></li>
+</ul>
+</section>
+<section id="semejanza-entre-perfiles">
+<h2><em><strong>Semejanza entre perfiles.</strong></em><a class="headerlink" href="#semejanza-entre-perfiles" title="Link to this heading">#</a></h2>
+<p>Una vez que se han definido las dos nubes de puntos, espacio fila <span class="math notranslate nohighlight">\((\mathbb R^{p})\)</span> y espacio columna <span class="math notranslate nohighlight">\((\mathbb R^{n})\)</span>, se debe decidir como medir la distancia entre ellos. En el análisis de correspondencias, la semejanza entre dos filas (o entre dos columnas) está dada por la distancia entre sus perfiles. Esta distancia es conocida con el nombre de distancia <em>ji-cuadrado</em> y se nota por <span class="math notranslate nohighlight">\(χ^2\)</span>.</p>
+<ol class="arabic simple">
+<li><p>La distancia entre dos perfiles fila <span class="math notranslate nohighlight">\(i\)</span> y <span class="math notranslate nohighlight">\(i'\)</span> esta dada por:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[d^2(i,i')=∑_{j=1}^p\frac{1}{f_{.j}}\left(\frac{f_{ij}}{f_{i.}}-\frac{f_{i'j}}{f_{i'.}}\right)\]</div>
+<ol class="arabic simple" start="2">
+<li><p>La distancia entre dos perfiles columna <span class="math notranslate nohighlight">\(j\)</span> y <span class="math notranslate nohighlight">\(j'\)</span> esta dada por:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[d^2(j,j')=∑_{i=1}^n\frac{1}{f_{i.}}\left(\frac{f_{ij}}{f_{.j}}-\frac{f_{ij'}}{f_{.j'}}\right)\]</div>
+<p>Las distancias anteriores comparan los histogramas por cada para de filas o columnas. En esta media se da más “importancia” a las categorías o modalidades con menor frecuencia y menos “importancia” a las que tengan alta frecuencia. Las distancias anteriores se traducen en que el AC da prioridad a las modalidades raras, por cuanto éstas, por su escasez, son más diferenciadoras que las otras.</p>
+<p>En el análisis de correspondencias (AC), la varianza o inercia se refiere a una medida de dispersión de los perfiles (tanto de filas como de columnas) alrededor de sus respectivos centroides.</p>
+<p>La inercia total en AC es análoga a la varianza total en el análisis de componentes principales (ACP), pero se calcula utilizando la distancia ji-cuadrado. Matemáticamente, la inercia total se define como:
+$<span class="math notranslate nohighlight">\(I = \sum_{i=1}^n \sum_{j=1}^p \frac{(f_{ij} - f_{i.}f_{.j})^2}{f_{i.}f_{.j}}\)</span>$
+donde:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f_{ij}\)</span> es la frecuencia relativa en la celda <span class="math notranslate nohighlight">\((i,j)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f_{i.}\)</span> es la frecuencia marginal de la fila <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f_{.j}\)</span> es la frecuencia marginal de la columna <span class="math notranslate nohighlight">\(j\)</span></p></li>
+</ul>
+<p>La inercia mide la dispersión de los perfiles alrededor del perfil promedio (centroide). Es una medida ponderada de la asociación entre filas y columnas de la tabla de contingencia. Un valor alto de inercia indica una fuerte asociación entre las categorías de filas y columnas. La inercia total está directamente relacionada con la estadística ji-cuadrado de Pearson:
+$<span class="math notranslate nohighlight">\(I = \frac{\chi^2}{N}\)</span><span class="math notranslate nohighlight">\(
+donde \)</span>N<span class="math notranslate nohighlight">\( es el total de observaciones y \)</span>\chi^2$ es la estadística ji-cuadrado.</p>
+<p>En el análisis de correspondencias, la “varianza” o “inercia” se refiere a la dispersión de los perfiles (tanto de filas como de columnas) en el espacio multidimensional definido por la distancia ji-cuadrado. La reducción de dimensionalidad busca capturar la mayor parte de esta inercia en un número reducido de dimensiones ortogonales, permitiendo así una representación visual y una interpretación más sencilla de las asociaciones entre categorías.</p>
+</section>
+<section id="ajuste-de-las-dos-nubes-de-puntos">
+<h2><em><strong>Ajuste de las dos nubes de puntos.</strong></em><a class="headerlink" href="#ajuste-de-las-dos-nubes-de-puntos" title="Link to this heading">#</a></h2>
+<p>El problema consiste en encontrar un subespacio <span class="math notranslate nohighlight">\((\mathbb R^{q})\)</span> de dimensión menor que
+el espacio fila <span class="math notranslate nohighlight">\((\mathbb R^{p})\)</span>, que conserve el máximo de la información de la nube de puntos original; una medida de la cantidad de información es la
+cantidad de varianza o inercia retenida por el subespacio <span class="math notranslate nohighlight">\((\mathbb R^{q})\)</span>. De la misma forma que el PCA, el AC procede a buscar una sucesión de ejes ortogonales
+sobre los cuales la nube de puntos es proyectada.</p>
+<p>De manera completamente análoga se hace para el caso de las filas.</p>
+<section id="puntos-extremos-y-la-composicion-de-su-perfil">
+<h3><em><strong>Puntos Extremos y la Composición de su Perfil</strong></em><a class="headerlink" href="#puntos-extremos-y-la-composicion-de-su-perfil" title="Link to this heading">#</a></h3>
+<p>En el Análisis de Correspondencias (AC), los puntos en el gráfico factorial representan perfiles que pueden corresponder a las filas o columnas de la tabla de contingencia. La posición de estos puntos en el espacio factorial nos proporciona información clave sobre cómo se relacionan entre sí y con las dimensiones principales del análisis.</p>
+<ul class="simple">
+<li><p><em><strong>Posición Extrema de los Puntos:</strong></em> Cuando un punto aparece en una posición extrema, es decir, lejos del origen en el gráfico factorial, esto indica que el perfil correspondiente tiene una composición particular o distintiva en comparación con otros perfiles. Un perfil extremo se caracteriza por tener valores que lo diferencian significativamente de los demás, lo que implica que es un perfil único en el contexto del análisis.</p></li>
+<li><p><em><strong>Seguridad en la Composición del Perfil:</strong></em> Cuanto más extremo sea un punto, mayor será la seguridad sobre la precisión con la que se ha capturado la composición del perfil en el espacio factorial. Esto se debe a que los puntos extremos suelen estar bien representados por las primeras dimensiones, que son las que explican la mayor parte de la inercia (varianza) en los datos. Un punto extremo no es una mezcla de otros perfiles y, por tanto, su posición refleja fielmente su contribución a las dimensiones principales.</p></li>
+</ul>
+</section>
+<section id="relaciones-cuasi-baricentricas-en-la-representacion-de-filas-y-columnas">
+<h3><em><strong>Relaciones Cuasi-Baricéntricas en la Representación de Filas y Columnas</strong></em><a class="headerlink" href="#relaciones-cuasi-baricentricas-en-la-representacion-de-filas-y-columnas" title="Link to this heading">#</a></h3>
+<p>En el Análisis de Correspondencias, tanto las filas como las columnas de la tabla de contingencia se representan simultáneamente en el mismo gráfico factorial, permitiendo una interpretación conjunta de sus relaciones.</p>
+<ul class="simple">
+<li><p><em><strong>Relaciones Cuasi-Baricéntricas:</strong></em> Aunque las filas y las columnas pertenecen a espacios diferentes (ya que las filas son perfiles en un espacio y las columnas en otro), el AC permite proyectarlas en un espacio común de forma que se pueden interpretar sus relaciones de manera significativa. Esta relación se conoce como cuasi-baricéntrica, lo que significa que, aunque los puntos de fila y columna no están en el mismo espacio de datos original, su proximidad en el gráfico puede interpretarse como una indicación de asociación.</p></li>
+<li><p><em><strong>Distancia entre Puntos de Filas y Columnas:</strong></em> Es importante destacar que no tiene sentido interpretar la distancia métrica entre un punto de fila y un punto de columna en el gráfico factorial, ya que provienen de espacios diferentes y la matriz de datos original no es simétrica. Por lo tanto, la distancia entre una fila y una columna no refleja una relación métrica directa entre esos puntos.</p></li>
+<li><p><em><strong>Interpretación de la Proximidad:</strong></em> Sin embargo, la proximidad de un punto de fila a los puntos de columna (y viceversa) sí tiene un significado interpretativo útil. Por ejemplo, si un punto de fila está cerca de un punto de columna, esto sugiere que el perfil de esa fila está asociado a esa columna, es decir, que tiene valores altos en esa columna. Aunque no se debe interpretar la distancia como una métrica precisa, la posición relativa de estos puntos ayuda a entender cómo se relacionan las filas y columnas en el contexto del análisis.</p></li>
+</ul>
+</section>
+</section>
+<section id="interpretacion-de-los-ejes-factoriales">
+<h2><em><strong>Interpretacion de los ejes factoriales.</strong></em><a class="headerlink" href="#interpretacion-de-los-ejes-factoriales" title="Link to this heading">#</a></h2>
+<p>El problema central, una vez se ha reducido la dimensionalidad del conjunto de datos, es la asignación de un nombre a los primeros ejes factoriales, para interpretar las proyecciones sobre los planos factoriales, junto con la superposición, de acuerdo con las relaciones de transición.</p>
+<section id="contribucion-absoluta-de-cada-eje-a-la-variabilidad-total">
+<h3>1. <em><strong>Contribución absoluta de cada eje a la variabilidad total.</strong></em><a class="headerlink" href="#contribucion-absoluta-de-cada-eje-a-la-variabilidad-total" title="Link to this heading">#</a></h3>
+<p>La contribución absoluta de un perfil a un eje factorial expresa la proporción de la varianza (inercia) que ese perfil aporta a la varianza “retenida” por dicho eje. A través de estas contribuciones absolutas, se puede identificar qué perfiles son responsables de la construcción de un factor. Esto indica en qué medida un perfil <span class="math notranslate nohighlight">\(i\)</span> contribuye a la inercia del eje.</p>
+<p>Para interpretar un eje, es importante identificar los perfiles con mayor contribución, sin perder de vista que la contribución media de un perfil <span class="math notranslate nohighlight">\(i\)</span> es <span class="math notranslate nohighlight">\(1/n\)</span>, donde  <span class="math notranslate nohighlight">\(n\)</span> es el número total de perfiles (filas o columnas). Se debe prestar atención a los signos de las coordenadas respecto al eje, ya que estos también influyen en la interpretación.</p>
+</section>
+<section id="cos2-cosenos-cuadrados-y-contribucion-de-los-perfiles">
+<h3><em><strong>2. Cos2 (Cosenos Cuadrados) y Contribución de los Perfiles.</strong></em><a class="headerlink" href="#cos2-cosenos-cuadrados-y-contribucion-de-los-perfiles" title="Link to this heading">#</a></h3>
+<p>Los cosenos cuadrados permiten medir la calidad de la representación de los puntos en el espacio definido por los primeros ejes factoriales y la detección de puntos mal representados en los ejes seleccionados. <em><strong>Valores de estos cosenos al cuadrado próximos a 1</strong></em> dan cuenta de puntos que influyen o están asociados altamente con el respectivo eje. Por supuesto, valores bajos indican una contribución “pobre” del eje en la posición del punto.</p>
+</section>
+</section>
+<section id="retomando-el-ejemplo-1">
+<h2><em><strong>Retomando el Ejemplo 1.</strong></em><a class="headerlink" href="#retomando-el-ejemplo-1" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz X para AC.</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Rubio(ru)&quot;</span><span class="p">,</span> <span class="s2">&quot;Rojo(r)&quot;</span><span class="p">,</span> <span class="s2">&quot;Medio(m)&quot;</span><span class="p">,</span><span class="s2">&quot;Oscuro(o)&quot;</span><span class="p">,</span> <span class="s2">&quot;Negro(n)&quot;</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Claros(C)&quot;</span><span class="p">,</span><span class="s2">&quot;Azules(A)&quot;</span><span class="p">,</span> <span class="s2">&quot;Medio(M)&quot;</span><span class="p">,</span><span class="s2">&quot;Oscuros(O)&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Color Cabello&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;Color Ojos&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Color Cabello</th>
+      <th>Rubio(ru)</th>
+      <th>Rojo(r)</th>
+      <th>Medio(m)</th>
+      <th>Oscuro(o)</th>
+      <th>Negro(n)</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>688</td>
+      <td>116</td>
+      <td>584</td>
+      <td>188</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>326</td>
+      <td>38</td>
+      <td>241</td>
+      <td>110</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>343</td>
+      <td>84</td>
+      <td>909</td>
+      <td>412</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>98</td>
+      <td>48</td>
+      <td>403</td>
+      <td>681</td>
+      <td>85</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prueba chi2 de indepencia.</span>
+<span class="n">x2_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El p-valor de la prueba de independencia es: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p_value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El p-valor de la prueba de independencia es: 0.000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Este <span class="math notranslate nohighlight">\(p\)</span>-valor indica que NO hay independencia entre las 2 variables, es decir, hay dependencia estadísticamente significativa entre ambas variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Instanciamos un objeto prince.CA()</span>
+<span class="n">ca</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">CA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Ajustamos el CA</span>
+<span class="n">ca</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Es importante comentar que se examinan los valores propios (<code class="docutils literal notranslate"><span class="pre">eigenvalues</span></code>) para determinar el número de ejes a considerar. Los valores propios y la proporción de varianzas retenidas por los diferentes ejes se pueden extraer usando el atributo <code class="docutils literal notranslate"><span class="pre">eigenvalues_summary</span></code> del objeto de <code class="docutils literal notranslate"><span class="pre">CA</span></code> de prince</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Veamos los eigenvalores, varianza y varianza acumulada.</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">eigenvalues_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eigenvalue</th>
+      <th>% of variance</th>
+      <th>% of variance (cumulative)</th>
+    </tr>
+    <tr>
+      <th>component</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.199</td>
+      <td>86.56%</td>
+      <td>86.56%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.030</td>
+      <td>13.07%</td>
+      <td>99.63%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.001</td>
+      <td>0.37%</td>
+      <td>100.00%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La tabla anterior indica que con la primera dimensión se reúne el <span class="math notranslate nohighlight">\(86.6\%\)</span> de la varianza y que con la segunda dimensión se reúne casi toda su variabilidad; es
+decir, <span class="math notranslate nohighlight">\(99.7\%\)</span>.</p>
+<p><em><strong>Nota:</strong></em> Los valores propios se pueden utilizar para determinar el número de ejes a retener. No existe una “regla general” para elegir el número de dimensiones a conservar para la interpretación de los datos. Depende de la pregunta de investigación y la necesidad del investigador. Por ejemplo, se puede estar satisfecho con el 80% de la variación total explicada, así que se pueden usar la cantidad de dimensiones necesarias para lograrlo.</p>
+<section id="informacion-espacio-fila">
+<h3><em><strong>Información espacio fila.</strong></em><a class="headerlink" href="#informacion-espacio-fila" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contribuciones fila.</span>
+<span class="n">contrib</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">row_contributions_</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">contrib</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&quot;Dim1&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s2">&quot;Dim2&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s2">&quot;Dim3&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>28.590673</td>
+      <td>7.628833</td>
+      <td>34.450625</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>10.719176</td>
+      <td>12.120781</td>
+      <td>63.831659</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>0.186754</td>
+      <td>65.700687</td>
+      <td>1.181429</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>60.503397</td>
+      <td>14.549698</td>
+      <td>0.536287</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em><strong>Nota:</strong></em></p>
+<ul class="simple">
+<li><p>Las filas que más contribuyen a <span class="math notranslate nohighlight">\(Dim1\)</span> y <span class="math notranslate nohighlight">\(Dim2\)</span> son las más importantes para explicar la variabilidad en el conjunto de datos.</p></li>
+<li><p>Las filas que no contribuyen mucho a ninguna dimensión o que contribuyen a las últimas dimensiones son
+menos importante.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot contribuciones.</span>
+<span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1c4230bb15f73cf607d27528ae78fe5ed661de898f82783c00b8d29eff0e22c6.png" src="../_images/1c4230bb15f73cf607d27528ae78fe5ed661de898f82783c00b8d29eff0e22c6.png" />
+</div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Note que en el primer eje los perfiles fila que más contribuyen en su representación son los <em>colores de ojos</em> Oscuros y Claros.</p></li>
+<li><p>Para el segundo eje quien más contribuye es el <em>color de ojos</em> Medio.</p></li>
+<li><p>El <em>color de ojos</em> Azul no contribuye de manera significativa en la construcción de los 2 primeros ejes.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos2 fila.</span>
+<span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>0.956489</td>
+      <td>0.038539</td>
+      <td>0.004972</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>0.835815</td>
+      <td>0.142715</td>
+      <td>0.021470</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>0.018467</td>
+      <td>0.981029</td>
+      <td>0.000504</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>0.964924</td>
+      <td>0.035039</td>
+      <td>0.000037</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Las coordenadas para la “reconstrucción” de la matriz <span class="math notranslate nohighlight">\(X\)</span>
+se obtienen mediante:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coordenadas perfiles fila.</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">row_coordinates</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+    <tr>
+      <th>Color Ojos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Claros(C)</th>
+      <td>-0.440708</td>
+      <td>-0.088463</td>
+      <td>-0.031773</td>
+    </tr>
+    <tr>
+      <th>Azules(A)</th>
+      <td>-0.400300</td>
+      <td>-0.165411</td>
+      <td>0.064158</td>
+    </tr>
+    <tr>
+      <th>Medio(M)</th>
+      <td>0.033614</td>
+      <td>0.245002</td>
+      <td>0.005553</td>
+    </tr>
+    <tr>
+      <th>Oscuros(O)</th>
+      <td>0.702739</td>
+      <td>-0.133914</td>
+      <td>-0.004345</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coordenadas perfiles columna.</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">column_coordinates</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+    <tr>
+      <th>Color Cabello</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Rubio(ru)</th>
+      <td>-0.543995</td>
+      <td>-0.173844</td>
+      <td>0.012522</td>
+    </tr>
+    <tr>
+      <th>Rojo(r)</th>
+      <td>-0.233261</td>
+      <td>-0.048279</td>
+      <td>-0.118055</td>
+    </tr>
+    <tr>
+      <th>Medio(m)</th>
+      <td>-0.042024</td>
+      <td>0.208304</td>
+      <td>0.003236</td>
+    </tr>
+    <tr>
+      <th>Oscuro(o)</th>
+      <td>0.588709</td>
+      <td>-0.103950</td>
+      <td>0.010116</td>
+    </tr>
+    <tr>
+      <th>Negro(n)</th>
+      <td>1.094388</td>
+      <td>-0.286437</td>
+      <td>-0.046136</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em><strong>Comentario:</strong></em></p>
+<p>Como <span class="math notranslate nohighlight">\(cos2\)</span> mide la calidad de la representación de los perfiles fila (en este caso) en los primeros ejes factoriales, tenemos en todos los perfiles una buena representación.</p>
+</section>
+<section id="informacion-espacio-columna">
+<h3><em><strong>Información espacio columna</strong></em><a class="headerlink" href="#informacion-espacio-columna" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contribuciones columna</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">column_contributions_</span><span class="o">*</span><span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Rubio(ru)</th>
+      <td>40.116171</td>
+      <td>27.130778</td>
+      <td>4.927568</td>
+    </tr>
+    <tr>
+      <th>Rojo(r)</th>
+      <td>1.449827</td>
+      <td>0.411300</td>
+      <td>86.089647</td>
+    </tr>
+    <tr>
+      <th>Medio(m)</th>
+      <td>0.351615</td>
+      <td>57.210800</td>
+      <td>0.483464</td>
+    </tr>
+    <tr>
+      <th>Oscuro(o)</th>
+      <td>44.915260</td>
+      <td>9.273788</td>
+      <td>3.074599</td>
+    </tr>
+    <tr>
+      <th>Negro(n)</th>
+      <td>13.167126</td>
+      <td>5.973333</td>
+      <td>5.424723</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot contribuciones columna</span>
+<span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/65a81308cc126430581389a485709b9b320cd2a42f64aa096e9131d8794c231d.png" src="../_images/65a81308cc126430581389a485709b9b320cd2a42f64aa096e9131d8794c231d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos2 perfiles columns</span>
+<span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+    <tr>
+      <th>Color Cabello</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Rubio(ru)</th>
+      <td>0.906902</td>
+      <td>0.092617</td>
+      <td>0.000481</td>
+    </tr>
+    <tr>
+      <th>Rojo(r)</th>
+      <td>0.769833</td>
+      <td>0.032978</td>
+      <td>0.197188</td>
+    </tr>
+    <tr>
+      <th>Medio(m)</th>
+      <td>0.039100</td>
+      <td>0.960668</td>
+      <td>0.000232</td>
+    </tr>
+    <tr>
+      <th>Oscuro(o)</th>
+      <td>0.969487</td>
+      <td>0.030227</td>
+      <td>0.000286</td>
+    </tr>
+    <tr>
+      <th>Negro(n)</th>
+      <td>0.934334</td>
+      <td>0.064005</td>
+      <td>0.001660</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Note que se pueden hacer comentarios similares que en el caso del espacio fila. En particular el <em>color de cabello</em> queda bien presentado en las 2 dimensiones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#ca.plot(</span>
+<span class="c1">#    X,</span>
+<span class="c1">#    x_component=0,</span>
+<span class="c1">#    y_component=1,</span>
+<span class="c1">#    show_row_markers=True,</span>
+<span class="c1">#    show_column_markers=True,</span>
+<span class="c1">#    show_row_labels=False,</span>
+<span class="c1">#    show_column_labels=False</span>
+<span class="c1">#).show()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_biplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>Comentarios finales:</strong></em></p>
+<ol class="arabic simple">
+<li><p>La primera dimensión está relacionada con el <em><strong>color
+del cabello</strong></em>, variando, de izquierda a derecha, desde el rubio hasta el negro.</p></li>
+<li><p>Se puede apreciar que los datos referentes a los ojos siguen un “patrón” similar al del cabello, con colores oscuros a la derecha y claros a la izquierda.</p></li>
+<li><p>Los puntos para <em><strong>azul</strong></em>, <em><strong>rubio</strong></em> están razonablemente próximos.</p></li>
+</ol>
+<p><em><strong>En resumen, la dirección del color es de izquierda a derecha, y va de claro a oscuro; tanto para el cabello como para los ojos.</strong></em></p>
+</section>
+</section>
+<section id="ejemplo-2">
+<h2><em><strong>Ejemplo 2.</strong></em><a class="headerlink" href="#ejemplo-2" title="Link to this heading">#</a></h2>
+<p>Los siguientes datos son una tabla de 1744 registros que contiene 13 tareas domésticas y su reparto en la pareja:</p>
+<ul class="simple">
+<li><p>La primera columna son las diferentes tareas.</p></li>
+<li><p>La segunda columna contiene quien realiza dicha tarea: <code class="docutils literal notranslate"><span class="pre">Wife</span></code> (solo la esposa), <code class="docutils literal notranslate"><span class="pre">Alternating</span></code> (alternados), <code class="docutils literal notranslate"><span class="pre">Husband</span></code> (solo el esposo) o <code class="docutils literal notranslate"><span class="pre">Jointly</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importamos el dataset</span>
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/&quot;</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;housetasks.csv&quot;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span><span class="n">file_name</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">,</span><span class="s2">&quot;who&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- task : [&#39;Laundry&#39; &#39;Main_meal&#39; &#39;Dinner&#39; &#39;Breakfeast&#39; &#39;Tidying&#39; &#39;Dishes&#39; &#39;Shopping&#39;
+ &#39;Official&#39; &#39;Driving&#39; &#39;Finances&#39; &#39;Insurance&#39; &#39;Repairs&#39; &#39;Holidays&#39;] 
+
+- who : [&#39;Wife&#39; &#39;Alternating&#39; &#39;Husband&#39; &#39;Jointly&#39;] 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tabla de contingencias.</span>
+<span class="n">df_crosstab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;who&quot;</span><span class="p">])</span>
+<span class="n">df_crosstab</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>who</th>
+      <th>Alternating</th>
+      <th>Husband</th>
+      <th>Jointly</th>
+      <th>Wife</th>
+    </tr>
+    <tr>
+      <th>task</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Breakfeast</th>
+      <td>36</td>
+      <td>15</td>
+      <td>7</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>Dinner</th>
+      <td>11</td>
+      <td>7</td>
+      <td>13</td>
+      <td>77</td>
+    </tr>
+    <tr>
+      <th>Dishes</th>
+      <td>24</td>
+      <td>4</td>
+      <td>53</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>Driving</th>
+      <td>51</td>
+      <td>75</td>
+      <td>3</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>Finances</th>
+      <td>13</td>
+      <td>21</td>
+      <td>66</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>Holidays</th>
+      <td>1</td>
+      <td>6</td>
+      <td>153</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Insurance</th>
+      <td>1</td>
+      <td>53</td>
+      <td>77</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>Laundry</th>
+      <td>14</td>
+      <td>2</td>
+      <td>4</td>
+      <td>156</td>
+    </tr>
+    <tr>
+      <th>Main_meal</th>
+      <td>20</td>
+      <td>5</td>
+      <td>4</td>
+      <td>124</td>
+    </tr>
+    <tr>
+      <th>Official</th>
+      <td>46</td>
+      <td>23</td>
+      <td>15</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>Repairs</th>
+      <td>3</td>
+      <td>160</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Shopping</th>
+      <td>23</td>
+      <td>9</td>
+      <td>55</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>Tidying</th>
+      <td>11</td>
+      <td>1</td>
+      <td>57</td>
+      <td>53</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Heatmap tabla de contingencias.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_crosstab</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Wife&quot;</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.0f&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7288769265ecc395255f072a2ece32f935efcd95e38cbb64ec74af2c1f148494.png" src="../_images/7288769265ecc395255f072a2ece32f935efcd95e38cbb64ec74af2c1f148494.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Se observa que las tareas de la casa (<code class="docutils literal notranslate"><span class="pre">Laundry</span></code> (lavandería), <code class="docutils literal notranslate"><span class="pre">Main_Meal</span></code> (comida principal) y <code class="docutils literal notranslate"><span class="pre">Dinner</span></code> (cena)) son realizadas con mayor frecuencia por
+la esposa.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Repairs</span></code> (reparaciones) y <code class="docutils literal notranslate"><span class="pre">Driving</span></code> (conducción) son realizadas predominantemente por el esposo.</p></li>
+<li><p>Los <code class="docutils literal notranslate"><span class="pre">Holidays</span></code> se asocian con más frecuencia a la columna <code class="docutils literal notranslate"><span class="pre">Jointly</span></code>.</p></li>
+</ul>
+<p>La prueba <span class="math notranslate nohighlight">\(\chi^{2}\)</span> de independencia se muestran a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Con scipy.</span>
+<span class="n">x2_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">df_crosstab</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El p-valor de la prueba es:&quot;</span><span class="p">,</span><span class="n">p_value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El p-valor de la prueba es: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dado el <span class="math notranslate nohighlight">\(p\)</span>-valor, y a una significancia <span class="math notranslate nohighlight">\(\alpha=0.05\)</span> se concluye que:</p>
+<p><em><strong>LAS TAREAS DEL HOGAR NO SON INDEPENDIENTES DE QUIEN LAS HACE.</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos y ajustamos un objeto CA de prince.</span>
+<span class="n">ca</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">CA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_crosstab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;prince.ca.CA at 0x78a7f9146cb0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Varianza retenida,</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">eigenvalues_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eigenvalue</th>
+      <th>% of variance</th>
+      <th>% of variance (cumulative)</th>
+    </tr>
+    <tr>
+      <th>component</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.543</td>
+      <td>48.69%</td>
+      <td>48.69%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.445</td>
+      <td>39.91%</td>
+      <td>88.60%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.127</td>
+      <td>11.40%</td>
+      <td>100.00%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Recuerde que la dimensión (<code class="docutils literal notranslate"><span class="pre">Dim1</span></code>) explica la mayor cantidad de variación, seguida por la dimensión 2 (<code class="docutils literal notranslate"><span class="pre">Dim2</span></code>) y así sucesivamente.</p></li>
+<li><p>Alrededor del 88,6% de la variación se explica por las dos primeras dimensiones. Este es un porcentaje aceptablemente alto.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráfico de sedimentación.</span>
+<span class="n">screeplot</span><span class="p">(</span><span class="n">ca</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>De acuerdo con el plot anterior, <em><strong>solo las dimensiones 1 y 2 deben usarse en la solución</strong></em>. La dimensión 3
+explica sólo el <span class="math notranslate nohighlight">\(11,4\%\)</span> de la inercia total y está por debajo de la cantidad:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{min(nrow,ncol)-1}=33,33\%\]</div>
+<p>que es el valor propio promedio.</p>
+<p>Con un <span class="math notranslate nohighlight">\(\%\)</span> tan bajo la dimensión 3, no debería ser considerada en un posterior análisis.</p>
+<p><em><strong>Nota:</strong></em> Tenga en cuenta que puede usar más de 2 dimensiones. Sin embargo, las dimensiones suplementarias no contribuyen significativamente a la interpretación de la naturaleza de la asociación entre las filas y columnas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Biplot.</span>
+<span class="n">ca_biplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Recuerdemos que la distancia entre cualquier punto de fila o columna da una medida de su similitud (o
+disimilitud). Los puntos de fila con un perfil similar se cierran en el mapa de factores. Lo mismo es válido para los puntos de columna.</p>
+<p>Este gráfico muestra que:</p>
+<ol class="arabic simple">
+<li><p>Las tareas del hogar, como la <code class="docutils literal notranslate"><span class="pre">Dinner</span></code>, <code class="docutils literal notranslate"><span class="pre">Breakfeast</span></code>, <code class="docutils literal notranslate"><span class="pre">laundry</span></code> , <code class="docutils literal notranslate"><span class="pre">Main_meal</span></code> son realizadas con mayor frecuencia por la esposa (<code class="docutils literal notranslate"><span class="pre">Wife</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Driving</span></code> y <code class="docutils literal notranslate"><span class="pre">Repairs</span></code> las realiza el marido (<code class="docutils literal notranslate"><span class="pre">Husband</span></code>).</p></li>
+<li><p>Tareas como <code class="docutils literal notranslate"><span class="pre">Holidays</span></code> y <code class="docutils literal notranslate"><span class="pre">Finances</span></code> se realizan de manera conjunta (<code class="docutils literal notranslate"><span class="pre">Jointly</span></code>).</p></li>
+</ol>
+<p>El siguiente paso para la interpretación es determinar qué perfiles fila y columna contribuyen más
+en la definición de las diferentes dimensiones retenidas en el modelo.</p>
+<section id="espacio-fila">
+<h3><em><strong>Espacio fila</strong></em><a class="headerlink" href="#espacio-fila" title="Link to this heading">#</a></h3>
+<p>Recuerde que debemos visualizar los puntos fila en busca de:</p>
+<ol class="arabic simple">
+<li><p>Sus contribuciones a las dimensiones <em><strong>(contribución absoluta)</strong></em>.</p></li>
+<li><p>Su calidad de representación en el mapa de factores <em><strong>(contribución relativa).</strong></em></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coordenadas fila.</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">row_coordinates</span><span class="p">(</span><span class="n">df_crosstab</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+    <tr>
+      <th>task</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Breakfeast</th>
+      <td>-0.508600</td>
+      <td>-0.452804</td>
+      <td>0.220405</td>
+    </tr>
+    <tr>
+      <th>Dinner</th>
+      <td>-0.692574</td>
+      <td>-0.308104</td>
+      <td>-0.207414</td>
+    </tr>
+    <tr>
+      <th>Dishes</th>
+      <td>-0.188964</td>
+      <td>0.441966</td>
+      <td>0.266949</td>
+    </tr>
+    <tr>
+      <th>Driving</th>
+      <td>0.741770</td>
+      <td>-0.653414</td>
+      <td>0.544458</td>
+    </tr>
+    <tr>
+      <th>Finances</th>
+      <td>0.270767</td>
+      <td>0.617868</td>
+      <td>0.034797</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Coordenadas de la fila</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">row_coordinates</span><span class="p">(</span><span class="n">df_crosstab</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_white&quot;</span><span class="p">,)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_hline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;pink&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>El gráfico anterior muestra las relaciones entre los puntos de fila:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Las filas con un perfil similar se agrupan.</p></li>
+<li><p>Las filas con correlación negativa se colocan en lados opuestos del origen del gráfico (cuadrantes opuestos).</p></li>
+<li><p>La distancia entre los puntos de fila y el origen mide la calidad de los puntos de fila en el mapa del factor. Los puntos de fila que están alejados del origen están bien representados en el mapa de factores.</p></li>
+</ol>
+<p>Algo que es frecuente que suceda es que no todos los puntos se muestran igual “de bien” representados en las dos dimensiones. Recordemos que el <span class="math notranslate nohighlight">\(cos2\)</span> mide el grado de asociación entre filas/columnas y un eje en particular, es decir, la calidad de la representación de las filas/columnas  en el mapa de factores.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+    <tr>
+      <th>task</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Breakfeast</th>
+      <td>0.504943</td>
+      <td>0.400230</td>
+      <td>0.094827</td>
+    </tr>
+    <tr>
+      <th>Dinner</th>
+      <td>0.776640</td>
+      <td>0.153703</td>
+      <td>0.069657</td>
+    </tr>
+    <tr>
+      <th>Dishes</th>
+      <td>0.118118</td>
+      <td>0.646153</td>
+      <td>0.235730</td>
+    </tr>
+    <tr>
+      <th>Driving</th>
+      <td>0.432019</td>
+      <td>0.335229</td>
+      <td>0.232752</td>
+    </tr>
+    <tr>
+      <th>Finances</th>
+      <td>0.160677</td>
+      <td>0.836670</td>
+      <td>0.002654</td>
+    </tr>
+    <tr>
+      <th>Holidays</th>
+      <td>0.029792</td>
+      <td>0.962360</td>
+      <td>0.007848</td>
+    </tr>
+    <tr>
+      <th>Insurance</th>
+      <td>0.576012</td>
+      <td>0.308802</td>
+      <td>0.115186</td>
+    </tr>
+    <tr>
+      <th>Laundry</th>
+      <td>0.739987</td>
+      <td>0.184552</td>
+      <td>0.075460</td>
+    </tr>
+    <tr>
+      <th>Main_meal</th>
+      <td>0.741603</td>
+      <td>0.232359</td>
+      <td>0.026038</td>
+    </tr>
+    <tr>
+      <th>Official</th>
+      <td>0.053045</td>
+      <td>0.066426</td>
+      <td>0.880529</td>
+    </tr>
+    <tr>
+      <th>Repairs</th>
+      <td>0.706736</td>
+      <td>0.225871</td>
+      <td>0.067393</td>
+    </tr>
+    <tr>
+      <th>Shopping</th>
+      <td>0.063654</td>
+      <td>0.747655</td>
+      <td>0.188691</td>
+    </tr>
+    <tr>
+      <th>Tidying</th>
+      <td>0.439812</td>
+      <td>0.535015</td>
+      <td>0.025172</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ol class="arabic simple">
+<li><p><em><strong>Los valores de <span class="math notranslate nohighlight">\(cos2\)</span> están comprendidos entre 0 y 1. La suma de <span class="math notranslate nohighlight">\(cos2\)</span> por filas en todas las dimensiones del CA es igual a uno.</strong></em></p></li>
+<li><p>Si un elemento de fila está bien representado por dos dimensiones, la suma de <span class="math notranslate nohighlight">\(cos2\)</span> es cercana a 1, para algunos elementos fila, se requieren más de 2 dimensiones para representar perfectamente los datos.</p></li>
+<li><p>La calidad de representación de una fila o columna en <span class="math notranslate nohighlight">\(n\)</span> dimensiones es simplemente la suma de las
+coseno cuadrado de esa fila o columna sobre las <span class="math notranslate nohighlight">\(n\)</span> dimensiones.</p></li>
+</ol>
+<p>Puede visualizar el <span class="math notranslate nohighlight">\(cos2\)</span> en los perfiles fila en todas las dimensiones, podemos generar el siguiente mapa de calor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">)[[</span><span class="s2">&quot;Dim1&quot;</span><span class="p">,</span><span class="s2">&quot;Dim2&quot;</span><span class="p">,</span> <span class="s2">&quot;Dim3&quot;</span><span class="p">]]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Dim1&quot;</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3a8814b9bf8cc6a27fef13485b32bc14be3cb84305010f6aaab2d0b0566e6615.png" src="../_images/3a8814b9bf8cc6a27fef13485b32bc14be3cb84305010f6aaab2d0b0566e6615.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>También podemos generar un barplot de los perfiles filas con el <span class="math notranslate nohighlight">\(cos2\)</span> con la función <code class="docutils literal notranslate"><span class="pre">plot_representation_cos2()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_bar_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span><span class="n">df_crosstab</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Notemos que todos los perfiles fila, salvo <code class="docutils literal notranslate"><span class="pre">Official</span></code>, están bien representados por las dos primeras dimensiones. Esto implica que la posición del punto correspondiente al elemento <code class="docutils literal notranslate"><span class="pre">Official</span></code> en el diagrama de dispersión debe ser interpretada con cierta cautela.</p>
+<p>La contribución de las filas (en %) a la definición de las dimensiones se extraer de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contrib</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">row_contributions_</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="s2">&quot;Dim1&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="s2">&quot;Dim2&quot;</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="s2">&quot;Dim3&quot;</span><span class="p">})</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">contrib</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Breakfeast</th>
+      <td>3.82</td>
+      <td>3.70</td>
+      <td>3.07</td>
+    </tr>
+    <tr>
+      <th>Dinner</th>
+      <td>5.47</td>
+      <td>1.32</td>
+      <td>2.10</td>
+    </tr>
+    <tr>
+      <th>Dishes</th>
+      <td>0.43</td>
+      <td>2.84</td>
+      <td>3.63</td>
+    </tr>
+    <tr>
+      <th>Driving</th>
+      <td>8.08</td>
+      <td>7.65</td>
+      <td>18.60</td>
+    </tr>
+    <tr>
+      <th>Finances</th>
+      <td>0.88</td>
+      <td>5.56</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th>Holidays</th>
+      <td>1.08</td>
+      <td>42.45</td>
+      <td>1.21</td>
+    </tr>
+    <tr>
+      <th>Insurance</th>
+      <td>6.15</td>
+      <td>4.02</td>
+      <td>5.25</td>
+    </tr>
+    <tr>
+      <th>Laundry</th>
+      <td>18.29</td>
+      <td>5.56</td>
+      <td>7.97</td>
+    </tr>
+    <tr>
+      <th>Main_meal</th>
+      <td>12.39</td>
+      <td>4.74</td>
+      <td>1.86</td>
+    </tr>
+    <tr>
+      <th>Official</th>
+      <td>0.52</td>
+      <td>0.80</td>
+      <td>36.94</td>
+    </tr>
+    <tr>
+      <th>Repairs</th>
+      <td>40.73</td>
+      <td>15.88</td>
+      <td>16.60</td>
+    </tr>
+    <tr>
+      <th>Shopping</th>
+      <td>0.18</td>
+      <td>2.52</td>
+      <td>2.22</td>
+    </tr>
+    <tr>
+      <th>Tidying</th>
+      <td>2.00</td>
+      <td>2.97</td>
+      <td>0.49</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><em><strong>Nota:</strong></em> Las variables de fila con mayor valor son las que más contribuyen a la definición de las dimensiones.</p>
+<p>Es posible crear un heatmap para resaltar la fila que más contribuye en cada dimensión:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">contrib</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;BuPu&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fd1ab6867255c8e58b77595cbc336f3e7021e4bb20326ec238fa842a7d60ca89.png" src="../_images/fd1ab6867255c8e58b77595cbc336f3e7021e4bb20326ec238fa842a7d60ca89.png" />
+</div>
+</div>
+<p>Podemos también plotear un barplot de las contribuciones de las filas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2dcf3edbd2672fc877b7a677d174076f9656fe4f3fec9a55227d475ae063ce91.png" src="../_images/2dcf3edbd2672fc877b7a677d174076f9656fe4f3fec9a55227d475ae063ce91.png" />
+</div>
+</div>
+<p><em><strong>Nota:</strong></em></p>
+<p>La línea discontinua roja en el gráfico anterior indica el valor promedio esperado, si las contribuciones fueran uniforme.</p>
+<p>Se puede ver que:</p>
+<ol class="arabic simple">
+<li><p>Los elementos de fila <code class="docutils literal notranslate"><span class="pre">Repairs</span></code>, <code class="docutils literal notranslate"><span class="pre">Laundry</span></code>, <code class="docutils literal notranslate"><span class="pre">Main_meal</span></code> y <code class="docutils literal notranslate"><span class="pre">Driving</span></code> son los más importantes en la definición de la primera dimensión.</p></li>
+<li><p>Los elementos de la fila <code class="docutils literal notranslate"><span class="pre">Holidays</span></code> y <code class="docutils literal notranslate"><span class="pre">Repairs</span></code> son los que más contribuyen a la dimensión 2.</p></li>
+</ol>
+<p>Los puntos de fila más importantes (o contribuyentes) se pueden resaltar en el diagrama de dispersión de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">row_coordinates</span><span class="p">(</span><span class="n">df_crosstab</span><span class="p">)</span>
+<span class="n">contrib</span> <span class="o">=</span> <span class="n">ca</span><span class="o">.</span><span class="n">row_contributions_</span><span class="o">*</span><span class="mi">100</span>
+<span class="n">tmp</span><span class="p">[</span><span class="s2">&quot;contrib&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">contrib</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">data_frame</span><span class="o">=</span><span class="n">tmp</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;contrib&quot;</span><span class="p">,</span> <span class="n">color_continuous_scale</span><span class="o">=</span><span class="s2">&quot;temps&quot;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">tmp</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">&quot;plotly_white&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Los perfiles fila <code class="docutils literal notranslate"><span class="pre">Repairs</span></code> y <code class="docutils literal notranslate"><span class="pre">Driving</span></code> tienen una contribución importante en el lado positivo de la primera dimensión, mientras que las categorías <code class="docutils literal notranslate"><span class="pre">Laundry</span></code> y <code class="docutils literal notranslate"><span class="pre">Main_meal</span></code> tienen una mayor contribución al lado negativo de la primera dimensión. En otras palabras, la dimensión 1 se define principalmente por la oposición de <code class="docutils literal notranslate"><span class="pre">Repairs</span></code> y <code class="docutils literal notranslate"><span class="pre">Driving</span></code> (lado postivo), y <code class="docutils literal notranslate"><span class="pre">Laundry</span></code> y <code class="docutils literal notranslate"><span class="pre">Main_meal</span></code> (lado negativo).</p>
+</section>
+<section id="conclusiones-espacio-fila">
+<h3><em><strong>Conclusiones espacio fila.</strong></em><a class="headerlink" href="#conclusiones-espacio-fila" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Las variables bien representadas son: <code class="docutils literal notranslate"><span class="pre">Repairs</span></code>, <code class="docutils literal notranslate"><span class="pre">Driving</span></code>, <code class="docutils literal notranslate"><span class="pre">Holidays</span></code>, <code class="docutils literal notranslate"><span class="pre">Laundry</span></code>.</p></li>
+<li><p>La varible que menos es representada: <code class="docutils literal notranslate"><span class="pre">Official</span></code></p></li>
+</ol>
+</section>
+<section id="espacio-columna">
+<h3><em><strong>Espacio columna.</strong></em><a class="headerlink" href="#espacio-columna" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_bar_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos2 para las columnas</span>
+<span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Notemos que solo el elemento de la columna <code class="docutils literal notranslate"><span class="pre">Alternating</span></code> no se muestra muy bien en los dos primeros
+dimensiones. La posición de este elemento debe interpretarse con cautela en el espacio formado por las
+dimensiones 1 y 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contribucion columns</span>
+<span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/74c29002d1055fdf87bafa838217466740c98969512efe8902d80ce17cb70457.png" src="../_images/74c29002d1055fdf87bafa838217466740c98969512efe8902d80ce17cb70457.png" />
+</div>
+</div>
+</section>
+<section id="conclusiones-espacio-columna">
+<h3><em><strong>Conclusiones espacio columna.</strong></em><a class="headerlink" href="#conclusiones-espacio-columna" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Todas están bien representadas salvo <code class="docutils literal notranslate"><span class="pre">Alternating</span></code>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contribucion index</span>
+<span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span><span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2dcf3edbd2672fc877b7a677d174076f9656fe4f3fec9a55227d475ae063ce91.png" src="../_images/2dcf3edbd2672fc877b7a677d174076f9656fe4f3fec9a55227d475ae063ce91.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">df_crosstab</span><span class="p">,</span>
+    <span class="n">x_component</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_component</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">show_row_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_column_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_row_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_column_labels</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+  #altair-viz-81347af2cdee4d7797351b1a45cbf38b.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-81347af2cdee4d7797351b1a45cbf38b.vega-embed details,
+  #altair-viz-81347af2cdee4d7797351b1a45cbf38b.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-81347af2cdee4d7797351b1a45cbf38b"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-81347af2cdee4d7797351b1a45cbf38b") {
+      outputDiv = document.getElementById("altair-viz-81347af2cdee4d7797351b1a45cbf38b");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-d869bcd7d4a710dae7e587b3a2e00fda"}, "mark": {"type": "circle", "size": 50}, "encoding": {"color": {"field": "variable", "type": "nominal"}, "tooltip": [{"field": "variable", "type": "nominal"}, {"field": "value", "type": "nominal"}, {"field": "component 0", "type": "quantitative"}, {"field": "component 1", "type": "quantitative"}], "x": {"axis": {"title": "component 0 \u2014 48.69%"}, "field": "component 0", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": "component 1 \u2014 39.91%"}, "field": "component 1", "scale": {"zero": false}, "type": "quantitative"}}, "name": "view_1"}, {"data": {"name": "data-6d0d557ce4e0aeee991e0c3c05de08ac"}, "mark": {"type": "circle", "size": 50}, "encoding": {"color": {"field": "variable", "type": "nominal"}, "tooltip": [{"field": "variable", "type": "nominal"}, {"field": "value", "type": "nominal"}, {"field": "component 0", "type": "quantitative"}, {"field": "component 1", "type": "quantitative"}], "x": {"axis": {"title": "component 0 \u2014 48.69%"}, "field": "component 0", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": "component 1 \u2014 39.91%"}, "field": "component 1", "scale": {"zero": false}, "type": "quantitative"}}}], "params": [{"name": "param_1", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales", "views": ["view_1"]}], "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-d869bcd7d4a710dae7e587b3a2e00fda": [{"component 0": -0.5086001806068526, "component 1": -0.4528037639443711, "component 2": 0.22040453319235884, "variable": "task", "value": "Breakfeast", "label": "Breakfeast"}, {"component 0": -0.6925739590868826, "component 1": -0.30810429528567473, "component 2": -0.20741376524035943, "variable": "task", "value": "Dinner", "label": "Dinner"}, {"component 0": -0.18896406202746932, "component 1": 0.44196624701807563, "component 2": 0.26694926204806046, "variable": "task", "value": "Dishes", "label": "Dishes"}, {"component 0": 0.7417695813012568, "component 1": -0.6534143381742233, "component 2": 0.5444584937214644, "variable": "task", "value": "Driving", "label": "Driving"}, {"component 0": 0.2707668817730197, "component 1": 0.6178683817128292, "component 2": 0.03479681250038137, "variable": "task", "value": "Finances", "label": "Finances"}, {"component 0": 0.25248630402964783, "component 1": 1.4350066128762375, "component 2": -0.12958664858753893, "variable": "task", "value": "Holidays", "label": "Holidays"}, {"component 0": 0.6470759474181333, "component 1": 0.47378315184755543, "component 2": -0.28936050851415823, "variable": "task", "value": "Insurance", "label": "Insurance"}, {"component 0": -0.9918367922956453, "component 1": -0.49532195224725295, "component 2": -0.31672897304292724, "variable": "task", "value": "Laundry", "label": "Laundry"}, {"component 0": -0.8755854574586756, "component 1": -0.49010919881922443, "component 2": -0.16406486828204064, "variable": "task", "value": "Main_meal", "label": "Main_meal"}, {"component 0": 0.22663238533754135, "component 1": -0.25361319176809277, "component 2": 0.9233641639965824, "variable": "task", "value": "Official", "label": "Official"}, {"component 0": 1.5287786514689004, "component 1": -0.8642646903020248, "component 2": -0.47208778051517303, "variable": "task", "value": "Repairs", "label": "Repairs"}, {"component 0": -0.11768132106142254, "component 1": 0.4033171077871656, "component 2": 0.20261512166763057, "variable": "task", "value": "Shopping", "label": "Shopping"}, {"component 0": -0.39380836412978654, "component 1": 0.4343443690627104, "component 2": -0.09421374631829062, "variable": "task", "value": "Tidying", "label": "Tidying"}], "data-6d0d557ce4e0aeee991e0c3c05de08ac": [{"component 0": -0.06218461656078169, "component 1": -0.2915938111005636, "component 2": 0.8485893859455788, "variable": "who", "value": "Alternating", "label": "Alternating"}, {"component 0": 1.160918470159474, "component 1": -0.6019199213170355, "component 2": -0.18885923906160554, "variable": "who", "value": "Husband", "label": "Husband"}, {"component 0": 0.14942608920002307, "component 1": 1.0265790704959665, "component 2": -0.046443020256343705, "variable": "who", "value": "Jointly", "label": "Jointly"}, {"component 0": -0.8376215398785545, "component 1": -0.3652207147351885, "component 2": -0.19991139439537753, "variable": "who", "value": "Wife", "label": "Wife"}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Contribucion columns</span>
+<span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span><span class="n">df_crosstab</span><span class="p">,</span> <span class="n">choice</span> <span class="o">=</span> <span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/74c29002d1055fdf87bafa838217466740c98969512efe8902d80ce17cb70457.png" src="../_images/74c29002d1055fdf87bafa838217466740c98969512efe8902d80ce17cb70457.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Biplot.</span>
+<span class="n">ca_biplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_crosstab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="conclusiones-ejemplo-2">
+<h3><em><strong>Conclusiones ejemplo 2.</strong></em><a class="headerlink" href="#conclusiones-ejemplo-2" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Las labores del hogar varían según quien las realiza.</p></li>
+<li><p>Dado que <code class="docutils literal notranslate"><span class="pre">Husband</span></code> está bien representado y así mismo <code class="docutils literal notranslate"><span class="pre">Driving</span></code> y <code class="docutils literal notranslate"><span class="pre">Repairs</span></code>. Son precisamente estas últimas labores las “preferidas” por los hombres. A su vez, tiene menor preferencia por <code class="docutils literal notranslate"><span class="pre">Laundry</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Alternating</span></code> y <code class="docutils literal notranslate"><span class="pre">Oficial</span></code> están mal representados no es posible asumir asociaciones usando esos perfiles.</p></li>
+<li><p>De igual manera, labores como <code class="docutils literal notranslate"><span class="pre">Main_meal</span></code>, <code class="docutils literal notranslate"><span class="pre">Laundry</span></code> están en correspondencia con la esposa. <code class="docutils literal notranslate"><span class="pre">Repairs</span></code> se asocia negativamente con <code class="docutils literal notranslate"><span class="pre">Wife</span></code>.</p></li>
+<li><p>Las labores conjuntas son las vacaciones.</p></li>
+</ol>
+</section>
+</section>
+<section id="ejemplo-3">
+<h2><em><strong>Ejemplo 3.</strong></em><a class="headerlink" href="#ejemplo-3" title="Link to this heading">#</a></h2>
+<p>Se pidió a 657 adolescentes que seleccionaran cuál de las 6 características describe mejor 4 marcas populares de teléfonos inteligentes. La data a continuación:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Data Ejercicio 3.</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">36</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">19</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pantalla&quot;</span><span class="p">,</span><span class="s2">&quot;precio&quot;</span><span class="p">,</span><span class="s2">&quot;diseño&quot;</span><span class="p">,</span><span class="s2">&quot;bateria&quot;</span><span class="p">,</span><span class="s2">&quot;software&quot;</span><span class="p">,</span><span class="s2">&quot;camara&quot;</span><span class="p">]</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Apple&quot;</span><span class="p">,</span><span class="s2">&quot;Samsung&quot;</span><span class="p">,</span><span class="s2">&quot;Nokia&quot;</span><span class="p">,</span><span class="s2">&quot;Huawei&quot;</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">row</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">cols</span> <span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;caracteristica&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;marca&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span> <span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>marca</th>
+      <th>Apple</th>
+      <th>Samsung</th>
+      <th>Nokia</th>
+      <th>Huawei</th>
+    </tr>
+    <tr>
+      <th>caracteristica</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pantalla</th>
+      <td>36</td>
+      <td>42</td>
+      <td>7</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>precio</th>
+      <td>3</td>
+      <td>5</td>
+      <td>43</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>diseño</th>
+      <td>56</td>
+      <td>29</td>
+      <td>13</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>bateria</th>
+      <td>27</td>
+      <td>31</td>
+      <td>24</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>software</th>
+      <td>48</td>
+      <td>36</td>
+      <td>8</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <th>camara</th>
+      <td>37</td>
+      <td>45</td>
+      <td>7</td>
+      <td>19</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Apple&quot;</span><span class="p">],</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/022a90c9d7fbad4418bf8abd332bd4ac036126ec1aad0a076f95d9ae2af63234.png" src="../_images/022a90c9d7fbad4418bf8abd332bd4ac036126ec1aad0a076f95d9ae2af63234.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x2_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">dof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El estadístico x^2 de la prueba es: </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x2_value</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El p-valor de la prueba es:&quot;</span><span class="p">,</span> <span class="n">p_value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Los grados de libertad son:&quot;</span><span class="p">,</span> <span class="n">dof</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>El estadístico x^2 de la prueba es: 164.33
+El p-valor de la prueba es: 3.3521729448916556e-27
+Los grados de libertad son: 15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ajustamos el CA</span>
+<span class="n">ca</span> <span class="o">=</span> <span class="n">prince</span><span class="o">.</span><span class="n">CA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;prince.ca.CA at 0x78a7f816d3c0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca</span><span class="o">.</span><span class="n">eigenvalues_summary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eigenvalue</th>
+      <th>% of variance</th>
+      <th>% of variance (cumulative)</th>
+    </tr>
+    <tr>
+      <th>component</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.219</td>
+      <td>87.57%</td>
+      <td>87.57%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.026</td>
+      <td>10.56%</td>
+      <td>98.13%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.005</td>
+      <td>1.87%</td>
+      <td>100.00%</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">screeplot</span><span class="p">(</span><span class="n">ca</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>El plot anterior sugiere que solo debemos usar una dimensión. Vamos a usar 2 factores pues reunen más inercia y un potencial biplot representa mejor la situación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_biplot</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df_ca</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Se puede ver del plot anterior que en los perfiles fila, el factor 1 parece separar el precio de las funciones y el factor 2 parece separar las características del hardware de las características que no son del hardware. Los perfiles que están muy juntos (por ejemplo, el pantalla y la cámara) tienen perfiles similares, mientras que las que están muy alejadas tienen perfiles diferentes (por ejemplo, el diseño y el precio).</p></li>
+<li><p>La dimensión 2 explica cerca del <span class="math notranslate nohighlight">\(10\%\)</span>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dim1</th>
+      <th>Dim2</th>
+      <th>Dim3</th>
+    </tr>
+    <tr>
+      <th>caracteristica</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>pantalla</th>
+      <td>0.842427</td>
+      <td>0.119950</td>
+      <td>0.037623</td>
+    </tr>
+    <tr>
+      <th>precio</th>
+      <td>0.997756</td>
+      <td>0.000343</td>
+      <td>0.001901</td>
+    </tr>
+    <tr>
+      <th>diseño</th>
+      <td>0.266549</td>
+      <td>0.664860</td>
+      <td>0.068591</td>
+    </tr>
+    <tr>
+      <th>bateria</th>
+      <td>0.333734</td>
+      <td>0.499491</td>
+      <td>0.166775</td>
+    </tr>
+    <tr>
+      <th>software</th>
+      <td>0.678181</td>
+      <td>0.277976</td>
+      <td>0.043844</td>
+    </tr>
+    <tr>
+      <th>camara</th>
+      <td>0.783260</td>
+      <td>0.211021</td>
+      <td>0.005719</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/199e66af33a2bbd7982085e9b10845033ce7df0fb85cb27e886c451beadbc232.png" src="../_images/199e66af33a2bbd7982085e9b10845033ce7df0fb85cb27e886c451beadbc232.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca_plot_cos2</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_contrib</span><span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">choice</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f2d4d9c1849cb485b87b39163d357f8852c8f99975dfef0284deee88dd9edf72.png" src="../_images/f2d4d9c1849cb485b87b39163d357f8852c8f99975dfef0284deee88dd9edf72.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ca</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">x_component</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">y_component</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">show_row_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_column_markers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">show_row_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_column_labels</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<style>
+  #altair-viz-767b830af1d949148b138812e0d0190e.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-767b830af1d949148b138812e0d0190e.vega-embed details,
+  #altair-viz-767b830af1d949148b138812e0d0190e.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-767b830af1d949148b138812e0d0190e"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-767b830af1d949148b138812e0d0190e") {
+      outputDiv = document.getElementById("altair-viz-767b830af1d949148b138812e0d0190e");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-efb7e523eba005d74bd358754faea42b"}, "mark": {"type": "circle", "size": 50}, "encoding": {"color": {"field": "variable", "type": "nominal"}, "tooltip": [{"field": "variable", "type": "nominal"}, {"field": "value", "type": "nominal"}, {"field": "component 0", "type": "quantitative"}, {"field": "component 1", "type": "quantitative"}], "x": {"axis": {"title": "component 0 \u2014 87.57%"}, "field": "component 0", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": "component 1 \u2014 10.56%"}, "field": "component 1", "scale": {"zero": false}, "type": "quantitative"}}, "name": "view_2"}, {"data": {"name": "data-5c67174d052c2f037f6f71de9152ed78"}, "mark": {"type": "circle", "size": 50}, "encoding": {"color": {"field": "variable", "type": "nominal"}, "tooltip": [{"field": "variable", "type": "nominal"}, {"field": "value", "type": "nominal"}, {"field": "component 0", "type": "quantitative"}, {"field": "component 1", "type": "quantitative"}], "x": {"axis": {"title": "component 0 \u2014 87.57%"}, "field": "component 0", "scale": {"zero": false}, "type": "quantitative"}, "y": {"axis": {"title": "component 1 \u2014 10.56%"}, "field": "component 1", "scale": {"zero": false}, "type": "quantitative"}}}], "params": [{"name": "param_2", "select": {"type": "interval", "encodings": ["x", "y"]}, "bind": "scales", "views": ["view_2"]}], "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-efb7e523eba005d74bd358754faea42b": [{"component 0": -0.2886125967903057, "component 1": -0.10890552822986677, "component 2": -0.06099238548393345, "variable": "caracteristica", "value": "pantalla", "label": "pantalla"}, {"component 0": 1.1631656524856289, "component 1": 0.021562865895508977, "component 2": -0.05077713391390568, "variable": "caracteristica", "value": "precio", "label": "precio"}, {"component 0": -0.14114782228736894, "component 1": 0.2229210828425672, "component 2": 0.07160106041608583, "variable": "caracteristica", "value": "dise\u00f1o", "label": "dise\u00f1o"}, {"component 0": 0.16171270956818795, "component 1": -0.19783714786196718, "component 2": 0.1143165927961473, "variable": "caracteristica", "value": "bateria", "label": "bateria"}, {"component 0": -0.2203922647054319, "component 1": 0.14110005369720874, "component 2": -0.056037216773350274, "variable": "caracteristica", "value": "software", "label": "software"}, {"component 0": -0.32322482930726915, "component 1": -0.16776999581485047, "component 2": -0.027619165095441222, "variable": "caracteristica", "value": "camara", "label": "camara"}], "data-5c67174d052c2f037f6f71de9152ed78": [{"component 0": -0.3404016769944367, "component 1": 0.11445979834628003, "component 2": 0.07326136919750409, "variable": "marca", "value": "Apple", "label": "Apple"}, {"component 0": -0.3167092241309956, "component 1": -0.21611725353889025, "component 2": -0.03545255353391858, "variable": "marca", "value": "Samsung", "label": "Samsung"}, {"component 0": 0.9639753206595323, "component 1": -0.10439130542805386, "component 2": 0.06059488526749473, "variable": "marca", "value": "Nokia", "label": "Nokia"}, {"component 0": 0.1979937410450207, "component 1": 0.17240486600808047, "component 2": -0.0917543853549455, "variable": "marca", "value": "Huawei", "label": "Huawei"}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p><em><strong>Comentarios:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Las prefencias por la marca Samsung muestran que se interesan por la camara. Esta marca está en relación opuesta con el precio.</p></li>
+<li><p>Apple esta bastante cerca de software y diseño pero no está bien representada en estas 2 dimensiones, así que no podemos pensar en la asociación.</p></li>
+<li><p>Tanto Huawei como diseño están bien representadas, luego, estas estarán asociadas. A su vez Huawei es menos preferida por su bateria.</p></li>
+<li><p>Nokia es asociada en su preferencia por el precio. Está es sentido opuesto con las características de diseño y camara.</p></li>
+<li><p>Aunque en mejor medida Samsung está asociado con la batería.</p></li>
+</ol>
+</section>
+<section id="referencias">
+<h2><em><strong>Referencias:</strong></em><a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><em>Análisis estadístico de datos multivariados. Díaz L &amp; Morales M. Editorial: Publicaciones Facultad de ciencias. UNAL.</em></p></li>
+<li><p><em>Multivariate Analysis II. Kassambara A. Disponible en: <a class="reference external" href="http://www.sthda.com/english/">http://www.sthda.com/english/</a></em></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_4_ACP_examples.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_6_ACM.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>Análisis de correspondencias multiples.</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-librerias-y-funciones-auxiliares"><em><strong>Protocolo de librerias y funciones auxiliares.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduccion"><em><strong>Introducción</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representacion-geometrica-de-una-tabla-de-contingencia"><em><strong>Representación geometrica de una tabla de contingencia</strong></em>.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semejanza-entre-perfiles"><em><strong>Semejanza entre perfiles.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ajuste-de-las-dos-nubes-de-puntos"><em><strong>Ajuste de las dos nubes de puntos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#puntos-extremos-y-la-composicion-de-su-perfil"><em><strong>Puntos Extremos y la Composición de su Perfil</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relaciones-cuasi-baricentricas-en-la-representacion-de-filas-y-columnas"><em><strong>Relaciones Cuasi-Baricéntricas en la Representación de Filas y Columnas</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-los-ejes-factoriales"><em><strong>Interpretacion de los ejes factoriales.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contribucion-absoluta-de-cada-eje-a-la-variabilidad-total">1. <em><strong>Contribución absoluta de cada eje a la variabilidad total.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cos2-cosenos-cuadrados-y-contribucion-de-los-perfiles"><em><strong>2. Cos2 (Cosenos Cuadrados) y Contribución de los Perfiles.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#retomando-el-ejemplo-1"><em><strong>Retomando el Ejemplo 1.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-espacio-fila"><em><strong>Información espacio fila.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#informacion-espacio-columna"><em><strong>Información espacio columna</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#espacio-fila"><em><strong>Espacio fila</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-espacio-fila"><em><strong>Conclusiones espacio fila.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#espacio-columna"><em><strong>Espacio columna.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-espacio-columna"><em><strong>Conclusiones espacio columna.</strong></em></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-ejemplo-2"><em><strong>Conclusiones ejemplo 2.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-3"><em><strong>Ejemplo 3.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

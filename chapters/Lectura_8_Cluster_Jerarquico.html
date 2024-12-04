@@ -1,0 +1,3760 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Clusters jerárquicos. &#8212; Metodos Estadisticos</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/Lectura_8_Cluster_Jerarquico';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="K-means clustering" href="Lectura_9_Kmeans.html" />
+    <link rel="prev" title="Análisis Factorial." href="Lectura_7_Factor_Analysis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Metodos Estadisticos - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Metodos Estadisticos - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="README.html">
+                    Métodos Estadísticos - Ucentral 2024-II
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lectura_1_Intro.html"><em><strong>Introducción al machine learning</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_2_Analisis_Descriptivo_Multivariado.html"><em><strong>Analisis descriptivo multivariado.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_3_ACP.html"><em><strong>Analisis de compomente principales (PCA).</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_4_ACP_examples.html"><em><strong>PCA: otros ejemplos y algunas funciones útiles.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_5_AC.html"><em><strong>Análisis de correspondencias simples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_6_ACM.html"><em><strong>Análisis de correspondencias multiples.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_7_Factor_Analysis.html"><em><strong>Análisis Factorial.</strong></em></a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><em><strong>Clusters jerárquicos.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_9_Kmeans.html"><em><strong>K-means clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_10_DBSCAN.html"><em><strong>DBSCAN clustering</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_11_Linear_Regression.html"><em><strong>Linear Regression</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_12_Logistic_Regression.html"><em><strong>Logistic Regression</strong></em></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_13_Arboles_de_decision.html"><em><strong>Decision Trees</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_14_Random_Forrest.html"><em><strong>Random Forrest</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_15_Cross_Validation.html"><em><strong>Cross-Validation</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_16_Intro_Metodos_de_Boosting.html"><em><strong>Regresion e introduccion método de Boosting</strong></em></a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lectura_17_LigthGBM_XgBoost_CatBoost.html"><em><strong>Algunas Implementaciones de Gradient-Boosting.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lectura_18_Intro_to_SVM.html"><em><strong>Intro Support Vector Machines.</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="news_clustering.html"><em><strong>Clustering sobre Noticias de “El Tiempo” (Colombia)</strong></em></a></li>
+<li class="toctree-l1"><a class="reference internal" href="model_news_clustering.html"><em><strong>Modelado News-Clustering</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fchapters/Lectura_8_Cluster_Jerarquico.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/Lectura_8_Cluster_Jerarquico.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clusters jerárquicos.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-conglomerados"><em><strong>Análisis de conglomerados.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-jerarquicos"><em><strong>Métodos jerárquicos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-aglomerativos"><em><strong>Métodos aglomerativos.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distancias-usadas-entre-individuos"><em><strong>Distancias usadas entre individuos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nota"><em><strong>Nota.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medida-de-similaridad"><em><strong>Medida de similaridad</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linkage-y-dendograma"><em><strong>Linkage y dendograma.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-aglomerativo"><em><strong>Coeficiente aglomerativo.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-cophenetico"><em><strong>Coeficiente Cophenético.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cortar-el-dendograma-en-diferentes-grupos"><em><strong>Cortar el dendograma en diferentes grupos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn"><em><strong>sklearn</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-los-cluster"><em><strong>Visualización de los cluster.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-fa-cluster-jerarquico"><em><strong>Ejemplo: FA + Cluster Jerarquico</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-caracterizamos-cada-cluster"><em><strong>Como caracterizamos cada cluster?</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-desventajas-de-la-agrupacion-jerarquica"><em><strong>Ventajas y desventajas de la agrupación jerárquica</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><em><strong>Conclusión.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="clusters-jerarquicos">
+<h1><em><strong>Clusters jerárquicos.</strong></em><a class="headerlink" href="#clusters-jerarquicos" title="Link to this heading">#</a></h1>
+<section id="universidad-central">
+<h2><em><strong>Universidad Central</strong></em><a class="headerlink" href="#universidad-central" title="Link to this heading">#</a></h2>
+</section>
+<section id="maestria-en-analitica-de-datos">
+<h2><em><strong>Maestría en analítica de datos</strong></em><a class="headerlink" href="#maestria-en-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="metodos-estadisticos-para-analitica-de-datos">
+<h2><em><strong>Métodos estadísticos para analítica de datos.</strong></em><a class="headerlink" href="#metodos-estadisticos-para-analitica-de-datos" title="Link to this heading">#</a></h2>
+</section>
+<section id="docente-luis-andres-campos-maldonado">
+<h2><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em><a class="headerlink" href="#docente-luis-andres-campos-maldonado" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="c1">#</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">factor_analyzer</span> <span class="kn">import</span> <span class="n">FactorAnalyzer</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">AgglomerativeClustering</span>         <span class="c1"># Calcular Agrupamiento jerarquico</span>
+<span class="kn">from</span> <span class="nn">scipy.cluster</span> <span class="kn">import</span> <span class="n">hierarchy</span> <span class="k">as</span> <span class="n">sch</span>                  <span class="c1"># Calcular Agrupamiento jerarquico</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">cdist</span>             <span class="c1"># Distancias entre individuos.</span>
+<span class="kn">from</span> <span class="nn">utils.plots_clustering</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">url_base</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/lacamposm/Metodos_Estadisticos/main/data/&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-de-conglomerados">
+<h2><em><strong>Análisis de conglomerados.</strong></em><a class="headerlink" href="#analisis-de-conglomerados" title="Link to this heading">#</a></h2>
+<p>El análisis de conglomerados busca particionar un conjunto de objetos en grupos, de tal forma que los objetos de un mismo grupo sean similares y los
+objetos de grupos diferentes sean disímiles. Así, el análisis de conglomerados
+tiene como objetivo principal definir la estructura de los datos colocando las
+observaciones más parecidas en grupos.
+Los propósitos más frecuentes para la construcción y análisis de conglomerados
+son los siguientes:</p>
+<ol class="arabic simple">
+<li><p>La identificación de una estructura natural en los objetos; es decir, el desarrollo de una tipología o clasificación de los objetos.</p></li>
+<li><p>La búsqueda de esquemas conceptuales útiles que expliquen el agrupamiento de algunos objetos.</p></li>
+<li><p>La formulación de hipótesis mediante la descripción y exploración de los grupos conformados.</p></li>
+<li><p>La verificación de hipótesis, o la confirmación de si estructuras definidas mediante otros procedimientos están realmente en los datos.</p></li>
+</ol>
+<p>Para alcanzar los propósitos anteriormente ilustrados se deben considerar los
+siguientes aspectos:</p>
+<ol class="arabic simple">
+<li><p>¿Cómo se mide la similaridad? Se requiere de un “dispositivo” que permita comparar los objetos en términos de las variables medidas sobre
+éllos. Tal dispositivo debe registrar la proximidad entre pares de objetos de tal forma que la distancia entre las observaciones (atributos del
+objeto) indique la similitud.</p></li>
+<li><p>¿Cómo se forman los conglomerados? Esta inquietud apunta a la arquitectura de los métodos; es decir, al procedimiento mediante el cual se
+agrupan las observaciones que son más similares dentro de un determinado conglomerado. Este procedimiento debe determinar la pertenencia al grupo de cada observación.</p></li>
+<li><p>¿Cuántos grupos se deben formar? Aunque se dispone de un amplio número de estrategias para decidir sobre la cantidad de conglomerados a construir, el criterio decisivo es la homogeneidad “media” alcanzada
+dentro de los conglomerados. Una estructura simple debe corresponder a un número pequeño de conglomerados. No obstante, a medida que el número de conglomerados disminuye, la homogeneidad dentro de los conglomerados necesariamente disminuye. En consecuencia, se debe llegar
+a un punto de equilibrio entre el número de conglomerados y la homogeneidad de éstos. La comparación de las medias asociadas a los grupos o conglomerados construidos, desde el enfoque exploratorio, coadyuvan
+a la decisión acerca del número de éstos, generalmente, es de la incumbencia del especialista asociado con el estudio en consideración.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejemplo.</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Edad&quot;</span><span class="p">,</span> <span class="s2">&quot;Estatura&quot;</span><span class="p">,</span><span class="s2">&quot;Peso&quot;</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mf">1.69</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mf">1.70</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mf">1.65</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mf">1.68</span><span class="p">,</span> <span class="mi">67</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">]</span>
+<span class="n">example</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="p">)</span>
+<span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Persona&quot;</span>
+<span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Edad</th>
+      <th>Estatura</th>
+      <th>Peso</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>30.0</td>
+      <td>1.69</td>
+      <td>66.0</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>32.0</td>
+      <td>1.70</td>
+      <td>69.0</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>35.0</td>
+      <td>1.65</td>
+      <td>72.0</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>33.0</td>
+      <td>1.68</td>
+      <td>67.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="metodos-jerarquicos">
+<h3><em><strong>Métodos jerárquicos.</strong></em><a class="headerlink" href="#metodos-jerarquicos" title="Link to this heading">#</a></h3>
+<p>Estos métodos empiezan con el cálculo de la matriz de distancias entre los objetos. Se forman grupos de manera aglomerativa o por un proceso de división.
+Una de las características de esta técnica es la localización irremovible de cada
+uno de los objetos en cada etapa del mismo. Con los procedimientos aglomerativos cada uno de los objetos empieza formando un conglomerado (grupos
+unitarios). Grupos cercanos se mezclan sucesivamente hasta que todos los objetos quedan dentro de un mismo conglomerado. Los métodos de división
+inician con todos los objetos dentro de un mismo conglomerado, éste es dividido luego en dos grupos, éstos en otros dos hasta que cada objeto llega a ser
+un conglomerado. Ambos procedimientos se resumen en un diagrama de árbol que ilustra la conformación de los distintos grupos, de acuerdo con el estado,
+de fusión o división, jerárquico implicado por la matriz de similaridades; este diagrama se conoce con el nombre de <em><strong>dendrograma</strong></em>. Por su amplia aplicación,
+se explican solo los métodos aglomerativos.</p>
+<section id="metodos-aglomerativos">
+<h4><em><strong>Métodos aglomerativos.</strong></em><a class="headerlink" href="#metodos-aglomerativos" title="Link to this heading">#</a></h4>
+<p>Son los más frecuentemente utilizados. Una primera característica de estos métodos es que buscan una matriz de similaridades de tamaño <span class="math notranslate nohighlight">\(n×n\)</span>, (<span class="math notranslate nohighlight">\(n\)</span> número de objetos), desde la cual, secuencialmente, se mezclan los casos más cercanos; aunque cada uno tiene su propia forma de medir las distancias entre grupos o clases. Un segundo aspecto es que cada paso o etapa en la conformación de grupos puede representarse visualmente por un <em><strong>dendrograma</strong></em>. En tercer lugar, se requieren <span class="math notranslate nohighlight">\(n−1\)</span> pasos para la conformación de los conglomerados de acuerdo con la matriz de similaridades. En el primer paso cada objeto es tratado como un grupo; es decir, se inicia con <span class="math notranslate nohighlight">\(n\)</span> conglomerados, y, en el paso final, se tienen todos los objetos en un solo conglomerado. Finalmente, los métodos jerárquicos aglomerativos son conceptualmente simples.</p>
+<p>Aparte de las características y bondades anotadas, estos métodos adolecen de algunas fallas; por una parte, los cálculos requeridos en los algoritmos son muy numerosos, aunque aritméticamente simples, por ejemplo con 500 casos se requieren cerca de 125.000 valores en la matriz de similaridades, situación que demanda el uso de una gran cantidad de cómputo; otra falla es que pasan sólo una vez a través de los datos; así, una partición pobre de los datos es irreversible en las etapas posteriores. A excepción del método de asociación simple, los demás métodos tienen el inconveniente de que generan diferentes soluciones al reordenar los datos en la matriz de similaridad; por último, estos métodos son muy inestables cuando se extraen casos del análisis; en consecuencia son bastante sensibles a la presencia de observaciones atípicas.</p>
+<p>El algoritmo procede de la siguiente manera:</p>
+<ol class="arabic simple">
+<li><p>Preparar los datos</p></li>
+<li><p>Cálculo de información de similitud entre cada par de individuos en los datos.</p></li>
+<li><p>Uso de la función de vinculación para agrupar objetos en un árbol de clúster jerárquico, basado en
+la información de distancia generada en el paso 2. <em><strong>Objetos/cluster</strong></em> que están próximos se vinculan haciendo uso la función de vinculación.</p></li>
+<li><p>Determinar dónde cortar el árbol jerárquico en grupos. Esto crea un partición de los datos.</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Paso 1:</strong> El primer paso es considerar cada individuos como un cluster</p></li>
+</ul>
+<p align="center"><img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-25.png" width="250">
+<ul class="simple">
+<li><p><strong>Paso 2:</strong> Identificar los dos clusters que son similares y convertirlos en un cluster</p></li>
+</ul>
+<p align="center"><img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-26.png" width="500">
+<ul class="simple">
+<li><p><strong>Paso 3:</strong> Repetir el proceso hasta que sólo queden un cluster con todos los individuos.</p></li>
+</ul>
+<p align="center"><img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-14.png" width="600"></section>
+</section>
+<section id="distancias-usadas-entre-individuos">
+<h3><em><strong>Distancias usadas entre individuos.</strong></em><a class="headerlink" href="#distancias-usadas-entre-individuos" title="Link to this heading">#</a></h3>
+<p>Sea <span class="math notranslate nohighlight">\(x=(x_1, \ldots, x_n)\)</span> y <span class="math notranslate nohighlight">\(y=(y_1, \ldots, y_n)\)</span> dos individuos con sus vectores de variables observadas (todas cuantitativas) se definen las siguientes distancias:</p>
+<ol class="arabic simple">
+<li><p>Distancia <a class="reference external" href="https://es.wikipedia.org/wiki/Distancia_euclidiana">Euclidiana</a>:
+$<span class="math notranslate nohighlight">\(D(x,y)=\sqrt{\sum_{i=1}^n (x_i-y_i)^2}=\sqrt{(x-y)^T(x-y)}\)</span>$</p></li>
+<li><p>Distancia de <a class="reference external" href="https://es.wikipedia.org/wiki/Distancia_de_Mahalanobis">Mahalanobis</a>
+$<span class="math notranslate nohighlight">\(D(x,y)=\sqrt{(x-y)^T\Sigma^{-1}(x-y)}\)</span>$</p></li>
+<li><p>Distancia de <a class="reference external" href="https://es.wikipedia.org/wiki/Geometr%C3%ADa_del_taxista">Manhattan</a><br />
+$<span class="math notranslate nohighlight">\(D(x,y)=\sum_{i=1}^n |x_i-y_i|\)</span>$</p></li>
+<li><p>Distancia de <a class="reference external" href="https://es.qwe.wiki/wiki/Minkowski_distance">Minkowski</a>
+$<span class="math notranslate nohighlight">\(D(x,y)=\left(\sum_{i=1}^n |x_i-y_i|^p\right)^{\frac{1}{p}}\)</span>$</p></li>
+<li><p>Distancia de <a class="reference internal" href="#"><span class="xref myst">coseno</span></a>
+$<span class="math notranslate nohighlight">\(D(x,y) = \cos(\theta) = \frac{x \cdot y}{{\|x|}\| \|y\|}\)</span>$</p></li>
+<li><p>Distancia de <a class="reference internal" href="#"><span class="xref myst">Chebyshev</span></a>
+$<span class="math notranslate nohighlight">\(D(x,y) = \max_{i} |x_i - y_i|\)</span>$</p></li>
+</ol>
+<section id="nota">
+<h4><em><strong>Nota.</strong></em><a class="headerlink" href="#nota" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>La distancia Euclidiana es adecuada cuando los datos son numéricos y están en la misma escala, ya que mide la distancia en línea recta entre dos puntos. Sin embargo, si las variables tienen diferentes escalas, es recomendable estandarizarlas antes de aplicar esta medida, ya que es sensible a magnitudes.</p></li>
+<li><p>La distancia de Mahalanobis es útil cuando las variables están correlacionadas, ya que toma en cuenta la matriz de covarianza entre ellas. Esta distancia refleja la relación entre las variables y es adecuada en situaciones donde las correlaciones entre las variables son importantes. Sin embargo, requiere conocer la matriz de covarianza y es más compleja computacionalmente.</p></li>
+<li><p>La distancia Manhattan es útil para datos dispersos o que contienen muchos ceros, como en datos de frecuencia. Suma las diferencias absolutas entre las variables, por lo que es ideal cuando se buscan diferencias absolutas entre individuos. Es importante estandarizar los datos si las variables están en escalas distintas.</p></li>
+<li><p>La distancia de Minkowski es una generalización de las distancias Euclidiana y Manhattan. Permite ajustar la importancia de las diferencias grandes o pequeñas mediante el parámetro p. Es útil cuando necesitas flexibilidad en la forma de calcular las distancias.</p></li>
+<li><p>La distancia de Coseno mide la similitud en la dirección de los vectores y es ignorante de la magnitud. Es ideal para datos de alta dimensionalidad, como en análisis de texto, donde la orientación de los vectores es más relevante que su tamaño.</p></li>
+<li><p>La distancia de Chebyshev es adecuada cuando te interesa la mayor diferencia entre las variables, ya que se enfoca en la distancia máxima entre dos puntos a lo largo de cualquier dimensión individual. Es útil si hay una variable crítica en el análisis.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">example</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Edad</th>
+      <th>Estatura</th>
+      <th>Peso</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>30.0</td>
+      <td>1.69</td>
+      <td>66.0</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>32.0</td>
+      <td>1.70</td>
+      <td>69.0</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>35.0</td>
+      <td>1.65</td>
+      <td>72.0</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>33.0</td>
+      <td>1.68</td>
+      <td>67.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Vector de las distancias.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">),</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># Matriz de distancias euclidiana</span>
+<span class="n">eucli</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+<span class="c1"># Visto como un pd.DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">eucli</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3.60556514 7.8103521  3.16229347 4.2429353  2.23615742 5.38524837] 
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Persona</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.00</td>
+      <td>3.61</td>
+      <td>7.81</td>
+      <td>3.16</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>3.61</td>
+      <td>0.00</td>
+      <td>4.24</td>
+      <td>2.24</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>7.81</td>
+      <td>4.24</td>
+      <td>0.00</td>
+      <td>5.39</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>3.16</td>
+      <td>2.24</td>
+      <td>5.39</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz de distancias Mahalanobis</span>
+<span class="n">maha</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">example</span><span class="p">,</span><span class="n">example</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;mahalanobis&quot;</span><span class="p">)</span>
+<span class="c1"># Visto como un pd.DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">maha</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Persona</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.00</td>
+      <td>2.65</td>
+      <td>2.65</td>
+      <td>2.65</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>2.65</td>
+      <td>0.00</td>
+      <td>2.65</td>
+      <td>2.65</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>2.65</td>
+      <td>2.65</td>
+      <td>0.00</td>
+      <td>2.65</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>2.65</td>
+      <td>2.65</td>
+      <td>2.65</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matriz de distancias Manhattan</span>
+<span class="n">minko</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">example</span><span class="p">,</span><span class="n">example</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cityblock&quot;</span><span class="p">,)</span>
+<span class="c1"># Visto como un pd.DataFrame</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">minko</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Persona</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.00</td>
+      <td>5.01</td>
+      <td>11.04</td>
+      <td>4.01</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>5.01</td>
+      <td>0.00</td>
+      <td>6.05</td>
+      <td>3.02</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>11.04</td>
+      <td>6.05</td>
+      <td>0.00</td>
+      <td>7.03</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>4.01</td>
+      <td>3.02</td>
+      <td>7.03</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="medida-de-similaridad">
+<h3><em><strong>Medida de similaridad</strong></em><a class="headerlink" href="#medida-de-similaridad" title="Link to this heading">#</a></h3>
+<p>Hay muchos métodos de aglomeración de clústeres (es decir, métodos de vinculación). Los métodos comunes de enlace se describen a continuación.</p>
+<p>Sea <span class="math notranslate nohighlight">\(r\)</span> y <span class="math notranslate nohighlight">\(s\)</span> dos conjuntos (cluster) de <span class="math notranslate nohighlight">\(k\)</span> y <span class="math notranslate nohighlight">\(l\)</span> individuos, entonces las siguientes medidas de similaridad se definen entre los grupos (cluster):</p>
+<p>• <em><strong>Vinculación simple o única:</strong></em> Se define la distancia entre dos clústeres como el valor mínimo de todas las distancias por pares entre los elementos en
+el grupo 1 y los elementos del grupo 2. Tiende a producir grupos largos y “sueltos”:</p>
+<div class="math notranslate nohighlight">
+\[D_{rs}=min\{D(X_r, Y_s)\}\]</div>
+<p>• <em><strong>Vinculación máxima o completa:</strong></em> La distancia entre dos clústeres se define como el valor máximo de todas las distancias por pares entre los elementos del grupo 1 y los elementos del grupo 2. Tiende a producir grupos más compactos:</p>
+<div class="math notranslate nohighlight">
+\[D_{rs}=max\{D(X_r, Y_s)\}\]</div>
+<p>• <em><strong>Enlace medio o promedio:</strong></em> La distancia entre dos conglomerados se define como la distancia media entre los elementos del grupo 1 y los elementos del grupo 2.</p>
+<div class="math notranslate nohighlight">
+\[D_{rs}=\frac{1}{lk}\sum_{rs}D(X_r, Y_s)\]</div>
+<p>• <em><strong>Enlace centroide:</strong></em> La distancia entre dos clusters se define como la distancia entre el centroide del conglomerado 1 (un vector medio de variables de longitud <span class="math notranslate nohighlight">\(p\)</span>) y el centroide para el grupo 2.</p>
+<div class="math notranslate nohighlight">
+\[D_{rs}=D(\bar{X}_r, \bar{Y}_s)\]</div>
+<p>• <em><strong>Método de la varianza mínima de Ward:</strong></em> En cada paso, el par de grupos con una distancia mínima entre grupos se fusionan, lo que ayuda a mantener la varianza total dentro de los conglomerados lo más baja posible. Este enfoque es útil en situaciones donde se desea que los grupos formados sean lo más homogéneos posible en términos de la varianza interna.</p>
+<div class="math notranslate nohighlight">
+\[D_{rs}=\sqrt{\frac{2kl}{k+l}}\cdot||\bar{X}_r- \bar{Y}_s||\]</div>
+<p><em><strong>NOTA:</strong></em></p>
+<p>Tenga en cuenta que, en cada etapa del proceso de agrupación, los dos grupos, que tienen la
+menor distancia de vinculación, están vinculados entre sí.</p>
+<p><em><strong>Por lo general, se prefieren la vinculación completa y el método de Ward.</strong></em></p>
+</section>
+</section>
+<section id="linkage-y-dendograma">
+<h2><em><strong>Linkage y dendograma.</strong></em><a class="headerlink" href="#linkage-y-dendograma" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><em><strong>Linkage:</strong></em></p></li>
+</ul>
+<p>Recuerdemos que la función de enlace toma la información de la distancia, y agrupa pares de objetos en grupos en función de su similitud. Seguido, estos grupos recién
+formados se vinculan entre sí para crear grupos más grandes. Este proceso es iterado hasta que todos los objetos en el conjunto de datos original estén vinculados en una jerarquía de árbol.</p>
+<ul class="simple">
+<li><p><em><strong>Dendograma:</strong></em></p></li>
+</ul>
+<p>Estos corresponden a la representación gráfica del árbol jerárquico generado por el algoritmo de <em><strong>clustering</strong></em>.</p>
+<p><em><strong>Información:</strong></em></p>
+<img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-15.png" width = "200">
+<p><em><strong>Dendograma:</strong></em></p>
+<img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-16.png" width = "700"><p><em><strong>Para tener en cuenta</strong></em></p>
+<ul class="simple">
+<li><p>La altura de los bloques representa la distancia entre clusters.</p></li>
+<li><p>¿Cómo  encontrar el número de clusters utilizando un dendrograma o dónde debemos dejar de fusionar los clusters? Las observaciones se asignan a los clusters trazando una línea horizontal a través del dendrograma.
+Por lo general,  se corta  el dendrograma de forma que se corte la línea vertical más larga.</p></li>
+</ul>
+<p align="center"><img src="https://d1rwhvwstyk9gu.cloudfront.net/2021/02/image-17.png" width="200">
+<ul class="simple">
+<li><p>En la anterior gráfica, un cluster tiene las observaciones A y B, y un segundo cluster tiene C, D, E y F.</p></li>
+</ul>
+</section>
+<section id="ejemplo-1">
+<h2><em><strong>Ejemplo 1.</strong></em><a class="headerlink" href="#ejemplo-1" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">eucli</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Persona</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <th>Persona</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.00</td>
+      <td>3.61</td>
+      <td>7.81</td>
+      <td>3.16</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>3.61</td>
+      <td>0.00</td>
+      <td>4.24</td>
+      <td>2.24</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>7.81</td>
+      <td>4.24</td>
+      <td>0.00</td>
+      <td>5.39</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>3.16</td>
+      <td>2.24</td>
+      <td>5.39</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A partir de la matriz de distancias se realiza la formación de los clusters.</span>
+<span class="c1"># Hacemos uso de: linkage y dendogram de scipy.</span>
+<span class="n">hc</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span>
+    <span class="n">example</span><span class="p">,</span>                         <span class="c1"># Dataset estandarizado</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">,</span>                 <span class="c1"># Medida de similaridad entre cluster</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span>               <span class="c1"># Medida de similaridad entre individuos.</span>
+<span class="p">)</span>
+
+<span class="n">hc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.        , 3.        , 2.23615742, 2.        ],
+       [0.        , 4.        , 3.16229347, 3.        ],
+       [2.        , 5.        , 4.2429353 , 4.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dendograma con method=&quot;single&quot;, metric=&quot;euclidean&quot;</span>
+<span class="c1"># El agrupamiento jerárquico codificado como una matriz de vinculación.</span>
+<span class="n">dendograma</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ee80eeffb0b827f906ef1f2416915df397707cb1844f381eb946c4ad1dd67d75.png" src="../_images/ee80eeffb0b827f906ef1f2416915df397707cb1844f381eb946c4ad1dd67d75.png" />
+</div>
+</div>
+<p>En el <em><strong>dendrograma</strong></em> que se muestra arriba, cada hoja corresponde a un registro, mientras nos movemos
+arriba del árbol, los objetos que son similares entre sí se combinan en ramas, que se fusionan a una altura mayor.
+La altura de la fusión, proporcionada en el eje vertical, indica la (dí)similitud/distancia
+entre dos registros/clusters. Cuanto mayor sea la altura de la fusión, menos similaridad hay entre los cluster que se fusionan. Esta altura se conoce como la distancia <em><strong>cofenética</strong></em> entre los dos objetos.</p>
+<p>Definamos varios métodos y metricas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hc</span>  <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cityblock&quot;</span><span class="p">,)</span>
+<span class="n">hc1</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;mahalanobis&quot;</span><span class="p">)</span>
+<span class="n">hc2</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;centroid&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+<span class="n">hc3</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ward&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distintos dendogramas.</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span>  <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">above_threshold_color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">above_threshold_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">above_threshold_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">color_threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">above_threshold_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/784d1cb96ee9d4925aa215ac5e656c6e1cfe1a933258249eb4fe2b6cf4e380d0.png" src="../_images/784d1cb96ee9d4925aa215ac5e656c6e1cfe1a933258249eb4fe2b6cf4e380d0.png" />
+</div>
+</div>
+<p><em><strong>Notas importante:</strong></em></p>
+<ol class="arabic simple">
+<li><p>Tenga en cuenta que, por lo general, se recomienda estandarizar las variables en el conjunto de datos antes
+de realizar análisis posteriores. La estandarización hace que las variables sean comparables, cuando
+se miden en diferentes escalas. Por ejemplo, una variable puede medir la altura en metros y otra variable puede medir el peso en kg.</p></li>
+<li><p>El agrupamiento aglomerativo es el tipo más común de agrupamiento jerárquico. Úselo para agrupar registros en clusters en función de su similitud. También se le conoce como AGNES (Anidamiento Aglomerativo).</p></li>
+<li><p>El clusterin aglomerativo funciona “de abajo hacia arriba”. Es decir, cada objeto es inicialmente considerado como un cluster de un solo elemento (hoja). En cada paso del algoritmo, los dos clusters que son más similares se combinan en un nuevo cluster más grande
+(nodos). Este procedimiento se repite hasta que todos los registros son miembros de un solo gran
+clúster (raíz). El resultado es un árbol basado en la
+representación de los registros, denominado <em><strong>dendograma.</strong></em></p></li>
+</ol>
+<p>Tenga en cuenta que el agrupamiento aglomerativo es bueno para identificar pequeños grupos.</p>
+</section>
+<section id="ejemplo-2">
+<h2><em><strong>Ejemplo 2.</strong></em><a class="headerlink" href="#ejemplo-2" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_usarrests</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;USArrests.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_usarrests</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Murder</th>
+      <td>50.0</td>
+      <td>7.788</td>
+      <td>4.355510</td>
+      <td>0.8</td>
+      <td>4.075</td>
+      <td>7.25</td>
+      <td>11.250</td>
+      <td>17.4</td>
+    </tr>
+    <tr>
+      <th>Assault</th>
+      <td>50.0</td>
+      <td>170.760</td>
+      <td>83.337661</td>
+      <td>45.0</td>
+      <td>109.000</td>
+      <td>159.00</td>
+      <td>249.000</td>
+      <td>337.0</td>
+    </tr>
+    <tr>
+      <th>UrbanPop</th>
+      <td>50.0</td>
+      <td>65.540</td>
+      <td>14.474763</td>
+      <td>32.0</td>
+      <td>54.500</td>
+      <td>66.00</td>
+      <td>77.750</td>
+      <td>91.0</td>
+    </tr>
+    <tr>
+      <th>Rape</th>
+      <td>50.0</td>
+      <td>21.232</td>
+      <td>9.366385</td>
+      <td>7.3</td>
+      <td>15.075</td>
+      <td>20.10</td>
+      <td>26.175</td>
+      <td>46.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Recuerde que debemos estandarizar los datos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler_data_usarrets</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_usarrests</span><span class="p">)</span>
+<span class="c1">##</span>
+<span class="n">df_scaler_usarrets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">scaler_data_usarrets</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_usarrests</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>1.255179</td>
+      <td>0.790787</td>
+      <td>-0.526195</td>
+      <td>-0.003451</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0.513019</td>
+      <td>1.118060</td>
+      <td>-1.224067</td>
+      <td>2.509424</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0.072361</td>
+      <td>1.493817</td>
+      <td>1.009122</td>
+      <td>1.053466</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0.234708</td>
+      <td>0.233212</td>
+      <td>-1.084492</td>
+      <td>-0.186794</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0.281093</td>
+      <td>1.275635</td>
+      <td>1.776781</td>
+      <td>2.088814</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>0.025976</td>
+      <td>0.402909</td>
+      <td>0.869548</td>
+      <td>1.883901</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distancia Mahalanobis.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">cdist</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Alabama</th>
+      <th>Alaska</th>
+      <th>Arizona</th>
+      <th>Arkansas</th>
+      <th>California</th>
+      <th>Colorado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0.000000</td>
+      <td>4.419320</td>
+      <td>3.173451</td>
+      <td>1.424984</td>
+      <td>3.541993</td>
+      <td>3.365494</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>4.419320</td>
+      <td>0.000000</td>
+      <td>3.893855</td>
+      <td>3.523499</td>
+      <td>3.577636</td>
+      <td>2.812180</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>3.173451</td>
+      <td>3.893855</td>
+      <td>0.000000</td>
+      <td>2.713884</td>
+      <td>1.752951</td>
+      <td>2.660469</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>1.424984</td>
+      <td>3.523499</td>
+      <td>2.713884</td>
+      <td>0.000000</td>
+      <td>3.274534</td>
+      <td>2.898161</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>3.541993</td>
+      <td>3.577636</td>
+      <td>1.752951</td>
+      <td>3.274534</td>
+      <td>0.000000</td>
+      <td>1.439765</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>3.365494</td>
+      <td>2.812180</td>
+      <td>2.660469</td>
+      <td>2.898161</td>
+      <td>1.439765</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distancia Euclidiana.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">cdist</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Alabama</th>
+      <th>Alaska</th>
+      <th>Arizona</th>
+      <th>Arkansas</th>
+      <th>California</th>
+      <th>Colorado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0.000000</td>
+      <td>2.731204</td>
+      <td>2.316805</td>
+      <td>1.302905</td>
+      <td>3.296239</td>
+      <td>2.677982</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>2.731204</td>
+      <td>0.000000</td>
+      <td>2.728061</td>
+      <td>2.854730</td>
+      <td>3.043126</td>
+      <td>2.350139</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>2.316805</td>
+      <td>2.728061</td>
+      <td>0.000000</td>
+      <td>2.745350</td>
+      <td>1.323789</td>
+      <td>1.378889</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>1.302905</td>
+      <td>2.854730</td>
+      <td>2.745350</td>
+      <td>0.000000</td>
+      <td>3.801851</td>
+      <td>2.859794</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>3.296239</td>
+      <td>3.043126</td>
+      <td>1.323789</td>
+      <td>3.801851</td>
+      <td>0.000000</td>
+      <td>1.300691</td>
+    </tr>
+    <tr>
+      <th>Colorado</th>
+      <td>2.677982</td>
+      <td>2.350139</td>
+      <td>1.378889</td>
+      <td>2.859794</td>
+      <td>1.300691</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hc</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span>
+    <span class="n">df_scaler_usarrets</span><span class="p">,</span>     <span class="c1"># Dataset estandarizado</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;ward&quot;</span><span class="p">,</span>          <span class="c1"># Medida de similaridad entre cluster</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span>      <span class="c1"># Medida de similaridad entre individuos.</span>
+<span class="p">)</span>   
+
+<span class="n">hc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[14.        , 28.        ,  0.2079438 ,  2.        ],
+       [12.        , 31.        ,  0.35377437,  2.        ],
+       [13.        , 15.        ,  0.43312429,  2.        ],
+       [22.        , 48.        ,  0.49909939,  2.        ],
+       [19.        , 30.        ,  0.54082482,  2.        ],
+       [35.        , 52.        ,  0.55914837,  3.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dendogram</span>
+<span class="n">dendogram</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/77735c9a0aa11247be47ac27fe8ee17d4783ee9941fc0d7818dac3b895eb0e74.png" src="../_images/77735c9a0aa11247be47ac27fe8ee17d4783ee9941fc0d7818dac3b895eb0e74.png" />
+</div>
+</div>
+</section>
+<section id="coeficiente-aglomerativo">
+<h2><em><strong>Coeficiente aglomerativo.</strong></em><a class="headerlink" href="#coeficiente-aglomerativo" title="Link to this heading">#</a></h2>
+<p>Sea <span class="math notranslate nohighlight">\(l_i\)</span> la distancia entre el valor maximo y el valor donde se une un dato al arbol, se define el coeficiente aglomerativo como:</p>
+<div class="math notranslate nohighlight">
+\[AC_{arbol}=\frac{1}{d_{maxima}}\sum_{i=1}^n l_i\]</div>
+<p>El coeficiente aglomerativo mide la eficiencia de los clústeres formados. Un valor bajo indica que los puntos se agrupan a distancias pequeñas, lo que implica clústeres compactos. Un valor alto indica que los clústeres se forman a distancias mayores, lo que sugiere una estructura más dispersa.</p>
+</section>
+<section id="coeficiente-cophenetico">
+<h2><em><strong>Coeficiente Cophenético.</strong></em><a class="headerlink" href="#coeficiente-cophenetico" title="Link to this heading">#</a></h2>
+<p>Después de vincular los objetos en un conjunto de datos en un árbol de <em><strong>clúster jerárquico</strong></em>, es posible que se desee evaluar que las distancias (es decir, las alturas) en el árbol reflejan las distancias originales de buena manera.</p>
+<p>Una forma de medir qué tan bien el dendograma refleja los datos es calcular la <em><strong>correlación entre las distancias cofenéticas</strong></em> y los datos de distancia originales. Si la agrupación es válida, la vinculación de objetos en el árbol de clúster debe tener una fuerte correlación con las distancias entre objetos en la matriz de distancia original.</p>
+<p>Cuanto más se acerque a 1 el valor del coeficiente de correlación, con mayor precisión será la solución de agrupamiento reflejada es sus datos. Los valores superiores a 0,75 se consideran buenos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metricas</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;braycurtis&quot;</span><span class="p">,</span> <span class="s2">&quot;canberra&quot;</span><span class="p">,</span> <span class="s2">&quot;chebyshev&quot;</span><span class="p">,</span> <span class="s2">&quot;cityblock&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;jaccard&quot;</span><span class="p">,</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">,</span> <span class="s2">&quot;minkowski&quot;</span><span class="p">,</span> <span class="s2">&quot;seuclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;sqeuclidean&quot;</span>
+<span class="p">]</span>
+
+
+<span class="n">metodos</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;single&quot;</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">,</span> <span class="s2">&quot;weighted&quot;</span><span class="p">,</span><span class="s2">&quot;centroid&quot;</span><span class="p">,</span><span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;ward&quot;</span><span class="p">]</span>
+
+<span class="n">cophenetic_coef</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">metodos</span><span class="p">,</span> <span class="n">metricas</span><span class="p">)</span>       
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>single</th>
+      <th>complete</th>
+      <th>average</th>
+      <th>weighted</th>
+      <th>centroid</th>
+      <th>median</th>
+      <th>ward</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>braycurtis</th>
+      <td>0.45419</td>
+      <td>0.579994</td>
+      <td>0.587999</td>
+      <td>0.555646</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>canberra</th>
+      <td>0.684276</td>
+      <td>0.711447</td>
+      <td>0.853879</td>
+      <td>0.829601</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>chebyshev</th>
+      <td>0.554387</td>
+      <td>0.66185</td>
+      <td>0.678834</td>
+      <td>0.588439</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>cityblock</th>
+      <td>0.54621</td>
+      <td>0.703594</td>
+      <td>0.71184</td>
+      <td>0.709585</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>correlation</th>
+      <td>0.714172</td>
+      <td>0.734769</td>
+      <td>0.857805</td>
+      <td>0.72666</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>cosine</th>
+      <td>0.796175</td>
+      <td>0.695941</td>
+      <td>0.804943</td>
+      <td>0.639452</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>euclidean</th>
+      <td>0.541272</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.621264</td>
+      <td>0.715281</td>
+      <td>0.555451</td>
+      <td>0.697527</td>
+    </tr>
+    <tr>
+      <th>jaccard</th>
+      <td>0.460865</td>
+      <td>0.824278</td>
+      <td>0.871284</td>
+      <td>0.866515</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>mahalanobis</th>
+      <td>0.675893</td>
+      <td>0.640368</td>
+      <td>0.714444</td>
+      <td>0.606974</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>minkowski</th>
+      <td>0.541272</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.621264</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>seuclidean</th>
+      <td>0.541272</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.621264</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>sqeuclidean</th>
+      <td>0.42189</td>
+      <td>0.628639</td>
+      <td>0.636384</td>
+      <td>0.600807</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="cortar-el-dendograma-en-diferentes-grupos">
+<h2><em><strong>Cortar el dendograma en diferentes grupos.</strong></em><a class="headerlink" href="#cortar-el-dendograma-en-diferentes-grupos" title="Link to this heading">#</a></h2>
+<p>Para identificar subgrupos, podemos cortar el <em><strong>dendrograma</strong></em> a cierta altura.  como se describe en las siguientes secciones.</p>
+<p>Uno de los problemas con el agrupamiento jerárquico es que no nos dice cuántos clústeres hay, o dónde cortar el dendrograma para formar clusters.
+Puede cortar el árbol jerárquico a una altura determinada para dividir los datos en clusters. Vamos a usar a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.cut_tree.html"><code class="docutils literal notranslate"><span class="pre">sch.cut_tree()</span></code></a> para esta tarea.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Seleccionar 4 clusters.</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dendogram1</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span>
+    <span class="n">hc</span><span class="p">,</span>                               <span class="c1"># El agrupamiento jerárquico codificado </span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>  <span class="c1"># como una matriz de vinculación.</span>
+    <span class="n">color_threshold</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">orientation</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/435b604ac91ee270ec832cd8269dbbc11ef7eed25a6f263769a099918710f89c.png" src="../_images/435b604ac91ee270ec832cd8269dbbc11ef7eed25a6f263769a099918710f89c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Seleccionar 2 clusters.</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">cut_tree</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dendogram2</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6fa41ec0207f5f69b485ebce17da08739dffee780970502839e8b6074b917f5e.png" src="../_images/6fa41ec0207f5f69b485ebce17da08739dffee780970502839e8b6074b917f5e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hc_def</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">linkage</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">)</span>
+<span class="n">dendo_def</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span><span class="n">hc_def</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ca02ff14f284984c6f3c6c4044da7f68989f1014d202b8abb1f95bf9cf917564.png" src="../_images/ca02ff14f284984c6f3c6c4044da7f68989f1014d202b8abb1f95bf9cf917564.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Opción para el número de cluster #</span>
+<span class="c1"># Calcular las diferencias entre las alturas de enlace en el dendrograma.</span>
+<span class="c1"># Se ordenan en orden descendente.</span>
+<span class="c1"># Se realiza el corte a la altura del dendograma dada por el promedio de las alturas donde se presentan las </span>
+<span class="c1"># mayores difencias.</span>
+<span class="n">cut_diff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hc_def</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;link_height&quot;</span><span class="p">])</span>
+<span class="n">cut_diff</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cut_diff</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cut_diff</span> <span class="o">=</span> <span class="n">cut_diff</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cut_diff</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>link_height</th>
+      <th>diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>48</th>
+      <td>1.455229</td>
+      <td>0.461014</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>0.788468</td>
+      <td>0.159465</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>0.994216</td>
+      <td>0.113933</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>0.490798</td>
+      <td>0.104382</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>0.880283</td>
+      <td>0.091815</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Determinar la máxima distancia vertical que no se intersecta con ninguno de los otro grupos.</span>
+<span class="c1"># Dibujar una linea horizontal en ambos extremos.</span>
+<span class="c1"># El número de clusters es igual al número de lineas verticales que pasan por la recta horizontal.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Primera opción</span>
+<span class="c1"># Punto 1 de corte.</span>
+<span class="n">point_cut1</span> <span class="o">=</span> <span class="n">cut_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cut_diff</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(),</span> <span class="s2">&quot;link_height&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">point_cut1</span><span class="p">)</span>
+
+<span class="n">dendogram1</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span>
+    <span class="n">hc_def</span><span class="p">,</span>                           <span class="c1"># El agrupamiento jerárquico codificado</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>  <span class="c1"># como una matriz de vinculación.</span>
+    <span class="n">color_threshold</span><span class="o">=</span><span class="n">point_cut1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">point_cut1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hierarchical Clustering Dendrogram&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.455229438091773
+</pre></div>
+</div>
+<img alt="../_images/28b90d38436794138484ad07d4424dce2367a6784a814399d78885bd3507ac0d.png" src="../_images/28b90d38436794138484ad07d4424dce2367a6784a814399d78885bd3507ac0d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Punto 2 de corte.</span>
+<span class="n">point_cut2</span> <span class="o">=</span> <span class="n">cut_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="s2">&quot;link_height&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">point_cut2</span><span class="p">)</span>
+<span class="c1"># Segunda opción</span>
+<span class="n">dendogram1</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span>
+    <span class="n">hc_def</span><span class="p">,</span>                          <span class="c1"># El agrupamiento jerárquico codificado</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="c1"># como una matriz de vinculación.</span>
+    <span class="n">color_threshold</span><span class="o">=</span><span class="n">point_cut2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">point_cut2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hierarchical Clustering Dendrogram&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7884684908073105
+</pre></div>
+</div>
+<img alt="../_images/e1f198090ee0fe4174dee40dd80515c103f7b7c1083f39b72e2b97985cc17997.png" src="../_images/e1f198090ee0fe4174dee40dd80515c103f7b7c1083f39b72e2b97985cc17997.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Punto 3 de corte. Promediamos los 2 primeros.</span>
+<span class="n">point_cut3</span> <span class="o">=</span> <span class="n">cut_diff</span><span class="p">[</span><span class="s2">&quot;link_height&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">point_cut3</span><span class="p">)</span>
+<span class="c1"># Segunda opción</span>
+<span class="n">dendogram1</span> <span class="o">=</span> <span class="n">sch</span><span class="o">.</span><span class="n">dendrogram</span><span class="p">(</span>
+    <span class="n">hc_def</span><span class="p">,</span>                          <span class="c1"># El agrupamiento jerárquico codificado</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="c1"># como una matriz de vinculación.</span>
+    <span class="n">color_threshold</span><span class="o">=</span><span class="n">point_cut3</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">point_cut3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Hierarchical Clustering Dendrogram&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1218489644495417
+</pre></div>
+</div>
+<img alt="../_images/41e43cc7c480f59e31d6590fb129fa369e35565ff3a72d71c29c84ae1555e2bc.png" src="../_images/41e43cc7c480f59e31d6590fb129fa369e35565ff3a72d71c29c84ae1555e2bc.png" />
+</div>
+</div>
+</section>
+<section id="sklearn">
+<h2><em><strong>sklearn</strong></em><a class="headerlink" href="#sklearn" title="Link to this heading">#</a></h2>
+<p>Vamos a usar <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html"><code class="docutils literal notranslate"><span class="pre">AgglomerativeClustering</span></code></a> del módulo <a class="reference external" href="https://scikit-learn.org/stable/modules/clustering.html#"><code class="docutils literal notranslate"><span class="pre">sklearn.cluster</span></code></a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%capture</span>
+<span class="c1">#!pip install mglearn</span>
+<span class="kn">import</span> <span class="nn">mglearn</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_agglomerative_algorithm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9567308e24441deca4bd5cbddd79a5839d00b9b2a13236d419c252be07f30a7d.png" src="../_images/9567308e24441deca4bd5cbddd79a5839d00b9b2a13236d419c252be07f30a7d.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## En AgglomerativeClustering tenemos los siguientes linkages:</span>
+<span class="c1">## linkage: {&quot;ward&quot;, &quot;complete&quot;, &quot;average&quot;, &quot;single&quot;}, default=&quot;ward&quot;</span>
+<span class="c1">## El criterio de vinculación (linkage) determina qué distancia usar entre conjuntos de observación.</span>
+<span class="c1">## El algoritmo fusionará los pares de clústeres que minimizan este criterio.</span>
+<span class="c1">## &quot;ward&quot;: Minimiza la varianza de los grupos que se fusionan.</span>
+<span class="c1">## &quot;average&quot;: Usa el promedio de las distancias de cada observación de los dos conjuntos.</span>
+<span class="c1">##  El enlace &quot;complete&quot; o &quot;máximo&quot; utiliza las distancias máximas entre todas las observaciones de </span>
+<span class="c1">## los dos conjuntos.</span>
+<span class="c1">## &quot;single&quot;: Utiliza el mínimo de las distancias entre todas las observaciones de los dos conjuntos.</span>
+<span class="n">linkages</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ward&quot;</span><span class="p">,</span> <span class="s2">&quot;complete&quot;</span><span class="p">,</span> <span class="s2">&quot;average&quot;</span><span class="p">,</span> <span class="s2">&quot;single&quot;</span><span class="p">]</span>
+<span class="c1">## metric: str or callable, default=&quot;euclidean&quot;</span>
+<span class="c1">## Metric used to compute the linkage. Can be “euclidean”, “l1”, “l2”, “manhattan”, “cosine”,</span>
+<span class="c1">## or “precomputed”. If linkage is “ward”, only “euclidean” is accepted. If “precomputed”,</span>
+<span class="c1">## a distance matrix (instead of a similarity matrix) is needed as input for the fit method.</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;braycurtis&quot;</span><span class="p">,</span> <span class="s2">&quot;canberra&quot;</span><span class="p">,</span> <span class="s2">&quot;chebyshev&quot;</span><span class="p">,</span> <span class="s2">&quot;cityblock&quot;</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">,</span> <span class="s2">&quot;minkowski&quot;</span><span class="p">,</span> <span class="s2">&quot;seuclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;sqeuclidean&quot;</span>
+<span class="p">]</span>
+<span class="c1">## Haremos uso de esto para calcular las &quot;mejores&quot; elecciones:</span>
+<span class="n">cophenetic_coef</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="n">linkages</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ward</th>
+      <th>complete</th>
+      <th>average</th>
+      <th>single</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>braycurtis</th>
+      <td>-1</td>
+      <td>0.579994</td>
+      <td>0.587999</td>
+      <td>0.45419</td>
+    </tr>
+    <tr>
+      <th>canberra</th>
+      <td>-1</td>
+      <td>0.711447</td>
+      <td>0.853879</td>
+      <td>0.684276</td>
+    </tr>
+    <tr>
+      <th>chebyshev</th>
+      <td>-1</td>
+      <td>0.66185</td>
+      <td>0.678834</td>
+      <td>0.554387</td>
+    </tr>
+    <tr>
+      <th>cityblock</th>
+      <td>-1</td>
+      <td>0.703594</td>
+      <td>0.71184</td>
+      <td>0.54621</td>
+    </tr>
+    <tr>
+      <th>cosine</th>
+      <td>-1</td>
+      <td>0.695941</td>
+      <td>0.804943</td>
+      <td>0.796175</td>
+    </tr>
+    <tr>
+      <th>correlation</th>
+      <td>-1</td>
+      <td>0.734769</td>
+      <td>0.857805</td>
+      <td>0.714172</td>
+    </tr>
+    <tr>
+      <th>euclidean</th>
+      <td>0.697527</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.541272</td>
+    </tr>
+    <tr>
+      <th>mahalanobis</th>
+      <td>-1</td>
+      <td>0.640368</td>
+      <td>0.714444</td>
+      <td>0.675893</td>
+    </tr>
+    <tr>
+      <th>minkowski</th>
+      <td>-1</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.541272</td>
+    </tr>
+    <tr>
+      <th>seuclidean</th>
+      <td>-1</td>
+      <td>0.697944</td>
+      <td>0.718038</td>
+      <td>0.541272</td>
+    </tr>
+    <tr>
+      <th>sqeuclidean</th>
+      <td>-1</td>
+      <td>0.628639</td>
+      <td>0.636384</td>
+      <td>0.42189</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;braycurtis&quot;</span><span class="p">,</span> <span class="s2">&quot;canberra&quot;</span><span class="p">,</span> <span class="s2">&quot;chebyshev&quot;</span><span class="p">,</span> <span class="s2">&quot;cityblock&quot;</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">,</span> <span class="s2">&quot;minkowski&quot;</span><span class="p">,</span> <span class="s2">&quot;seuclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;sqeuclidean&quot;</span>
+<span class="p">]</span>
+
+<span class="n">optimal_clusters_hierarchy</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;n_clusters&#39;: 2,
+ &#39;metric&#39;: &#39;correlation&#39;,
+ &#39;linkage&#39;: &#39;average&#39;,
+ &#39;optimal_threshold&#39;: 1.102466314178095,
+ &#39;cophenetic&#39;: 0.8578051897177195}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">cluster1</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>            <span class="c1"># El número de clústeres a buscar.</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span>                  <span class="c1"># Métrica entre individuos.</span>
+    <span class="n">linkage</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span>                <span class="c1"># El criterio de vinculación.</span>
+<span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">cluster1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>AgglomerativeClustering(linkage=&#x27;average&#x27;, metric=&#x27;cosine&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;AgglomerativeClustering<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.AgglomerativeClustering.html">?<span>Documentation for AgglomerativeClustering</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>AgglomerativeClustering(linkage=&#x27;average&#x27;, metric=&#x27;cosine&#x27;)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Atributos: n_clusters_, labels_</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster1</span><span class="o">.</span><span class="n">n_clusters_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster1</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+[1 1 1 1 1 1 0 0 1 1 0 0 1 0 0 0 1 1 0 1 0 1 0 1 1 0 0 1 0 0 1 1 1 0 0 0 0
+ 0 0 1 0 1 1 0 0 1 0 0 0 0]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Atributos: n_features_in_, feature_names_in_,</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster1</span><span class="o">.</span><span class="n">n_features_in_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster1</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+[&#39;Murder&#39; &#39;Assault&#39; &#39;UrbanPop&#39; &#39;Rape&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels1</span> <span class="o">=</span> <span class="n">cluster1</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;cluster1&quot;</span><span class="p">:</span><span class="n">labels1</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cluster1
+0           27
+1           23
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;Ajuste y predicción del cluster sobre la data (no necesita de fit)&quot;</span>
+<span class="n">cluster1</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1,
+       0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+       0, 1, 0, 0, 0, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DataFrame final con las clasificaciones.</span>
+<span class="n">df_usarrests_result</span> <span class="o">=</span> <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_usarrests_result</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels1</span><span class="p">;</span> <span class="n">df_usarrests_result</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cluster2</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+    <span class="n">linkage</span><span class="o">=</span><span class="s2">&quot;average&quot;</span>
+<span class="p">)</span>     
+<span class="c1"># Ajuste y etiquetado de cluster</span>
+<span class="n">labels2</span> <span class="o">=</span> <span class="n">cluster2</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;cluster2&quot;</span><span class="p">:</span> <span class="n">labels2</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">df_scaler_usarrets</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>cluster2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># DataFrame final con las clasificaciones.</span>
+<span class="n">df_usarrests_result2</span> <span class="o">=</span>  <span class="n">df_usarrests</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_usarrests_result2</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels2</span><span class="p">;</span> <span class="n">df_usarrests_result2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Murder</th>
+      <th>Assault</th>
+      <th>UrbanPop</th>
+      <th>Rape</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>13.2</td>
+      <td>236</td>
+      <td>58</td>
+      <td>21.2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>10.0</td>
+      <td>263</td>
+      <td>48</td>
+      <td>44.5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>8.1</td>
+      <td>294</td>
+      <td>80</td>
+      <td>31.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>8.8</td>
+      <td>190</td>
+      <td>50</td>
+      <td>19.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>9.0</td>
+      <td>276</td>
+      <td>91</td>
+      <td>40.6</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="visualizacion-de-los-cluster">
+<h2><em><strong>Visualización de los cluster.</strong></em><a class="headerlink" href="#visualizacion-de-los-cluster" title="Link to this heading">#</a></h2>
+<p>Vamos a hacer uso de <code class="docutils literal notranslate"><span class="pre">PCA</span></code> para lograr visualizar los cluster.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.62006039, 0.86750168, 0.95664248, 1.        ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">cluster1</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">)</span>
+<span class="n">cluster1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+<span class="c1"># Cluster de cada registro.</span>
+<span class="n">labels1</span> <span class="o">=</span> <span class="n">cluster1</span><span class="o">.</span><span class="n">labels_</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot con 2 clusters.</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">df_usarrests</span><span class="p">,</span> <span class="n">labels1</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Con 4 clusters</span>
+<span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cluster2</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,)</span>
+<span class="n">cluster2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_scaler_usarrets</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>AgglomerativeClustering(linkage=&#x27;average&#x27;, metric=&#x27;cosine&#x27;, n_clusters=4)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;AgglomerativeClustering<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cluster.AgglomerativeClustering.html">?<span>Documentation for AgglomerativeClustering</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>AgglomerativeClustering(linkage=&#x27;average&#x27;, metric=&#x27;cosine&#x27;, n_clusters=4)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cluster de cada registro.</span>
+<span class="n">labels2</span> <span class="o">=</span> <span class="n">cluster2</span><span class="o">.</span><span class="n">labels_</span>
+<span class="c1"># Plot con 4 clusters.</span>
+<span class="n">cluster_biplot</span><span class="p">(</span><span class="n">pca</span><span class="p">,</span> <span class="n">df_usarrests</span><span class="p">,</span> <span class="n">labels2</span><span class="p">,</span> <span class="n">size_text</span><span class="o">=</span><span class="mf">6.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+</section>
+<section id="ejemplo-fa-cluster-jerarquico">
+<h2><em><strong>Ejemplo: FA + Cluster Jerarquico</strong></em><a class="headerlink" href="#ejemplo-fa-cluster-jerarquico" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_usarrets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url_base</span> <span class="o">+</span> <span class="s2">&quot;USArrests.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">scaled_data_df_usa_arrests</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_usarrets</span><span class="p">)</span>
+
+<span class="n">fa_vari</span> <span class="o">=</span> <span class="n">FactorAnalyzer</span><span class="p">(</span><span class="n">n_factors</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="s2">&quot;varimax&quot;</span><span class="p">)</span>
+<span class="n">fa_vari</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data_df_usa_arrests</span><span class="p">)</span>
+<span class="n">fa_transform</span> <span class="o">=</span> <span class="n">fa_vari</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">scaled_data_df_usa_arrests</span><span class="p">)</span>
+
+<span class="c1"># Varianza factores, variabilidad y variabilidad acumulada.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">fa_vari</span><span class="o">.</span><span class="n">get_factor_variance</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Factor1&quot;</span><span class="p">,</span> <span class="s2">&quot;Factor2&quot;</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;SS loadings&quot;</span><span class="p">,</span> <span class="s2">&quot;Portion_Var&quot;</span><span class="p">,</span><span class="s2">&quot;Cumulative_Var&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Factor1</th>
+      <th>Factor2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SS loadings</th>
+      <td>1.950982</td>
+      <td>0.857294</td>
+    </tr>
+    <tr>
+      <th>Portion_Var</th>
+      <td>0.487746</td>
+      <td>0.214323</td>
+    </tr>
+    <tr>
+      <th>Cumulative_Var</th>
+      <td>0.487746</td>
+      <td>0.702069</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ol class="arabic simple">
+<li><p><em><strong>factor1:</strong></em> El primer factor parece ser compuesto principalmente de asesinato, asalto y violación, con cargas de 0,84, 0,91 y 0,78, respectivamente (lectura anterior). Esta variable latente se podría pensar como <em><strong>indice delictivo</strong></em>.</p></li>
+<li><p><em><strong>factor2</strong></em> El segundo esta compuesto por poblacion urbana y violacion, con cargas de 0,64 y 0,59. Esta variable latente se podría pensar como <em><strong>Dinámica urbana y crimen</strong></em>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metricas</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;braycurtis&quot;</span><span class="p">,</span> <span class="s2">&quot;canberra&quot;</span><span class="p">,</span> <span class="s2">&quot;chebyshev&quot;</span><span class="p">,</span> <span class="s2">&quot;cityblock&quot;</span><span class="p">,</span> <span class="s2">&quot;correlation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cosine&quot;</span><span class="p">,</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;mahalanobis&quot;</span><span class="p">,</span> <span class="s2">&quot;minkowski&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">optimal_clusters_hierarchy</span><span class="p">(</span><span class="n">fa_transform</span><span class="p">,</span> <span class="n">metricas</span><span class="p">,</span> <span class="n">to_sklearn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&#39;Optimos parametros&#39;:&quot;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="n">clustering</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="n">clustering</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">scaled_data_df_usa_arrests</span><span class="p">)</span>
+
+<span class="n">df_factor</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">fa_transform</span><span class="p">,</span>  <span class="c1"># Puntuaciones factoriales</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;factor_1&quot;</span><span class="p">,</span> <span class="s2">&quot;factor_2&quot;</span><span class="p">],</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">df_usarrets</span><span class="o">.</span><span class="n">index</span>
+<span class="p">)</span>
+
+<span class="n">df_factor</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">labels_</span>
+<span class="n">df_factor</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Optimos parametros&#39;: {&#39;n_clusters&#39;: 2, &#39;metric&#39;: &#39;correlation&#39;, &#39;linkage&#39;: &#39;complete&#39;}
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>factor_1</th>
+      <th>factor_2</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Alabama</th>
+      <td>1.157124</td>
+      <td>-0.651535</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Alaska</th>
+      <td>0.807827</td>
+      <td>0.770150</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Arizona</th>
+      <td>0.374417</td>
+      <td>1.354160</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>Arkansas</th>
+      <td>0.293548</td>
+      <td>-0.604472</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>California</th>
+      <td>0.464488</td>
+      <td>2.007143</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_factor</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cluster&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="n">px</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">df_factor</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<section id="como-caracterizamos-cada-cluster">
+<h3><em><strong>Como caracterizamos cada cluster?</strong></em><a class="headerlink" href="#como-caracterizamos-cada-cluster" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="ventajas-y-desventajas-de-la-agrupacion-jerarquica">
+<h2><em><strong>Ventajas y desventajas de la agrupación jerárquica</strong></em><a class="headerlink" href="#ventajas-y-desventajas-de-la-agrupacion-jerarquica" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>No se necesita especificar el número de clusters necesarios para el algoritmo.</p></li>
+<li><p>No funciona bien en los conjuntos de datos grandes. En general, es aplicable a los  pequeños.</p></li>
+<li><p>En comparación con K-means, el clustering jerárquico es computacionalmente pesado y tarda más tiempo en ejecutarse.</p></li>
+</ol>
+</section>
+<section id="conclusion">
+<h2><em><strong>Conclusión.</strong></em><a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>A pesar de las limitaciones del clustering jerárquico cuando se trata de grandes conjuntos de datos, sigue siendo una gran herramienta para tratar con conjuntos de datos pequeños y medianos y encontrar patrones en ellos.</p>
+</section>
+<section id="referencias">
+<h2><em><strong>Referencias:</strong></em><a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><em>Análisis estadístico de datos multivariados. Díaz L &amp; Morales M. Editorial: Publicaciones Facultad de ciencias. UNAL.</em></p></li>
+<li><p><em>Multivariate Analysis I. Kassambara A. Disponible en: <a class="reference external" href="http://www.sthda.com/english/">http://www.sthda.com/english/</a></em></p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lectura_7_Factor_Analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><em><strong>Análisis Factorial.</strong></em></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lectura_9_Kmeans.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><em><strong>K-means clustering</strong></em></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#universidad-central"><em><strong>Universidad Central</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maestria-en-analitica-de-datos"><em><strong>Maestría en analítica de datos</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-estadisticos-para-analitica-de-datos"><em><strong>Métodos estadísticos para analítica de datos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docente-luis-andres-campos-maldonado"><em><strong>Docente: Luis Andrés Campos Maldonado.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-conglomerados"><em><strong>Análisis de conglomerados.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-jerarquicos"><em><strong>Métodos jerárquicos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metodos-aglomerativos"><em><strong>Métodos aglomerativos.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distancias-usadas-entre-individuos"><em><strong>Distancias usadas entre individuos.</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nota"><em><strong>Nota.</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#medida-de-similaridad"><em><strong>Medida de similaridad</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linkage-y-dendograma"><em><strong>Linkage y dendograma.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-1"><em><strong>Ejemplo 1.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-2"><em><strong>Ejemplo 2.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-aglomerativo"><em><strong>Coeficiente aglomerativo.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coeficiente-cophenetico"><em><strong>Coeficiente Cophenético.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cortar-el-dendograma-en-diferentes-grupos"><em><strong>Cortar el dendograma en diferentes grupos.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearn"><em><strong>sklearn</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-los-cluster"><em><strong>Visualización de los cluster.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-fa-cluster-jerarquico"><em><strong>Ejemplo: FA + Cluster Jerarquico</strong></em></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#como-caracterizamos-cada-cluster"><em><strong>Como caracterizamos cada cluster?</strong></em></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ventajas-y-desventajas-de-la-agrupacion-jerarquica"><em><strong>Ventajas y desventajas de la agrupación jerárquica</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><em><strong>Conclusión.</strong></em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias"><em><strong>Referencias:</strong></em></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Luis Andres Campos
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
