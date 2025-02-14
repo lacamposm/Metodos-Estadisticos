@@ -168,6 +168,7 @@ cache/
 config/
 CUADERNOS/
 Books_Sta/
+jb-course/
 
 # Notebooks Ignorados.
 exercises_clase.ipynb
